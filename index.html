@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weft - Your Matrix client</title>
+    <meta
+      name="description"
+      content="Weft is a Matrix client for Windows and macOS. It keeps every account, your mail and servers long gone in one searchable record on your own computer, and a local assistant turns what was agreed into todos."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:title" content="Weft - Your Matrix client" />
+    <meta
+      property="og:description"
+      content="Every Matrix account, your mail and your old servers in one local record, with an assistant that runs on your machine."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ui.css" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="nav">
+      <div class="frame nav-in">
+        <a class="brand" href="#top" aria-label="Weft, back to top">
+          <img src="assets/brand/mark.svg" alt="" width="28" height="28" />
+          <span>Weft</span>
+        </a>
+        <nav class="links" aria-label="Sections">
+          <a href="#search">Chats</a>
+          <a href="#workspace">Workspace</a>
+          <a href="#warp">Local AI</a>
+          <a href="#yours">Make it yours</a>
+        </nav>
+        <a class="btn btn-small" href="#download">Download</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero: the product, working -->
+      <section class="hero" id="top" aria-labelledby="hero-h">
+        <div class="frame hero-head">
+          <h1 id="hero-h" class="lines">
+            <span class="line"
+              ><span data-line style="--i: 0">Your chats,</span></span
+            >
+            <span class="line"
+              ><span data-line style="--i: 1">woven into one</span></span
+            >
+          </h1>
+          <div class="hero-side" data-after-lines>
+            <p class="lead">
+              <b>Weft is a Matrix client</b> for Windows and macOS. It keeps
+              every account, your mail and servers long gone in one archive on
+              your own computer.
+            </p>
+            <div class="hero-act">
+              <a class="btn" href="#download" data-primary-download
+                ><span data-primary-label>Download Weft</span></a
+              >
+              <p class="small">Free. No hidden costs.</p>
+            </div>
+          </div>
+        </div>
+        <div class="stage hero-stage">
+          <div class="frame">
+            <div
+              class="win"
+              data-ui
+              data-frag="hero"
+              aria-label="The Weft window: chat list and the Machine Learning Lab chat. Click a chat to open it; type below to send a message."
+            >
+              <noscript
+                ><p class="win-nojs">
+                  Turn on JavaScript to try the Weft window here.
+                </p></noscript
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Search -->
+      <section class="search sec" id="search" aria-labelledby="search-h">
+        <div class="frame">
+          <div class="search-top" data-reveal>
+            <h2 id="search-h">Search every chat at once</h2>
+            <p>
+              Full-text search across every account, encrypted rooms and
+              imported history included. Press <kbd>Ctrl</kbd>
+              <kbd>K</kbd> anywhere in the app. Try it here.
+            </p>
+          </div>
+          <label class="search-line" data-ui data-reveal>
+            <span class="sr">Search the sample archive</span>
+            <input
+              id="q"
+              type="search"
+              value="lab meeting"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <div class="search-body">
+            <div
+              class="results"
+              data-ui
+              data-frag="results"
+              aria-live="polite"
+            ></div>
+            <div class="examples" data-reveal>
+              <p class="small">Or try</p>
+              <button type="button" data-q="GPU cluster">GPU cluster</button>
+              <button type="button" data-q="hotel Vienna">hotel Vienna</button>
+              <button type="button" data-q="abstract">abstract</button>
+              <button type="button" data-q="Daniel">Daniel</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- One archive -->
+      <section class="archive sec" aria-labelledby="archive-h">
+        <div class="frame">
+          <h2 id="archive-h" data-reveal>All your accounts, one list</h2>
+          <div class="mods">
+            <article class="mod" data-reveal>
+              <div class="mod-panel" data-ui data-frag="mod-linked"></div>
+              <div class="mod-text">
+                <h3>
+                  Multiple instances,<br />
+                  one chat
+                </h3>
+                <p>
+                  When using non-federated Matrix servers, you can link people
+                  and rooms across them. Weft shows them as one.
+                </p>
+              </div>
+            </article>
+            <article class="mod" data-reveal>
+              <div class="mod-panel" data-ui data-frag="mod-import"></div>
+              <div class="mod-text">
+                <h3>History from servers that shut down</h3>
+                <p>
+                  Import an Element export as JSON or zip. The messages slot
+                  into the room by their original time, with their attachments.
+                </p>
+              </div>
+            </article>
+            <article class="mod" data-reveal>
+              <div class="mod-panel" data-ui data-frag="mod-mail"></div>
+              <div class="mod-text">
+                <h3>Mail directly in your chats</h3>
+                <p>
+                  Add your mail account. The same local model sorts it into what
+                  needs a reply, what belongs to which label and what is spam.
+                </p>
+              </div>
+            </article>
+            <article class="mod" data-reveal>
+              <div class="mod-panel" data-ui data-frag="mod-keys"></div>
+              <div class="mod-text">
+                <h3>
+                  Encrypted,<br />
+                  keys backed up
+                </h3>
+                <p>
+                  End-to-end encryption with cross-signing, key backup and
+                  recovery. Weft is just one more device, your phone stays in
+                  sync.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- The workspace around the chat -->
+      <section class="tour sec" id="workspace" aria-labelledby="tour-h">
+        <div class="frame">
+          <div class="tour-head" data-reveal>
+            <h2 id="tour-h">Everything around the chat</h2>
+            <p>
+              A timeline that sums up what you missed in every chat, mail sorted
+              like your chats, a calendar that finds dates in messages, a todo
+              board, notes that quote what was said, and a dedicated page for
+              every person.
+            </p>
+          </div>
+          <div
+            class="tour-tabs"
+            role="group"
+            aria-label="Show a part of Weft"
+            data-reveal
+          >
+            <button type="button" data-tour="timeline">Timeline</button>
+            <button type="button" data-tour="inbox">Inbox</button>
+            <button type="button" data-tour="calendar">Calendar</button>
+            <button type="button" data-tour="todos">Todos</button>
+            <button type="button" data-tour="notes">Notes</button>
+            <button type="button" data-tour="profile">Profile</button>
+            <button type="button" data-tour="chats">Chats</button>
+          </div>
+          <div
+            class="win win-tour"
+            data-ui
+            data-frag="tour"
+            aria-label="A Weft window: inbox, calendar, todos, notes and a profile"
+          ></div>
+        </div>
+      </section>
+
+      <!-- From message to todo (pinned) -->
+      <section class="flow sec" id="work" aria-labelledby="flow-h">
+        <div class="frame flow-in">
+          <h2 id="flow-h">From message to todo</h2>
+          <div class="flow-steps">
+            <div class="step" data-step="0">
+              <p class="step-h">A message asks something of you.</p>
+              <p>
+                Jonas writes in the lab chat: could you send the camera-ready
+                checklist to Daniel before Friday?
+              </p>
+            </div>
+            <div class="step" data-step="1">
+              <p class="step-h">Then Weft picks up the todo.</p>
+              <p>
+                A small model on your machine reads each new message and
+                suggests todos and events. Nothing is added without you.
+              </p>
+            </div>
+            <div class="step" data-step="2">
+              <p class="step-h">Add it, and it links back.</p>
+              <p>
+                The todo lands on your board under Thesis supervision, due
+                Friday, one click from the message it came from. Events go to
+                the calendar the same way.
+              </p>
+            </div>
+          </div>
+          <div class="flow-stage">
+            <div
+              class="stage-box"
+              data-ui
+              data-frag="flow"
+              data-state="0"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy mode: its own window, built like the hero -->
+      <section class="privacy" id="privacy" aria-labelledby="privacy-h">
+        <div class="frame hero-head privacy-head" data-reveal>
+          <h2 id="privacy-h">
+            Privacy mode is <span data-privacy-word>off</span>
+          </h2>
+          <div class="hero-side">
+            <p class="lead">
+              Sharing your screen in a lecture or a meeting? <kbd>Ctrl</kbd>
+              <kbd>Shift</kbd> <kbd>H</kbd> covers sensitive information and
+              hides the previews in the chat list, until you allow it.
+            </p>
+            <div class="hero-act">
+              <button
+                class="btn"
+                type="button"
+                data-privacy-toggle
+                aria-pressed="false"
+              >
+                Turn privacy mode on
+              </button>
+              <p class="small">Or click the eye next to the logo.</p>
+            </div>
+          </div>
+        </div>
+        <div class="stage hero-stage">
+          <div class="frame">
+            <div
+              class="win"
+              data-ui
+              data-frag="privacy"
+              aria-label="A Weft window for trying privacy mode"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Warp -->
+      <section class="warp sec" id="warp" aria-labelledby="warp-h">
+        <div class="frame warp-in">
+          <div class="warp-text" data-reveal>
+            <h2 id="warp-h">Ask your chats anything</h2>
+            <p>
+              Warp searches your records, reads what matters and answers in a
+              few sentences, with numbered sources that open where they live. It
+              can propose todos, notes and replies.
+              <kbd>Ctrl</kbd> <kbd>J</kbd> opens it beside any page.
+            </p>
+            <div class="asks" role="group" aria-label="Ask Warp">
+              <button type="button" data-ask="chi" aria-pressed="true">
+                Where does the CHI paper stand?
+              </button>
+              <button type="button" data-ask="meet" aria-pressed="false">
+                When is the lab meeting this week?
+              </button>
+              <button type="button" data-ask="sem" aria-pressed="false">
+                What did I miss in the seminar?
+              </button>
+            </div>
+            <p class="small">
+              Runs on your machine through a local inference server such as
+              Ollama.
+            </p>
+          </div>
+          <div
+            class="warp-panel"
+            data-ui
+            data-frag="warp"
+            aria-live="polite"
+          ></div>
+        </div>
+      </section>
+
+      <!-- Make it yours -->
+      <section class="yours" id="yours" aria-labelledby="yours-h">
+        <div class="frame yours-in">
+          <div class="yours-head" data-reveal>
+            <h2 id="yours-h">Make it yours</h2>
+            <p>
+              Themes, accents, and styles, all unique to you. Change them here
+              and every screen on this page follows.
+            </p>
+          </div>
+          <div class="plate">
+            <div class="notes notes-l">
+              <div class="note" data-for="theme">
+                <p class="note-h">Theme</p>
+                <p>
+                  Light, Dark, Midnight, Nord, Dracula, Catppuccin, Solarized
+                  and High contrast.
+                </p>
+              </div>
+              <div class="note" data-for="accent">
+                <p class="note-h">Accent colour</p>
+                <p>Buttons, links, toggles and your own message bubbles.</p>
+              </div>
+            </div>
+            <div class="settings" data-ui data-frag="settings"></div>
+            <div class="notes notes-r">
+              <div class="note" data-for="style">
+                <p class="note-h">Message style</p>
+                <p>
+                  Flat rows, chat bubbles, or bubbles with your own messages on
+                  the right.
+                </p>
+              </div>
+              <div class="note" data-for="density">
+                <p class="note-h">Density and corners</p>
+                <p>
+                  How much room between messages, how round the cards and
+                  buttons are.
+                </p>
+              </div>
+              <div class="note" data-for="css">
+                <p class="note-h">user.css</p>
+                <p>
+                  Your own stylesheet loads last, overrides everything and
+                  reloads as you save.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Small things -->
+      <section class="small-things sec" aria-labelledby="st-h">
+        <div class="frame">
+          <h2 id="st-h" data-reveal>Shortcuts and details</h2>
+          <div class="lists">
+            <div class="list keys" data-reveal>
+              <p class="group">Keyboard</p>
+              <ul>
+                <li>
+                  <span class="k"><kbd>Ctrl</kbd> <kbd>K</kbd></span
+                  ><span>Search every chat, mail and note</span>
+                </li>
+                <li>
+                  <span class="k"><kbd>Ctrl</kbd> <kbd>J</kbd></span
+                  ><span>Open Warp next to what you are reading</span>
+                </li>
+                <li>
+                  <span class="k"><kbd>/</kbd></span
+                  ><span>Filter the chat list</span>
+                </li>
+                <li>
+                  <span class="k"
+                    ><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>H</kbd></span
+                  ><span>Turn privacy mode on or off</span>
+                </li>
+                <li>
+                  <span class="k"><kbd>Ctrl</kbd> <kbd>I</kbd></span
+                  ><span>Show the raw Matrix event behind a message</span>
+                </li>
+                <li>
+                  <span class="k"><kbd>Shift</kbd> <kbd>Enter</kbd></span
+                  ><span>Start a new line without sending</span>
+                </li>
+                <li>
+                  <span class="k"><kbd>Esc</kbd></span
+                  ><span>Close a dialog or cancel a reply</span>
+                </li>
+              </ul>
+            </div>
+            <div class="list" data-reveal>
+              <p class="group">Also in Weft</p>
+              <ul class="facts">
+                <li>
+                  Polls, voice messages, files, locations and threads all show
+                  in the timeline, with read receipts under each message.
+                </li>
+                <li>
+                  Archived chats come back on their own when someone writes
+                  again. Folders and pins keep the rest in order.
+                </li>
+                <li>
+                  Subscribe to .ics calendars, like a course timetable, and see
+                  them next to the events found in your chats.
+                </li>
+                <li>
+                  The app, and everything the assistant writes, follows the
+                  language you pick: English or German.
+                </li>
+                <!-- <li>
+                  The same service also runs in a container on your own server,
+                  with Weft in the browser.
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Local by design -->
+      <section class="local sec" id="local" aria-labelledby="local-h">
+        <div class="frame local-in">
+          <div class="local-text" data-reveal>
+            <h2 id="local-h">Your data stays on your machine</h2>
+            <p>
+              Weft runs standalone on your computer. All your Messages, imports,
+              todos and notes get saved in one file in your data folder. There
+              is no Weft cloud and no Weft account.
+            </p>
+            <p>
+              The assistant uses an inference server on your machine. Without
+              one, chats, search and the workspace work as usual. Matrix, IMAP
+              and iCalendar keep your data readable.
+            </p>
+          </div>
+          <div class="local-panel" data-ui data-frag="local" data-reveal></div>
+        </div>
+      </section>
+
+      <!-- Download -->
+      <section class="download" id="download" aria-labelledby="dl-h">
+        <div class="frame dl-in">
+          <div class="dl-text">
+            <h2 id="dl-h" class="close-line">Get Weft</h2>
+            <p>
+              Install it once and it keeps itself up to date. Free, with no
+              account to create: sign in with the Matrix accounts you already
+              have.
+            </p>
+          </div>
+          <div class="dialog" data-ui role="group" aria-labelledby="dlg-h">
+            <div class="dlg-head">
+              <p class="dlg-h" id="dlg-h">Download Weft</p>
+            </div>
+            <div class="dlg-body">
+              <div class="seg" role="radiogroup" aria-label="System">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked="true"
+                  data-os="windows"
+                >
+                  Windows
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked="false"
+                  data-os="mac"
+                >
+                  macOS
+                </button>
+              </div>
+              <div
+                class="seg seg-sub"
+                role="radiogroup"
+                aria-label="Mac processor"
+                hidden
+              >
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked="true"
+                  data-mac="mac-arm"
+                >
+                  Apple silicon
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked="false"
+                  data-mac="mac-intel"
+                >
+                  Intel
+                </button>
+              </div>
+              <p class="dlg-note" data-os-note>
+                Windows 10 and 11, 64-bit. The installer needs no administrator
+                rights.
+              </p>
+              <p class="dlg-ver" data-version>Latest version on GitHub</p>
+            </div>
+            <div class="dlg-foot">
+              <a
+                class="dlg-link"
+                href="https://github.com/smilefx/weft-app/releases"
+                >All releases</a
+              >
+              <a
+                class="dlg-btn"
+                data-dl
+                href="https://github.com/smilefx/weft-app/releases/latest"
+                >Download for Windows</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="faq sec" aria-labelledby="faq-h">
+        <div class="frame faq-in">
+          <h2 id="faq-h">Questions</h2>
+          <div class="tiles">
+            <details name="faq" open>
+              <summary>Do I need a Matrix account?</summary>
+              <div class="ans">
+                <p>
+                  Yes, Weft is a Matrix client. Any homeserver works, your
+                  organisation's or a public one, with password or single
+                  sign-on. You can add as many accounts as you have. Mail is
+                  optional.
+                </p>
+              </div>
+            </details>
+            <details name="faq">
+              <summary>What do I need for the AI features?</summary>
+              <div class="ans">
+                <p>
+                  A local inference server with an OpenAI-compatible API, such
+                  as <a href="https://ollama.com">Ollama</a>, and the models
+                  named in the settings. Weft shows which ones are installed.
+                  Without it, chats, search and the workspace work as usual.
+                </p>
+              </div>
+            </details>
+            <details name="faq">
+              <summary>Can I keep using other clients?</summary>
+              <div class="ans">
+                <p>
+                  Yes. Weft signs in as one more device of your account, so
+                  everything stays in sync with your other clients, encryption
+                  keys included.
+                </p>
+              </div>
+            </details>
+            <details name="faq">
+              <summary>Windows says it protected my PC</summary>
+              <div class="ans">
+                <p>
+                  Weft is not signed with a paid certificate yet, so SmartScreen
+                  warns on the first install. Choose <b>More info</b>, then
+                  <b>Run anyway</b>. Updates after that do not warn.
+                </p>
+              </div>
+            </details>
+            <details name="faq">
+              <summary>macOS will not open it</summary>
+              <div class="ans">
+                <p>
+                  Drag Weft to Applications and open it. If macOS refuses, open
+                  <b>System Settings → Privacy &amp; Security</b> and choose
+                  <b>Open Anyway</b>. If it says the app is damaged, run this
+                  once in Terminal:
+                </p>
+                <pre><code>xattr -dr com.apple.quarantine /Applications/Weft.app</code></pre>
+              </div>
+            </details>
+            <details name="faq">
+              <summary>How do updates work?</summary>
+              <div class="ans">
+                <p>
+                  Weft checks for updates in the background and asks you to
+                  restart when it is ready. Your chats stay where they are.
+                </p>
+              </div>
+            </details>
+            <details name="faq">
+              <summary>Where is my data stored?</summary>
+              <div class="ans">
+                <p>
+                  In one file and a media folder inside your user data folder.
+                  Back it up like any other file. Remove an account and its data
+                  goes with it.
+                </p>
+              </div>
+            </details>
+            <details name="faq">
+              <summary>What about Linux?</summary>
+              <div class="ans">
+                <p>
+                  A linux build is planned, but not yet available. A Docker
+                  image is also in the works, for running Weft on a local server
+                  and using it in a browser.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot" aria-labelledby="foot-h">
+      <h2 id="foot-h" class="sr">About this site</h2>
+      <div class="foot-board">
+        <div class="tile t-about">
+          <p class="t-big">Weft is made for you.</p>
+          <p class="small">
+            People, chats and mail on this page are made up. Matrix is an open
+            standard of the Matrix.org Foundation.
+          </p>
+        </div>
+        <nav class="tile t-nav" aria-label="Footer">
+          <a href="#search">Chats</a>
+          <a href="#workspace">Workspace</a>
+          <a href="#warp">Local AI</a>
+          <a href="#yours">Make it yours</a>
+          <a href="#local">Your data</a>
+        </nav>
+        <div class="tile t-rel">
+          <p class="small">Latest release</p>
+          <a
+            class="t-mid"
+            href="https://github.com/smilefx/weft-app/releases/latest"
+            data-foot-version
+            >See GitHub</a
+          >
+        </div>
+        <div class="tile t-src">
+          <p class="small">Releases and update feed</p>
+          <a class="t-mid" href="https://github.com/smilefx/weft-app/releases"
+            >github.com/smilefx/weft-app</a
+          >
+        </div>
+        <div class="tile t-word" aria-hidden="true">
+          <img src="assets/brand/wordmark-on-dark.svg" alt="" />
+        </div>
+        <a class="tile t-go" href="#download">
+          <span class="t-big">Download Weft</span>
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M12 36 36 12M16 12h20v20" />
+          </svg>
+        </a>
+      </div>
+    </footer>
+
+    <!-- Material Symbols Rounded, drawn as the app's Icon.svelte does (weight 450, filled unless a line glyph). -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-chat" viewBox="0 0 960 960">
+        <path
+          d="M236 724 149 811Q128 832 102 820Q76 809 76 780V161Q76 126 101 101Q126 76 161 76H799Q834 76 859 101Q884 126 884 161V639Q884 674 859 699Q834 724 799 724ZM202 639H799Q799 639 799 639Q799 639 799 639V161Q799 161 799 161Q799 161 799 161H161Q161 161 161 161Q161 161 161 161V678ZM202 639 161 678V161Q161 161 161 161Q161 161 161 161H799Q799 161 799 161Q799 161 799 161V639Q799 639 799 639Q799 639 799 639ZM280 560H520Q537 560 548 548Q560 537 560 520Q560 503 548 492Q537 480 520 480H280Q263 480 252 492Q240 503 240 520Q240 537 252 548Q263 560 280 560ZM280 440H680Q697 440 708 428Q720 417 720 400Q720 383 708 372Q697 360 680 360H280Q263 360 252 372Q240 383 240 400Q240 417 252 428Q263 440 280 440ZM280 320H680Q697 320 708 308Q720 297 720 280Q720 263 708 252Q697 240 680 240H280Q263 240 252 252Q240 263 240 280Q240 297 252 308Q263 320 280 320Z"
+        />
+      </symbol>
+      <symbol id="i-mail" viewBox="0 0 960 960">
+        <path
+          d="M161 804Q126 804 101 779Q76 754 76 719V241Q76 206 101 181Q126 156 161 156H799Q834 156 859 181Q884 206 884 241V719Q884 754 859 779Q834 804 799 804ZM799 325 503 511Q497 514 491 516Q485 518 480 518Q475 518 469 516Q463 514 457 511L161 325V719Q161 719 161 719Q161 719 161 719H799Q799 719 799 719Q799 719 799 719ZM480 441 799 241H161ZM799 325 782 336Q790 331 794 323Q799 315 799 305Q799 285 781 274Q763 264 744 275L799 241H161L216 275Q197 264 179 275Q161 285 161 305Q161 316 166 324Q170 331 178 336L161 325V719Q161 719 161 719Q161 719 161 719H799Q799 719 799 719Q799 719 799 719Z"
+        />
+      </symbol>
+      <symbol id="i-cal" viewBox="0 0 960 960">
+        <path
+          d="M201 884Q166 884 141 859Q116 834 116 799V241Q116 206 141 181Q166 156 201 156H240V117Q240 100 252 88Q264 76 281 76Q299 76 311 88Q323 100 323 117V156H637V117Q637 100 649 88Q661 76 679 76Q696 76 708 88Q720 100 720 117V156H759Q794 156 819 181Q844 206 844 241V799Q844 834 819 859Q794 884 759 884ZM201 799H759Q759 799 759 799Q759 799 759 799V400H201V799Q201 799 201 799Q201 799 201 799ZM201 320H759V241Q759 241 759 241Q759 241 759 241H201Q201 241 201 241Q201 241 201 241ZM201 320V241Q201 241 201 241Q201 241 201 241H759Q759 241 759 241Q759 241 759 241V320ZM480 561Q463 561 451 549Q439 537 439 520Q439 503 451 491Q463 479 480 479Q497 479 509 491Q521 503 521 520Q521 537 509 549Q497 561 480 561ZM320 561Q303 561 291 549Q279 537 279 520Q279 503 291 491Q303 479 320 479Q337 479 349 491Q361 503 361 520Q361 537 349 549Q337 561 320 561ZM640 561Q623 561 611 549Q599 537 599 520Q599 503 611 491Q623 479 640 479Q657 479 669 491Q681 503 681 520Q681 537 669 549Q657 561 640 561ZM480 721Q463 721 451 709Q439 697 439 680Q439 663 451 651Q463 639 480 639Q497 639 509 651Q521 663 521 680Q521 697 509 709Q497 721 480 721ZM279 680Q279 663 291 651Q303 639 320 639Q337 639 349 651Q361 663 361 680Q361 697 349 709Q337 721 320 721Q303 721 291 709Q279 697 279 680ZM640 721Q623 721 611 709Q599 697 599 680Q599 663 611 651Q623 639 640 639Q657 639 669 651Q681 663 681 680Q681 697 669 709Q657 721 640 721Z"
+        />
+      </symbol>
+      <symbol id="i-todo" viewBox="0 0 960 960">
+        <path
+          d="M424 532 341 449Q329 438 311 438Q293 438 281 450Q270 461 270 479Q270 497 281 509L394 621Q406 634 424 634Q441 634 454 621L678 397Q690 385 690 367Q689 349 678 337Q666 326 648 326Q630 326 619 337ZM201 844Q166 844 141 819Q116 794 116 759V201Q116 166 141 141Q166 116 201 116H759Q794 116 819 141Q844 166 844 201V759Q844 794 819 819Q794 844 759 844ZM201 759H759Q759 759 759 759Q759 759 759 759V201Q759 201 759 201Q759 201 759 201H201Q201 201 201 201Q201 201 201 201V759Q201 759 201 759Q201 759 201 759ZM201 201H759Q759 201 759 201Q759 201 759 201V759Q759 759 759 759Q759 759 759 759H201Q201 759 201 759Q201 759 201 759V201Q201 201 201 201Q201 201 201 201Z"
+        />
+      </symbol>
+      <symbol id="i-note" viewBox="0 0 960 960">
+        <path
+          d="M201 759H559V601Q559 583 571 571Q583 559 601 559H759V201Q759 201 759 201Q759 201 759 201H201Q201 201 201 201Q201 201 201 201V759Q201 759 201 759Q201 759 201 759ZM201 844Q166 844 141 819Q116 794 116 759V201Q116 166 141 141Q166 116 201 116H759Q794 116 819 141Q844 166 844 201V565Q844 582 838 598Q831 613 819 625L625 819Q613 831 598 838Q582 844 565 844ZM440 561H322Q305 561 293 550Q281 538 281 520Q281 503 293 491Q305 480 322 480H440Q457 480 469 491Q480 503 480 520Q480 538 469 550Q457 561 440 561ZM638 400H322Q305 400 293 388Q281 376 281 359Q281 341 293 330Q305 318 322 318H638Q655 318 667 330Q679 341 679 359Q679 376 667 388Q655 400 638 400ZM201 759H559L759 559V201Q759 201 759 201Q759 201 759 201H201Q201 201 201 201Q201 201 201 201V759Q201 759 201 759Q201 759 201 759Z"
+        />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 960 960">
+        <path
+          d="M379 643Q269 643 193 566Q116 490 116 380Q116 270 193 194Q269 117 379 117Q489 117 565 194Q642 270 642 380Q642 424 628 463Q614 502 591 532L814 755Q826 767 826 785Q826 803 814 815Q802 826 784 826Q766 826 754 815L531 592Q501 615 462 629Q423 643 379 643ZM379 557Q453 557 505 506Q556 454 556 380Q556 306 505 254Q453 203 379 203Q305 203 253 254Q202 306 202 380Q202 454 253 506Q305 557 379 557Z"
+        />
+      </symbol>
+      <symbol id="i-spark" viewBox="0 0 960 960">
+        <path
+          d="M705 255 635 224Q629 220 626 215Q623 210 623 204Q623 199 626 194Q629 188 635 185L705 153L737 84Q740 77 745 74Q751 71 756 71Q761 71 767 74Q772 77 775 84L807 153L877 185Q883 188 886 194Q889 199 889 204Q889 210 886 215Q883 220 877 224L807 255L775 325Q772 331 767 334Q761 337 756 337Q751 337 745 334Q740 331 737 325ZM259 581 100 509Q90 505 86 497Q82 489 82 480Q82 471 86 463Q90 455 100 451L259 379L331 220Q336 210 344 206Q352 201 360 201Q369 201 377 206Q385 210 389 220L462 379L621 451Q630 455 635 463Q639 471 639 480Q639 489 635 497Q630 505 621 509L462 581L389 740Q385 750 377 754Q369 759 360 759Q352 759 344 754Q336 750 331 740ZM360 606 400 520 486 480 400 440 360 354 320 440 234 480 320 520ZM709 811 640 779Q633 776 630 771Q627 765 627 760Q627 755 630 749Q633 744 640 741L709 709L741 639Q744 633 749 630Q755 626 760 626Q766 626 771 630Q776 633 780 639L811 709L881 741Q887 744 890 749Q894 755 894 760Q894 765 890 771Q887 776 881 779L811 811L780 881Q776 887 771 890Q766 894 760 894Q755 894 749 890Q744 887 741 881ZM360 606 320 520 234 480 320 440 360 354 400 440 486 480 400 520Z"
+        />
+      </symbol>
+      <symbol id="i-gear" viewBox="0 0 960 960">
+        <path
+          d="M431 884Q403 884 383 866Q363 847 359 821L350 755Q338 750 328 744Q317 737 307 730L245 756Q219 767 194 758Q168 749 154 725L104 639Q90 615 96 589Q102 562 124 545L177 505Q176 499 176 493Q176 487 176 480Q176 473 176 467Q176 461 177 455L124 415Q102 398 96 371Q90 345 104 321L154 235Q168 212 194 202Q219 193 245 204L307 230Q317 223 328 217Q339 210 350 205L359 139Q363 113 383 94Q403 76 431 76H529Q557 76 577 94Q597 113 601 139L610 205Q622 210 632 217Q643 223 653 230L715 204Q741 193 766 202Q792 212 806 235L856 321Q870 345 864 371Q858 398 836 415L783 455Q784 461 784 467Q784 473 784 480Q784 487 784 493Q784 499 782 505L835 545Q857 562 863 589Q869 615 855 639L804 725Q790 749 764 758Q739 767 713 756L653 730Q643 737 632 744Q621 750 610 755L601 821Q597 847 577 866Q557 884 529 884ZM441 799H518L532 693Q563 685 590 669Q616 654 638 631L737 672L775 606L689 542Q694 527 696 512Q698 496 698 480Q698 464 696 448Q694 433 689 418L775 354L737 288L639 330Q617 306 590 291Q563 275 532 267L519 161H442L428 267Q397 275 370 291Q343 306 321 329L223 288L185 354L270 417Q265 433 263 448Q261 463 261 480Q261 496 263 511Q265 527 270 542L185 606L223 672L321 630Q343 654 370 669Q397 685 428 693ZM482 620Q540 620 581 579Q622 538 622 480Q622 422 581 381Q540 340 482 340Q423 340 382 381Q342 422 342 480Q342 538 382 579Q423 620 482 620ZM441 799 428 693Q397 685 370 669Q343 654 321 630L223 672L185 606L270 542Q265 527 263 511Q261 496 261 480Q261 463 263 448Q265 433 270 417L185 354L223 288L321 329Q343 306 370 291Q397 275 428 267L442 161H519L532 267Q563 275 590 291Q617 306 639 330L737 288L775 354L689 418Q694 433 696 448Q698 464 698 480Q698 496 696 512Q694 527 689 542L775 606L737 672L638 631Q616 654 590 669Q563 685 532 693L518 799Z"
+        />
+      </symbol>
+      <symbol id="i-lock" viewBox="0 0 960 960">
+        <path
+          d="M241 884Q206 884 181 859Q156 833 156 798V401Q156 366 181 341Q206 316 241 316H278V239Q278 155 337 96Q396 37 480 37Q564 37 623 96Q682 155 682 239V316H719Q754 316 779 341Q804 366 804 401V798Q804 833 779 859Q754 884 719 884ZM241 798H719Q719 798 719 798Q719 798 719 798V401Q719 401 719 401Q719 401 719 401H241Q241 401 241 401Q241 401 241 401V798Q241 798 241 798Q241 798 241 798ZM560 600Q560 567 536 543Q513 520 480 520Q447 520 424 543Q400 567 400 600Q400 633 424 656Q447 680 480 680Q513 680 536 656Q560 633 560 600ZM364 316H596V239Q596 190 562 156Q529 122 480 122Q431 122 398 156Q364 190 364 239ZM241 798Q241 798 241 798Q241 798 241 798V401Q241 401 241 401Q241 401 241 401H719Q719 401 719 401Q719 401 719 401V798Q719 798 719 798Q719 798 719 798Z"
+        />
+      </symbol>
+      <symbol id="i-link" viewBox="0 0 960 960">
+        <path
+          d="M280 684Q195 684 136 624Q76 565 76 480Q76 395 136 336Q195 276 280 276H395Q414 276 426 288Q438 301 438 319Q438 337 426 349Q414 361 395 361H280Q231 361 196 396Q161 431 161 480Q161 529 196 564Q231 599 280 599H395Q414 599 426 611Q438 623 438 641Q438 659 426 672Q414 684 395 684ZM358 521Q341 521 329 509Q317 497 317 480Q317 463 329 451Q341 439 358 439H602Q619 439 631 451Q643 463 643 480Q643 497 631 509Q619 521 602 521ZM565 684Q546 684 534 672Q522 659 522 641Q522 623 534 611Q546 599 565 599H680Q729 599 764 564Q799 529 799 480Q799 431 764 396Q729 361 680 361H565Q546 361 534 349Q522 337 522 319Q522 301 534 288Q546 276 565 276H680Q765 276 824 336Q884 395 884 480Q884 565 824 624Q765 684 680 684Z"
+        />
+      </symbol>
+      <symbol id="i-reply" viewBox="0 0 960 960">
+        <path
+          d="M279 483 391 594Q403 607 403 624Q402 641 390 654Q377 666 360 666Q343 667 330 654L146 470Q133 457 133 440Q133 423 146 410L330 226Q342 214 359 214Q377 214 390 226Q402 239 402 256Q402 274 390 287L279 397H641Q725 397 785 457Q844 516 844 600V721Q844 739 832 752Q819 764 801 764Q783 764 771 752Q759 739 759 721V600Q759 551 724 517Q690 483 641 483Z"
+        />
+      </symbol>
+      <symbol id="i-send" viewBox="0 0 960 960">
+        <path
+          d="M791 520 176 779Q155 788 135 775Q116 763 116 740V220Q116 197 135 185Q155 172 176 181L791 440Q817 452 817 480Q817 508 791 520ZM200 678 670 480 200 282V418L442 480L200 542ZM200 678 670 480 200 282V418L116 397V563L200 542Z"
+        />
+      </symbol>
+      <symbol id="i-plus" viewBox="0 0 960 960">
+        <path
+          d="M437 523H239Q221 523 208 510Q196 498 196 480Q196 462 208 450Q221 437 239 437H437V239Q437 221 450 208Q462 196 480 196Q498 196 510 208Q523 221 523 239V437H721Q739 437 752 450Q764 462 764 480Q764 498 752 510Q739 523 721 523H523V721Q523 739 510 752Q498 764 480 764Q462 764 450 752Q437 739 437 721Z"
+        />
+      </symbol>
+      <symbol id="i-eye" viewBox="0 0 960 960">
+        <path
+          d="M480 640Q555 640 608 588Q660 535 660 460Q660 385 608 332Q555 280 480 280Q405 280 352 332Q300 385 300 460Q300 535 352 588Q405 640 480 640ZM480 565Q436 565 405 535Q375 504 375 460Q375 416 405 385Q436 355 480 355Q524 355 555 385Q585 416 585 460Q585 504 555 535Q524 565 480 565ZM59 501Q53 491 51 481Q48 471 48 460Q48 449 51 439Q53 429 59 419Q123 301 234 229Q345 156 480 156Q615 156 726 229Q837 301 901 419Q907 429 909 439Q912 449 912 460Q912 471 909 481Q907 491 901 501Q837 619 726 691Q615 764 480 764Q345 764 234 691Q123 619 59 501ZM128 460Q178 359 273 300Q367 240 480 240Q593 240 687 300Q782 359 832 460Q782 561 687 620Q593 680 480 680Q367 680 273 620Q178 561 128 460ZM832 460Q782 359 687 300Q593 240 480 240Q367 240 273 300Q178 359 128 460Q178 561 273 620Q367 680 480 680Q593 680 687 620Q782 561 832 460Z"
+        />
+      </symbol>
+      <symbol id="i-eye-off" viewBox="0 0 960 960">
+        <path
+          d="M607 333Q647 373 657 426Q667 479 645 530Q636 521 629 514Q622 507 613 498Q605 490 597 483Q590 475 582 467Q586 443 579 422Q572 400 556 385Q541 369 519 361Q497 353 472 357Q464 349 457 342Q450 335 441 326Q433 318 426 311Q418 304 410 295Q462 273 514 283Q566 292 607 333ZM480 240Q452 240 425 244Q398 248 370 255Q368 254 366 251Q364 249 362 247Q342 227 349 200Q356 174 382 166Q406 162 431 159Q455 156 480 156Q618 156 732 229Q847 301 907 424Q911 433 913 442Q915 451 915 460Q915 469 914 478Q912 487 908 496Q891 534 867 567Q843 600 812 629Q797 643 777 642Q758 642 743 627Q736 621 729 614Q722 607 715 601Q753 572 782 537Q812 501 832 460Q782 359 687 300Q593 240 480 240ZM480 764Q345 764 234 691Q122 618 57 499Q52 491 50 481Q47 471 47 460Q47 449 49 440Q51 430 56 420Q76 381 103 345Q129 309 162 279L80 196Q69 184 69 167Q70 150 81 139Q93 128 110 128Q127 128 139 139L819 820Q831 831 831 848Q831 865 819 877Q808 888 791 888Q773 888 762 877L625 741Q590 753 553 758Q517 764 480 764ZM221 337Q192 363 169 394Q145 425 128 460Q178 561 273 620Q367 680 480 680Q499 680 518 678Q536 675 556 672L519 635Q509 638 500 639Q490 640 480 640Q405 640 352 588Q300 535 300 460Q300 450 301 440Q302 431 305 421ZM370 255 715 601Q753 572 782 537Q812 501 832 460Q782 359 687 300Q593 240 480 240Q452 240 425 244Q398 248 370 255ZM480 680Q499 680 518 678Q536 675 556 672L221 337Q192 363 169 394Q145 425 128 460Q178 561 273 620Q367 680 480 680Z"
+        />
+      </symbol>
+      <symbol id="i-auto" viewBox="0 0 960 960">
+        <path
+          d="M705 255 635 224Q629 220 626 215Q623 210 623 204Q623 199 626 194Q629 188 635 185L705 153L737 84Q740 77 745 74Q751 71 756 71Q761 71 767 74Q772 77 775 84L807 153L877 185Q883 188 886 194Q889 199 889 204Q889 210 886 215Q883 220 877 224L807 255L775 325Q772 331 767 334Q761 337 756 337Q751 337 745 334Q740 331 737 325ZM259 581 100 509Q90 505 86 497Q82 489 82 480Q82 471 86 463Q90 455 100 451L259 379L331 220Q336 210 344 206Q352 201 360 201Q369 201 377 206Q385 210 389 220L462 379L621 451Q630 455 635 463Q639 471 639 480Q639 489 635 497Q630 505 621 509L462 581L389 740Q385 750 377 754Q369 759 360 759Q352 759 344 754Q336 750 331 740ZM360 606 400 520 486 480 400 440 360 354 320 440 234 480 320 520ZM709 811 640 779Q633 776 630 771Q627 765 627 760Q627 755 630 749Q633 744 640 741L709 709L741 639Q744 633 749 630Q755 626 760 626Q766 626 771 630Q776 633 780 639L811 709L881 741Q887 744 890 749Q894 755 894 760Q894 765 890 771Q887 776 881 779L811 811L780 881Q776 887 771 890Q766 894 760 894Q755 894 749 890Q744 887 741 881ZM360 606 320 520 234 480 320 440 360 354 400 440 486 480 400 520Z"
+        />
+      </symbol>
+      <symbol id="i-bell" viewBox="0 0 960 960">
+        <path
+          d="M199 764Q181 764 168 752Q156 739 156 721Q156 703 168 691Q181 679 199 679H234V403Q234 318 285 252Q336 186 417 166V139Q417 112 436 94Q454 76 480 76Q506 76 524 94Q543 112 543 139V166Q624 186 675 252Q726 318 726 403V679H761Q779 679 792 691Q804 703 804 721Q804 739 792 752Q779 764 761 764ZM640 403V679H320V403Q320 337 367 290Q414 243 480 243Q546 243 593 290Q640 337 640 403ZM480 885Q447 885 423 862Q399 838 399 804H561Q561 838 538 862Q514 885 480 885ZM320 679H640V403Q640 337 593 290Q546 243 480 243Q414 243 367 290Q320 337 320 403Z"
+        />
+      </symbol>
+      <symbol id="i-school" viewBox="0 0 960 960">
+        <path
+          d="M243 714Q222 702 210 682Q198 662 198 638V449L105 398Q93 391 88 381Q83 372 83 360Q83 348 88 339Q93 329 105 323L439 141Q449 135 459 133Q469 130 480 130Q491 130 501 133Q511 135 521 141L901 348Q912 354 918 364Q923 374 923 386V640Q923 658 911 670Q899 682 882 682Q864 682 852 670Q840 658 840 640V406L762 449V638Q762 662 750 682Q738 702 717 714L521 819Q511 825 501 827Q491 830 480 830Q469 830 459 827Q449 825 439 819ZM480 506Q480 506 480 506Q480 506 480 506L750 360L480 214Q480 214 480 214Q480 214 480 214L210 360ZM480 746Q480 746 480 746Q480 746 480 746L678 640Q678 640 678 640Q678 640 678 640V493L522 579Q512 585 501 587Q491 590 480 590Q469 590 459 587Q448 585 438 579L282 493V640Q282 640 282 640Q282 640 282 640ZM480 506 210 360 480 214Q480 214 480 214Q480 214 480 214L750 360L480 506Q480 506 480 506Q480 506 480 506ZM480 746Q480 746 480 746Q480 746 480 746L282 640V493L198 449V491L282 535L423 613Q438 621 451 627Q464 632 480 632ZM480 746V632Q496 632 509 626Q523 620 538 612L678 535L762 491V449L678 493V640L480 746Q480 746 480 746Q480 746 480 746Z"
+        />
+      </symbol>
+      <symbol id="i-box" viewBox="0 0 960 960">
+        <path
+          d="M201 884Q166 884 141 859Q116 834 116 799V348Q98 337 87 318Q76 300 76 277V161Q76 126 101 101Q126 76 161 76H799Q834 76 859 101Q884 126 884 161V277Q884 300 873 318Q862 337 844 348V799Q844 834 819 859Q794 884 759 884ZM201 362V799Q201 799 201 799Q201 799 201 799H759Q759 799 759 799Q759 799 759 799V362ZM161 277H799Q799 277 799 277Q799 277 799 277V161Q799 161 799 161Q799 161 799 161H161Q161 161 161 161Q161 161 161 161V277Q161 277 161 277Q161 277 161 277ZM400 563H561Q578 563 590 551Q602 539 602 521Q602 504 590 492Q578 480 561 480H400Q382 480 370 492Q358 504 358 521Q358 539 370 551Q382 563 400 563ZM201 362H759V799Q759 799 759 799Q759 799 759 799H201Q201 799 201 799Q201 799 201 799Z"
+        />
+      </symbol>
+      <symbol id="i-star" viewBox="0 0 960 960">
+        <path
+          d="M356 670 480 595 604 671 571 530 680 435 537 422 480 289 423 422 280 434 389 529ZM480 696 314 796Q302 803 289 802Q276 801 267 794Q257 786 252 775Q246 764 250 750L294 560L146 433Q136 423 133 411Q130 399 134 387Q138 375 147 368Q156 360 171 358L365 341L440 163Q446 150 457 143Q468 137 480 137Q492 137 503 143Q514 150 520 163L595 341L789 358Q804 360 813 368Q822 375 826 387Q830 399 827 411Q824 423 814 433L666 560L710 750Q714 764 708 775Q703 786 693 794Q684 801 671 802Q658 803 646 796ZM356 670 389 529 280 434 423 422 480 289 537 422 680 435 571 530 604 671 480 595Z"
+        />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 960 960">
+        <path
+          d="M522 463V322Q522 305 510 293Q498 281 480 281Q462 281 450 293Q438 305 438 322V479Q438 487 441 495Q445 503 451 509L581 640Q593 651 610 651Q628 651 640 640Q651 628 651 610Q651 592 640 581ZM480 884Q396 884 322 852Q249 820 194 766Q140 711 108 638Q76 564 76 480Q76 396 108 322Q140 249 194 194Q249 140 322 108Q396 76 480 76Q564 76 638 108Q711 140 766 194Q820 249 852 322Q884 396 884 480Q884 564 852 638Q820 711 766 766Q711 820 638 852Q564 884 480 884ZM480 799Q348 799 255 706Q161 613 161 480Q161 347 255 254Q348 161 480 161Q612 161 705 254Q799 347 799 480Q799 613 705 706Q612 799 480 799ZM480 799Q612 799 705 706Q799 613 799 480Q799 347 705 254Q612 161 480 161Q348 161 255 254Q161 347 161 480Q161 613 255 706Q348 799 480 799Z"
+        />
+      </symbol>
+      <symbol id="i-arrow" viewBox="0 0 960 960">
+        <path
+          d="M638 343 287 694Q275 706 257 706Q239 706 227 694Q215 682 215 664Q215 646 227 634L578 283H281Q263 283 251 270Q238 258 238 240Q238 222 251 210Q263 197 281 197H681Q699 197 712 210Q724 222 724 240V640Q724 658 712 670Q699 683 681 683Q663 683 651 670Q638 658 638 640Z"
+        />
+      </symbol>
+      <symbol id="i-close" viewBox="0 0 960 960">
+        <path
+          d="M480 540 286 734Q274 746 256 746Q238 746 226 734Q214 722 214 704Q214 686 226 674L420 480L226 286Q214 274 214 256Q214 238 226 226Q238 214 256 214Q274 214 286 226L480 420L674 226Q686 214 704 214Q722 214 734 226Q746 238 746 256Q746 274 734 286L540 480L734 674Q746 686 746 704Q746 722 734 734Q722 746 704 746Q686 746 674 734Z"
+        />
+      </symbol>
+      <symbol id="i-key" viewBox="0 0 960 960">
+        <path
+          d="M280 600Q230 600 195 565Q160 530 160 480Q160 430 195 395Q230 360 280 360Q330 360 365 395Q400 430 400 480Q400 530 365 565Q330 600 280 600ZM280 480Q280 480 280 480Q280 480 280 480Q280 480 280 480Q280 480 280 480Q280 480 280 480Q280 480 280 480H809Q809 480 809 480Q809 480 809 480Q809 480 809 480Q809 480 809 480Q809 480 809 480Q809 480 809 480H809Q803 480 796 480Q788 480 781 480Q773 480 766 480Q759 480 752 480H702H646Q641 480 635 480Q628 480 622 480Q615 480 608 480Q602 480 596 480H312H280Q280 480 280 480Q280 480 280 480ZM280 724Q358 724 421 679Q484 635 509 562H523L572 611Q578 617 586 620Q593 623 602 623Q610 623 618 620Q625 617 632 611L683 560L750 614Q756 619 764 622Q772 625 781 624Q789 623 796 619Q803 616 809 609L898 509Q903 503 906 495Q908 488 908 479Q908 471 905 464Q902 456 897 451L857 411Q850 405 842 401Q834 398 826 398H509Q485 329 423 283Q362 236 280 236Q178 236 107 307Q36 378 36 480Q36 581 107 653Q179 724 280 724Z"
+        />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 960 960">
+        <path
+          d="M382 602 719 265Q732 252 749 252Q766 252 779 265Q792 278 792 296Q792 313 779 326L412 694Q399 707 382 707Q365 707 352 694L180 522Q167 509 168 492Q168 474 181 461Q194 448 212 448Q229 448 242 461Z"
+        />
+      </symbol>
+      <symbol id="i-server" viewBox="0 0 960 960">
+        <path
+          d="M300 235Q275 235 258 253Q240 270 240 295Q240 320 258 338Q275 355 300 355Q325 355 342 338Q360 320 360 295Q360 270 342 253Q325 235 300 235ZM300 643Q275 643 258 661Q240 678 240 703Q240 728 258 746Q275 763 300 763Q325 763 342 746Q360 728 360 703Q360 678 342 661Q325 643 300 643ZM159 111H801Q819 111 832 124Q844 136 844 154V436Q844 454 832 467Q819 479 801 479H159Q141 479 128 467Q116 454 116 436V154Q116 136 128 124Q141 111 159 111ZM201 197V394H759V197ZM159 519H801Q819 519 832 532Q844 544 844 563V844Q844 863 832 875Q819 887 801 887H159Q141 887 128 875Q116 863 116 844V563Q116 544 128 532Q141 519 159 519ZM201 605V802H759V605ZM201 197H759V394H201ZM201 605H759V802H201Z"
+        />
+      </symbol>
+      <symbol id="i-chip" viewBox="0 0 960 960">
+        <path
+          d="M360 557V403Q360 385 372 372Q385 360 403 360H557Q575 360 588 372Q600 385 600 403V557Q600 575 588 588Q575 600 557 600H403Q385 600 372 588Q360 575 360 557ZM440 520H520V440H440ZM357 805V764H281Q246 764 221 739Q196 714 196 679V603H155Q138 603 126 591Q114 579 114 562Q114 544 126 533Q138 521 155 521H196V439H155Q138 439 126 427Q114 415 114 398Q114 381 126 369Q138 357 155 357H196V281Q196 246 221 221Q246 196 281 196H357V155Q357 138 369 126Q381 114 398 114Q416 114 427 126Q439 138 439 155V196H521V155Q521 138 533 126Q545 114 562 114Q579 114 591 126Q603 138 603 155V196H679Q714 196 739 221Q764 246 764 281V357H805Q822 357 834 369Q846 381 846 398Q846 415 834 427Q822 439 805 439H764V521H805Q822 521 834 533Q846 544 846 562Q846 579 834 591Q822 603 805 603H764V679Q764 714 739 739Q714 764 679 764H603V805Q603 822 591 834Q579 846 562 846Q545 846 533 834Q521 822 521 805V764H439V805Q439 822 427 834Q416 846 398 846Q381 846 369 834Q357 822 357 805ZM679 679Q679 679 679 679Q679 679 679 679V281Q679 281 679 281Q679 281 679 281H281Q281 281 281 281Q281 281 281 281V679Q281 679 281 679Q281 679 281 679ZM440 520V440H520V520Z"
+        />
+      </symbol>
+      <symbol id="i-folder" viewBox="0 0 960 960">
+        <path
+          d="M161 804Q126 804 101 779Q76 754 76 719V241Q76 206 101 181Q126 156 161 156H363Q380 156 396 162Q411 169 423 181L480 238H841Q859 238 872 250Q884 262 884 280Q884 299 872 311Q859 323 841 323H445L363 241H161Q161 241 161 241Q161 241 161 241V719Q161 719 161 719Q161 719 161 719L239 464Q247 436 270 420Q293 403 321 403H827Q871 403 896 438Q922 473 910 514L841 740Q832 770 808 787Q785 804 754 804ZM252 719H758Q758 719 758 719Q758 719 758 719L827 489Q827 489 827 489Q827 489 827 489H321Q321 489 321 489Q321 489 321 489ZM161 465V241Q161 241 161 241Q161 241 161 241H363L445 323H320Q256 323 209 363Q161 403 161 465ZM252 719 321 489Q321 489 321 489Q321 489 321 489H827Q827 489 827 489Q827 489 827 489L758 719Q758 719 758 719Q758 719 758 719Z"
+        />
+      </symbol>
+      <symbol id="i-upload" viewBox="0 0 960 960">
+        <path
+          d="M241 804Q206 804 181 779Q156 754 156 719V641Q156 623 168 611Q181 599 199 599Q217 599 229 611Q241 623 241 641V719Q241 719 241 719Q241 719 241 719H719Q719 719 719 719Q719 719 719 719V641Q719 623 731 611Q743 599 761 599Q779 599 792 611Q804 623 804 641V719Q804 754 779 779Q754 804 719 804ZM437 320 365 392Q352 405 335 405Q317 405 304 392Q292 379 292 362Q291 345 304 332L450 186Q456 180 464 177Q472 174 480 174Q488 174 496 177Q504 180 510 186L656 332Q669 344 668 362Q668 379 656 392Q643 404 625 405Q608 405 595 392L523 320V596Q523 614 510 626Q498 639 480 639Q462 639 450 626Q437 614 437 596Z"
+        />
+      </symbol>
+      <symbol id="i-file" viewBox="0 0 960 960">
+        <path
+          d="M241 884Q206 884 181 859Q156 834 156 799V161Q156 126 181 101Q206 76 241 76H526Q544 76 559 82Q575 89 586 101L779 294Q791 305 798 321Q804 336 804 354V799Q804 834 779 859Q754 884 719 884ZM519 319V161H241Q241 161 241 161Q241 161 241 161V799Q241 799 241 799Q241 799 241 799H719Q719 799 719 799Q719 799 719 799V361H561Q543 361 531 349Q519 337 519 319ZM241 161H519V319Q519 337 531 349Q543 361 561 361H719L519 161V319Q519 337 531 349Q543 361 561 361H719V799Q719 799 719 799Q719 799 719 799H241Q241 799 241 799Q241 799 241 799V161Q241 161 241 161Q241 161 241 161Z"
+        />
+      </symbol>
+      <symbol id="i-sync" viewBox="0 0 960 960">
+        <path
+          d="M480 804Q344 804 250 710Q155 616 155 480Q155 344 250 250Q344 156 480 156Q550 156 613 185Q677 214 723 267V197Q723 180 734 168Q746 156 764 156Q781 156 793 168Q805 180 805 197V399Q805 417 792 429Q780 442 762 442H559Q542 442 530 430Q519 418 519 401Q519 383 530 372Q542 360 560 360H686Q654 305 599 273Q544 241 480 241Q380 241 311 311Q241 381 241 480Q241 579 311 649Q380 719 480 719Q546 719 602 685Q657 651 689 595Q697 580 713 574Q729 569 745 574Q762 580 769 596Q777 613 768 628Q726 708 650 756Q573 804 480 804Z"
+        />
+      </symbol>
+      <symbol id="i-more" viewBox="0 0 960 960">
+        <path
+          d="M236 562Q203 562 179 538Q154 514 154 480Q154 446 179 422Q203 398 236 398Q270 398 294 422Q318 446 318 480Q318 514 294 538Q270 562 236 562ZM480 562Q446 562 422 538Q398 514 398 480Q398 446 422 422Q446 398 480 398Q514 398 538 422Q562 446 562 480Q562 514 538 538Q514 562 480 562ZM724 562Q690 562 666 538Q642 514 642 480Q642 446 666 422Q690 398 724 398Q758 398 782 422Q806 446 806 480Q806 514 782 538Q758 562 724 562Z"
+        />
+      </symbol>
+      <symbol id="i-sort" viewBox="0 0 960 960">
+        <path
+          d="M159 728Q140 728 128 716Q116 703 116 685Q116 667 128 655Q140 643 159 643H319Q338 643 350 655Q362 667 362 686Q362 704 350 716Q338 728 319 728ZM159 523Q140 523 128 510Q116 498 116 480Q116 462 128 450Q140 437 159 437H560Q578 437 591 450Q603 462 603 480Q603 498 591 511Q578 523 560 523ZM159 317Q140 317 128 305Q116 293 116 275Q116 256 128 244Q141 232 159 232H801Q820 232 832 244Q844 257 844 275Q844 293 832 305Q819 317 801 317Z"
+        />
+      </symbol>
+      <symbol id="i-mic" viewBox="0 0 960 960">
+        <path
+          d="M355 441V202Q355 150 392 114Q428 77 480 77Q532 77 568 114Q605 150 605 202V441Q605 493 568 529Q532 566 480 566Q428 566 392 529Q355 493 355 441ZM519 202V441Q519 458 508 469Q497 480 480 480Q463 480 452 469Q441 458 441 441V202Q441 185 452 174Q463 163 480 163Q497 163 508 174Q519 185 519 202ZM438 806V724Q345 711 278 645Q211 578 197 484Q195 466 206 453Q218 441 236 441Q253 441 265 453Q278 465 282 483Q296 553 352 598Q409 643 480 643Q552 643 608 598Q664 552 678 483Q682 465 695 453Q707 441 724 441Q742 441 754 454Q765 466 763 484Q749 576 683 644Q616 711 522 724V806Q522 823 510 835Q498 847 480 847Q462 847 450 835Q438 823 438 806ZM519 441V202Q519 185 508 174Q497 163 480 163Q463 163 452 174Q441 185 441 202V441Q441 458 452 469Q463 480 480 480Q497 480 508 469Q519 458 519 441Z"
+        />
+      </symbol>
+      <symbol id="i-smile" viewBox="0 0 960 960">
+        <path
+          d="M619 441Q645 441 662 423Q680 405 680 380Q680 355 662 337Q645 319 619 319Q594 319 576 337Q558 355 558 380Q558 405 576 423Q594 441 619 441ZM341 441Q366 441 384 423Q402 405 402 380Q402 355 384 337Q366 319 341 319Q315 319 298 337Q280 355 280 380Q280 405 298 423Q315 441 341 441ZM480 884Q396 884 322 852Q249 820 194 766Q140 711 108 638Q76 564 76 480Q76 396 108 322Q140 249 194 194Q249 140 322 108Q396 76 480 76Q564 76 638 108Q711 140 766 194Q820 249 852 322Q884 396 884 480Q884 564 852 638Q820 711 766 766Q711 820 638 852Q564 884 480 884ZM480 799Q347 799 254 706Q161 613 161 480Q161 347 254 254Q347 161 480 161Q613 161 706 254Q799 347 799 480Q799 613 706 706Q613 799 480 799ZM480 799Q613 799 706 706Q799 613 799 480Q799 347 706 254Q613 161 480 161Q347 161 254 254Q161 347 161 480Q161 613 254 706Q347 799 480 799ZM480 700Q538 700 588 672Q637 643 667 595Q673 583 666 571Q658 559 644 559H316Q302 559 294 571Q287 583 293 595Q323 643 373 672Q423 700 480 700Z"
+        />
+      </symbol>
+      <symbol id="i-at" viewBox="0 0 960 960">
+        <path
+          d="M480 884Q396 884 322 852Q249 820 194 766Q140 711 108 638Q76 564 76 480Q76 396 108 322Q140 249 194 194Q249 140 322 108Q396 76 480 76Q564 76 638 108Q711 140 766 194Q820 249 852 322Q884 396 884 480V538Q884 598 843 640Q801 682 741 682Q706 682 674 667Q643 652 622 623Q593 653 557 667Q520 682 480 682Q396 682 337 623Q278 564 278 480Q278 396 337 337Q396 278 480 278Q564 278 623 337Q682 396 682 480V537Q682 563 699 580Q716 598 741 598Q767 598 784 580Q800 563 800 537V480Q800 346 707 253Q614 160 480 160Q346 160 253 253Q160 346 160 480Q160 614 253 707Q346 800 480 800H638Q656 800 668 812Q680 824 680 842Q680 860 668 872Q656 884 638 884ZM598 480Q598 431 564 396Q529 362 480 362Q431 362 396 396Q362 431 362 480Q362 529 396 564Q431 598 480 598Q529 598 564 564Q598 529 598 480Z"
+        />
+      </symbol>
+      <symbol id="i-clip" viewBox="0 0 960 960">
+        <path
+          d="M726 631Q726 737 652 810Q577 884 471 884Q365 884 291 810Q216 737 216 631V259Q216 182 270 129Q324 76 400 76Q477 76 531 129Q584 182 584 259V611Q584 658 551 691Q518 723 471 723Q424 723 391 691Q358 658 358 611V283Q358 265 370 253Q382 241 400 241Q418 241 430 253Q442 265 442 283V611Q442 623 451 631Q459 639 471 639Q483 639 492 631Q500 623 500 611V259Q499 217 471 189Q442 160 400 160Q359 160 330 189Q300 217 300 259V631Q300 702 350 751Q400 800 471 800Q541 800 591 751Q640 702 642 631V279Q642 261 654 249Q666 237 684 237Q702 237 714 249Q726 261 726 279Z"
+        />
+      </symbol>
+      <symbol id="i-phone" viewBox="0 0 960 960">
+        <path
+          d="M798 844Q673 844 550 789Q427 734 326 634Q226 533 171 410Q116 288 116 162Q116 142 129 129Q142 116 162 116H324Q341 116 353 126Q365 137 368 152L394 290Q396 308 393 320Q390 332 380 341L282 439Q302 474 329 508Q356 541 388 573Q418 603 451 629Q484 655 520 676L615 581Q626 571 641 566Q657 561 673 564L808 592Q824 596 834 608Q844 620 844 635V798Q844 818 831 831Q818 844 798 844ZM243 358 308 293Q308 293 308 293Q308 293 308 293L291 201Q291 201 291 201Q291 201 291 201H204Q204 201 204 201Q204 201 204 201Q208 242 217 281Q226 320 243 358ZM601 715Q639 732 679 742Q718 753 759 756Q759 756 759 756Q759 756 759 756V669Q759 669 759 669Q759 669 759 669L667 649Q667 649 667 649Q667 649 667 649ZM243 358Q226 320 217 281Q208 242 204 201Q204 201 204 201Q204 201 204 201H291Q291 201 291 201Q291 201 291 201L308 293Q308 293 308 293Q308 293 308 293ZM601 715 667 649Q667 649 667 649Q667 649 667 649L759 669Q759 669 759 669Q759 669 759 669V756Q759 756 759 756Q759 756 759 756Q718 753 679 742Q639 732 601 715Z"
+        />
+      </symbol>
+      <symbol id="i-video" viewBox="0 0 960 960">
+        <path
+          d="M161 804Q126 804 101 779Q76 754 76 719V241Q76 206 101 181Q126 156 161 156H639Q674 156 699 181Q724 206 724 241V420L848 296Q858 286 871 291Q884 297 884 311V649Q884 663 871 669Q858 674 848 664L724 540V719Q724 754 699 779Q674 804 639 804ZM161 719H639Q639 719 639 719Q639 719 639 719V241Q639 241 639 241Q639 241 639 241H161Q161 241 161 241Q161 241 161 241V719Q161 719 161 719Q161 719 161 719ZM161 719Q161 719 161 719Q161 719 161 719V241Q161 241 161 241Q161 241 161 241H639Q639 241 639 241Q639 241 639 241V719Q639 719 639 719Q639 719 639 719Z"
+        />
+      </symbol>
+      <symbol id="i-thread" viewBox="0 0 960 960">
+        <path
+          d="M844 827Q836 827 828 824Q821 821 814 815L726 726H323Q288 726 263 701Q238 676 238 641V601H676Q711 601 736 576Q761 551 761 515V237H801Q837 237 862 263Q887 288 887 323V784Q887 803 874 815Q861 827 844 827ZM159 477 200 435H596Q596 435 596 435Q596 435 596 435V158Q596 158 596 158Q596 158 596 158H159Q159 158 159 158Q159 158 159 158ZM116 623Q99 623 86 611Q73 598 73 579V158Q73 123 98 98Q123 73 159 73H596Q631 73 656 98Q681 123 681 158V435Q681 471 656 496Q631 521 596 521H235L146 610Q139 616 132 620Q124 623 116 623ZM159 477V158Q159 158 159 158Q159 158 159 158H596Q596 158 596 158Q596 158 596 158V435Q596 435 596 435Q596 435 596 435H200Z"
+        />
+      </symbol>
+      <symbol id="i-pin" viewBox="0 0 960 960">
+        <path
+          d="M644 198V476L711 543Q718 549 721 557Q724 565 724 574V599Q724 617 712 629Q699 641 681 641H523V874Q523 893 510 905Q498 917 480 917Q462 917 450 905Q437 893 437 874V641H279Q261 641 248 629Q236 617 236 599V574Q236 565 239 557Q242 549 249 543L316 476V198Q299 198 287 186Q276 174 276 156Q276 138 288 126Q301 113 319 113H641Q659 113 672 126Q684 138 684 156Q684 174 673 186Q661 198 644 198ZM357 556H603L559 512V199H401V512ZM357 556 401 512V199H559V512L603 556Z"
+        />
+      </symbol>
+      <symbol id="i-panel" viewBox="0 0 960 960">
+        <path
+          d="M480 480Q480 480 480 480Q480 480 480 480Q480 480 480 480Q480 480 480 480Q480 480 480 480Q480 480 480 480Q480 480 480 480Q480 480 480 480ZM782 319H824Q849 319 866 301Q884 283 884 258V216Q884 191 866 174Q849 156 824 156H782Q757 156 739 174Q721 191 721 216V258Q721 283 739 301Q757 319 782 319ZM782 561H824Q849 561 866 544Q884 526 884 501V459Q884 434 866 416Q849 399 824 399H782Q757 399 739 416Q721 434 721 459V501Q721 526 739 544Q757 561 782 561ZM158 804H560Q594 804 618 780Q641 756 641 722V238Q641 204 618 180Q594 156 560 156H158Q124 156 100 180Q76 204 76 238V722Q76 756 100 780Q124 804 158 804ZM782 804H824Q849 804 866 786Q884 769 884 744V702Q884 677 866 659Q849 641 824 641H782Q757 641 739 659Q721 677 721 702V744Q721 769 739 786Q757 804 782 804Z"
+        />
+      </symbol>
+      <symbol id="i-edit" viewBox="0 0 960 960">
+        <path
+          d="M201 844Q166 844 141 819Q116 794 116 759V201Q116 166 141 141Q166 116 201 116H455Q483 116 495 142Q506 168 486 189Q482 192 479 195Q476 198 473 201H201Q201 201 201 201Q201 201 201 201V759Q201 759 201 759Q201 759 201 759H759Q759 759 759 759Q759 759 759 759V486Q762 483 765 480Q768 477 771 474Q792 453 818 465Q844 476 844 505V759Q844 794 819 819Q794 844 759 844ZM201 759Q201 759 201 759Q201 759 201 759V201Q201 201 201 201Q201 201 201 201H473L303 371Q291 383 285 399Q278 414 278 431V596Q278 632 303 657Q328 682 364 682H528Q545 682 560 675Q576 669 588 657L759 486V759Q759 759 759 759Q759 759 759 759ZM358 559V464Q358 447 365 432Q371 416 383 404L723 64Q736 51 752 45Q768 39 784 39Q801 39 817 45Q832 51 845 64L896 116Q908 129 914 144Q921 160 921 176Q921 192 915 208Q909 223 896 236L556 576Q544 588 528 595Q513 602 496 602H401Q383 602 370 590Q358 577 358 559ZM783 232 839 176 785 122 728 177ZM441 519H496L726 288L699 261L671 234L441 463ZM441 519 441 463 671 234 699 261 726 288 496 519Z"
+        />
+      </symbol>
+      <symbol id="i-archive" viewBox="0 0 960 960">
+        <path
+          d="M201 884Q166 884 141 859Q116 834 116 799V348Q98 337 87 318Q76 300 76 277V161Q76 126 101 101Q126 76 161 76H799Q834 76 859 101Q884 126 884 161V277Q884 300 873 318Q862 337 844 348V799Q844 834 819 859Q794 884 759 884ZM201 362V799Q201 799 201 799Q201 799 201 799H759Q759 799 759 799Q759 799 759 799V362ZM161 277H799Q799 277 799 277Q799 277 799 277V161Q799 161 799 161Q799 161 799 161H161Q161 161 161 161Q161 161 161 161V277Q161 277 161 277Q161 277 161 277ZM400 563H561Q578 563 590 551Q602 539 602 521Q602 504 590 492Q578 480 561 480H400Q382 480 370 492Q358 504 358 521Q358 539 370 551Q382 563 400 563ZM201 362H759V799Q759 799 759 799Q759 799 759 799H201Q201 799 201 799Q201 799 201 799Z"
+        />
+      </symbol>
+      <symbol id="i-folder-new" viewBox="0 0 960 960">
+        <path
+          d="M161 804Q126 804 101 779Q76 754 76 719V241Q76 206 101 181Q126 156 161 156H363Q380 156 396 162Q411 169 423 181L480 238H799Q834 238 859 263Q884 288 884 323V719Q884 754 859 779Q834 804 799 804ZM161 719H799Q799 719 799 719Q799 719 799 719V323Q799 323 799 323Q799 323 799 323H445L363 241Q363 241 363 241Q363 241 363 241H161Q161 241 161 241Q161 241 161 241V719Q161 719 161 719Q161 719 161 719ZM161 719Q161 719 161 719Q161 719 161 719V241Q161 241 161 241Q161 241 161 241H363Q363 241 363 241Q363 241 363 241L445 323H799Q799 323 799 323Q799 323 799 323V719Q799 719 799 719Q799 719 799 719ZM560 562V602Q560 620 571 632Q583 643 601 643Q618 643 630 632Q642 620 642 602V562H682Q700 562 712 550Q723 538 723 521Q723 504 712 492Q700 480 682 480H642V439Q642 422 630 410Q618 398 601 398Q583 398 571 410Q560 422 560 439V480H519Q501 480 490 492Q478 504 478 521Q478 538 490 550Q501 562 519 562Z"
+        />
+      </symbol>
+      <symbol id="i-down" viewBox="0 0 960 960">
+        <path
+          d="M450 589 266 405Q254 393 254 375Q254 357 266 345Q278 333 296 333Q314 333 326 345L480 499L634 345Q646 333 664 333Q682 333 694 345Q706 357 706 375Q706 393 694 405L510 589Q504 595 496 598Q488 601 480 601Q472 601 464 598Q456 595 450 589Z"
+        />
+      </symbol>
+      <symbol id="i-up" viewBox="0 0 960 960">
+        <path
+          d="M480 435 326 589Q314 601 296 601Q278 601 266 589Q254 577 254 559Q254 541 266 529L450 345Q456 339 464 336Q472 333 480 333Q488 333 496 336Q504 339 510 345L694 529Q706 541 706 559Q706 577 694 589Q682 601 664 601Q646 601 634 589Z"
+        />
+      </symbol>
+      <symbol id="i-right" viewBox="0 0 960 960">
+        <path
+          d="M500 480 346 326Q334 314 334 296Q334 278 346 266Q358 254 376 254Q394 254 406 266L590 450Q596 456 599 464Q602 472 602 480Q602 488 599 496Q596 504 590 510L406 694Q394 706 376 706Q358 706 346 694Q334 682 334 664Q334 646 346 634Z"
+        />
+      </symbol>
+      <symbol id="i-left" viewBox="0 0 960 960">
+        <path
+          d="M436 480 590 634Q602 646 602 664Q602 682 590 694Q578 706 560 706Q542 706 530 694L346 510Q340 504 337 496Q334 488 334 480Q334 472 337 464Q340 456 346 450L530 266Q542 254 560 254Q578 254 590 266Q602 278 602 296Q602 314 590 326Z"
+        />
+      </symbol>
+      <symbol id="i-repeat" viewBox="0 0 960 960">
+        <path
+          d="M278 763 308 794Q321 806 321 823Q320 840 308 853Q296 865 278 866Q261 866 248 854L146 751Q139 745 137 737Q134 730 134 721Q134 713 137 705Q139 698 146 691L248 589Q261 576 278 577Q296 577 308 590Q320 602 321 619Q321 636 308 649L278 679H680Q680 679 680 679Q680 679 680 679V561Q680 543 692 531Q704 519 722 519Q740 519 752 531Q764 543 764 561V678Q764 713 739 738Q714 763 679 763ZM682 282H280Q280 282 280 282Q280 282 280 282V400Q280 418 268 430Q256 442 238 442Q220 442 208 430Q196 418 196 400V283Q196 248 221 223Q246 198 281 198H682L652 167Q639 155 640 138Q640 121 652 108Q664 96 682 95Q699 95 712 107L814 210Q821 216 823 224Q826 232 826 240Q826 248 823 256Q821 264 814 270L712 373Q699 385 682 385Q664 384 652 372Q640 359 640 342Q639 325 652 312Z"
+        />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 960 960">
+        <path
+          d="M36 690Q36 655 54 625Q73 596 103 580Q165 549 229 534Q294 518 360 518Q427 518 492 534Q556 549 618 580Q648 596 666 625Q684 654 684 690V721Q684 756 659 781Q634 806 599 806H122Q86 806 61 781Q36 756 36 721ZM838 806H740Q752 787 758 765Q764 743 764 721V683Q764 638 740 596Q715 554 669 524Q719 530 764 545Q810 559 848 580Q885 600 904 626Q924 652 924 683V721Q924 756 899 781Q874 806 838 806ZM360 478Q293 478 246 430Q198 383 198 316Q198 249 246 201Q293 154 360 154Q427 154 475 201Q522 249 522 316Q522 383 475 430Q427 478 360 478ZM604 478Q593 478 576 475Q559 473 548 470Q575 437 590 398Q604 358 604 316Q604 273 590 234Q575 194 548 162Q562 157 576 156Q590 154 604 154Q671 154 719 201Q766 249 766 316Q766 383 719 430Q671 478 604 478ZM122 721H599V690Q599 680 593 671Q588 662 579 657Q526 630 471 617Q416 603 360 603Q305 603 250 617Q195 630 142 657Q133 662 127 671Q122 680 122 690ZM360 394Q393 394 416 371Q439 348 439 316Q439 284 416 261Q393 238 360 238Q328 238 305 261Q282 284 282 316Q282 348 305 371Q328 394 360 394ZM599 721H122V690Q122 680 127 671Q133 662 142 657Q195 630 250 617Q305 603 360 603Q416 603 471 617Q526 630 579 657Q588 662 593 671Q599 680 599 690ZM360 394Q328 394 305 371Q282 348 282 316Q282 284 305 261Q328 238 360 238Q393 238 416 261Q439 284 439 316Q439 348 416 371Q393 394 360 394Z"
+        />
+      </symbol>
+      <symbol id="i-user" viewBox="0 0 960 960">
+        <path
+          d="M480 478Q412 478 364 430Q316 382 316 314Q316 246 364 198Q412 150 480 150Q548 150 596 198Q644 246 644 314Q644 382 596 430Q548 478 480 478ZM156 721V690Q156 655 174 625Q192 596 222 580Q285 549 349 534Q414 518 480 518Q547 518 611 534Q676 549 738 580Q768 596 786 625Q804 654 804 690V721Q804 756 779 781Q754 806 719 806H241Q206 806 181 781Q156 756 156 721ZM241 721H719V690Q719 680 713 671Q708 662 699 657Q645 630 591 617Q536 603 480 603Q424 603 369 617Q314 630 261 657Q252 662 247 671Q241 680 241 690ZM480 392Q512 392 535 369Q559 346 559 314Q559 281 535 258Q512 235 480 235Q448 235 425 258Q401 281 401 314Q401 346 425 369Q448 392 480 392ZM480 392Q448 392 425 369Q401 346 401 314Q401 281 425 258Q448 235 480 235Q512 235 535 258Q559 281 559 314Q559 346 535 369Q512 392 480 392ZM241 721V690Q241 680 247 671Q252 662 261 657Q314 630 369 617Q424 603 480 603Q536 603 591 617Q645 630 699 657Q708 662 713 671Q719 680 719 690V721Z"
+        />
+      </symbol>
+      <symbol id="i-inbox" viewBox="0 0 960 960">
+        <path
+          d="M201 844Q166 844 141 819Q116 794 116 759V201Q116 166 141 141Q166 116 201 116H759Q794 116 819 141Q844 166 844 201V759Q844 794 819 819Q794 844 759 844ZM201 759H759Q759 759 759 759Q759 759 759 759V639H640Q610 677 568 698Q527 719 480 719Q433 719 392 698Q350 677 320 639H201V759Q201 759 201 759Q201 759 201 759ZM480 639Q512 639 539 623Q565 607 582 580Q588 571 598 565Q607 559 619 559H759V201Q759 201 759 201Q759 201 759 201H201Q201 201 201 201Q201 201 201 201V559H341Q353 559 362 565Q372 571 378 580Q395 607 421 623Q448 639 480 639ZM201 759Q201 759 201 759Q201 759 201 759V639H320Q350 677 392 698Q433 719 480 719Q527 719 568 698Q610 677 640 639H759V759Q759 759 759 759Q759 759 759 759Z"
+        />
+      </symbol>
+      <symbol id="i-palette" viewBox="0 0 960 960">
+        <path
+          d="M480 884Q397 884 323 852Q250 820 195 765Q140 710 108 637Q76 563 76 480Q76 396 109 322Q141 249 197 194Q253 140 328 108Q403 76 488 76Q568 76 640 104Q712 132 766 181Q820 230 852 297Q884 364 884 442Q884 557 814 621Q744 684 642 684H571Q562 684 559 689Q556 694 556 699Q556 711 570 732Q584 753 584 782Q584 833 555 858Q526 884 480 884ZM479 799Q347 799 254 705Q161 612 161 480Q161 347 257 254Q352 161 488 161Q614 161 706 242Q799 322 799 443Q799 522 753 560Q708 599 642 599H570Q527 599 498 624Q469 650 469 692Q469 730 484 748Q499 767 499 781Q499 789 493 794Q488 799 479 799ZM261 520Q287 520 304 503Q321 486 321 460Q321 434 304 417Q287 400 261 400Q235 400 218 417Q201 434 201 460Q201 486 218 503Q235 520 261 520ZM381 361Q407 361 424 344Q441 327 441 301Q441 275 424 258Q407 241 381 241Q355 241 338 258Q321 275 321 301Q321 327 338 344Q355 361 381 361ZM579 361Q605 361 622 344Q639 327 639 301Q639 275 622 258Q605 241 579 241Q553 241 536 258Q519 275 519 301Q519 327 536 344Q553 361 579 361ZM698 520Q724 520 741 503Q758 486 758 460Q758 434 741 417Q724 400 698 400Q672 400 655 417Q638 434 638 460Q638 486 655 503Q672 520 698 520ZM479 799Q488 799 493 794Q499 789 499 781Q499 767 484 748Q469 730 469 692Q469 650 498 624Q527 599 570 599H642Q708 599 753 560Q799 522 799 443Q799 322 706 242Q614 161 488 161Q352 161 257 254Q161 347 161 480Q161 612 254 705Q347 799 479 799Z"
+        />
+      </symbol>
+      <symbol id="i-import" viewBox="0 0 960 960">
+        <path
+          d="M450 609 304 463Q291 450 292 433Q292 416 304 403Q317 390 335 390Q352 389 365 402L437 474V199Q437 181 450 168Q462 156 480 156Q498 156 510 168Q523 181 523 199V474L595 402Q608 389 625 390Q643 390 656 403Q668 416 668 433Q669 450 656 463L510 609Q504 615 496 618Q488 620 480 620Q472 620 464 618Q456 615 450 609ZM241 804Q206 804 181 779Q156 754 156 719V641Q156 623 168 611Q181 599 199 599Q217 599 229 611Q241 623 241 641V719Q241 719 241 719Q241 719 241 719H719Q719 719 719 719Q719 719 719 719V641Q719 623 731 611Q743 599 761 599Q779 599 792 611Q804 623 804 641V719Q804 754 779 779Q754 804 719 804Z"
+        />
+      </symbol>
+      <symbol id="i-trash" viewBox="0 0 960 960">
+        <path
+          d="M279 844Q243 844 218 819Q193 794 193 759V241Q175 241 163 229Q150 217 150 199Q150 180 163 168Q175 156 193 156H357Q357 138 370 125Q382 113 400 113H560Q578 113 590 125Q603 138 603 156H767Q785 156 797 168Q810 180 810 199Q810 217 797 229Q785 241 767 241V759Q767 794 742 819Q717 844 681 844ZM681 241H279V759Q279 759 279 759Q279 759 279 759H681Q681 759 681 759Q681 759 681 759ZM441 639V361Q441 344 429 332Q417 320 399 320Q382 320 370 332Q358 344 358 361V639Q358 656 370 668Q382 680 399 680Q417 680 429 668Q441 656 441 639ZM602 639V361Q602 344 590 332Q578 320 561 320Q543 320 531 332Q519 344 519 361V639Q519 656 531 668Q543 680 561 680Q578 680 590 668Q602 656 602 639ZM279 241H681V759Q681 759 681 759Q681 759 681 759H279Q279 759 279 759Q279 759 279 759Z"
+        />
+      </symbol>
+      <symbol id="i-mappin" viewBox="0 0 960 960">
+        <path
+          d="M480 771Q601 660 660 570Q719 480 719 408Q719 299 649 230Q580 161 480 161Q380 161 311 230Q241 299 241 408Q241 480 300 570Q359 660 480 771ZM425 836Q360 776 309 718Q259 661 225 608Q191 554 173 504Q156 454 156 408Q156 256 254 166Q351 76 480 76Q609 76 706 166Q804 256 804 408Q804 454 787 504Q769 554 735 608Q701 661 651 718Q600 776 535 836Q523 846 509 851Q494 856 480 856Q466 856 451 851Q437 846 425 836ZM480 771Q359 660 300 570Q241 480 241 408Q241 299 311 230Q380 161 480 161Q580 161 649 230Q719 299 719 408Q719 480 660 570Q601 660 480 771ZM480 481Q514 481 537 457Q561 434 561 400Q561 366 537 343Q514 319 480 319Q446 319 423 343Q399 366 399 400Q399 434 423 457Q446 481 480 481Z"
+        />
+      </symbol>
+      <symbol id="i-info" viewBox="0 0 960 960">
+        <path
+          d="M522 640V482Q522 464 510 452Q498 440 480 440Q462 440 450 452Q438 464 438 482V640Q438 658 450 670Q462 682 480 682Q498 682 510 670Q522 658 522 640ZM522 320Q522 302 510 290Q498 278 480 278Q462 278 450 290Q438 302 438 320Q438 338 450 350Q462 362 480 362Q498 362 510 350Q522 338 522 320ZM480 884Q396 884 322 852Q249 820 194 766Q140 711 108 638Q76 564 76 480Q76 396 108 322Q140 249 194 194Q249 140 322 108Q396 76 480 76Q564 76 638 108Q711 140 766 194Q820 249 852 322Q884 396 884 480Q884 564 852 638Q820 711 766 766Q711 820 638 852Q564 884 480 884ZM480 799Q614 799 706 706Q799 614 799 480Q799 346 706 254Q614 161 480 161Q346 161 254 254Q161 346 161 480Q161 614 254 706Q346 799 480 799ZM480 799Q346 799 254 706Q161 614 161 480Q161 346 254 254Q346 161 480 161Q614 161 706 254Q799 346 799 480Q799 614 706 706Q614 799 480 799Z"
+        />
+      </symbol>
+      <symbol id="i-label" viewBox="0 0 960 960">
+        <path
+          d="M161 804Q126 804 101 779Q76 754 76 719V241Q76 206 101 181Q126 156 161 156H599Q619 156 637 165Q655 174 667 190L846 429Q863 451 863 480Q863 509 846 531L667 770Q655 786 637 795Q619 804 599 804ZM161 719H599Q599 719 599 719Q599 719 599 719L777 480Q777 480 777 480Q777 480 777 480L599 241Q599 241 599 241Q599 241 599 241H161Q161 241 161 241Q161 241 161 241V719Q161 719 161 719Q161 719 161 719ZM161 719Q161 719 161 719Q161 719 161 719V241Q161 241 161 241Q161 241 161 241H599Q599 241 599 241Q599 241 599 241L777 480Q777 480 777 480Q777 480 777 480L599 719Q599 719 599 719Q599 719 599 719Z"
+        />
+      </symbol>
+      <symbol id="i-subject" viewBox="0 0 960 960">
+        <path
+          d="M198 769Q180 769 168 757Q156 744 156 727Q156 709 168 697Q180 684 198 684H522Q539 685 552 697Q564 709 564 727Q564 745 552 757Q539 769 522 769ZM198 605Q180 605 168 593Q156 580 156 563Q156 545 168 533Q180 520 198 520H762Q780 520 792 533Q804 545 804 563Q804 580 792 593Q780 605 762 605ZM198 441Q180 441 168 429Q156 416 156 399Q156 381 168 369Q180 356 198 356H762Q780 356 792 369Q804 381 804 399Q804 416 792 429Q780 441 762 441ZM199 277Q181 277 168 264Q156 252 156 234Q156 216 168 203Q181 191 199 191H761Q779 191 792 203Q804 216 804 234Q804 252 792 264Q779 277 761 277Z"
+        />
+      </symbol>
+      <symbol id="i-quote" viewBox="0 0 960 960">
+        <path
+          d="M258 661 315 562Q315 562 315 562Q315 562 315 562Q249 561 202 513Q156 466 156 400Q156 333 203 285Q251 238 318 238Q385 238 432 285Q480 333 480 400Q480 423 475 443Q469 462 458 480L330 703Q324 712 315 718Q306 724 294 724Q270 724 258 703Q246 682 258 661ZM622 661 679 562Q679 562 679 562Q679 562 679 562Q613 561 567 513Q520 466 520 400Q520 333 568 285Q615 238 682 238Q749 238 797 285Q844 333 844 400Q844 423 839 443Q834 462 823 480L694 703Q689 712 679 718Q670 724 658 724Q634 724 622 703Q610 682 622 661ZM318 459Q342 459 359 441Q376 424 376 400Q376 376 359 359Q342 341 318 341Q293 341 276 359Q259 376 259 400Q259 424 276 441Q293 459 318 459ZM682 459Q707 459 724 441Q741 424 741 400Q741 376 724 359Q707 341 682 341Q658 341 641 359Q624 376 624 400Q624 424 641 441Q658 459 682 459ZM682 459Q658 459 641 441Q624 424 624 400Q624 376 641 359Q658 341 682 341Q707 341 724 359Q741 376 741 400Q741 424 724 441Q707 459 682 459ZM318 459Q293 459 276 441Q259 424 259 400Q259 376 276 359Q293 341 318 341Q342 341 359 359Q376 376 376 400Q376 424 359 441Q342 459 318 459Z"
+        />
+      </symbol>
+      <symbol id="i-forward" viewBox="0 0 960 960">
+        <path
+          d="M763 440 610 287Q597 274 597 256Q597 239 610 226Q623 214 641 214Q658 214 670 226L854 410Q860 416 863 424Q866 432 866 440Q866 448 863 456Q860 464 854 470L670 654Q657 667 640 666Q623 666 610 654Q597 641 597 624Q597 607 609 594ZM513 483H279Q230 483 196 517Q161 551 161 600V721Q161 739 149 752Q137 764 119 764Q101 764 88 752Q76 739 76 721V600Q76 516 135 457Q195 397 279 397H513L403 287Q390 274 390 256Q390 239 403 226Q415 214 433 214Q451 214 462 226L646 410Q653 416 655 424Q658 432 658 440Q658 448 655 456Q653 464 646 470L462 654Q450 667 432 666Q415 666 403 654Q390 641 389 624Q389 607 402 594Z"
+        />
+      </symbol>
+      <symbol id="i-globe" viewBox="0 0 960 960">
+        <path
+          d="M480 884Q397 884 323 852Q250 820 195 765Q140 710 108 637Q76 563 76 480Q76 396 108 323Q140 250 195 195Q250 140 323 108Q397 76 480 76Q564 76 637 108Q710 140 765 195Q820 250 852 323Q884 396 884 480Q884 563 852 637Q820 710 765 765Q710 820 637 852Q564 884 480 884ZM480 797Q505 761 524 722Q543 683 555 639H405Q417 683 435 722Q454 761 480 797ZM376 781Q358 748 345 712Q332 677 323 639H205Q234 689 277 726Q321 763 376 781ZM583 781Q639 763 682 726Q726 689 755 639H637Q628 677 615 712Q602 748 583 781ZM171 560H307Q304 540 302 520Q301 501 301 480Q301 459 302 440Q304 420 307 400H171Q166 420 164 440Q161 459 161 480Q161 501 164 520Q166 540 171 560ZM387 560H573Q576 540 578 520Q579 501 579 480Q579 459 578 440Q576 420 573 400H387Q384 420 382 440Q381 459 381 480Q381 501 382 520Q384 540 387 560ZM653 560H788Q793 540 796 520Q798 501 798 480Q798 459 796 440Q793 420 788 400H653Q656 420 658 440Q659 459 659 480Q659 501 658 520Q656 540 653 560ZM637 321H755Q726 271 682 234Q639 197 583 179Q602 212 615 248Q628 283 637 321ZM405 321H555Q543 277 524 238Q505 199 480 163Q454 199 435 238Q417 277 405 321ZM205 321H323Q332 283 345 248Q358 212 376 179Q321 197 277 234Q234 271 205 321Z"
+        />
+      </symbol>
+      <symbol id="i-shield" viewBox="0 0 960 960">
+        <path
+          d="M453 876Q317 830 237 708Q156 585 156 444V256Q156 229 171 208Q187 186 212 177L450 87Q465 82 480 82Q495 82 510 87L748 177Q773 186 789 208Q804 229 804 256V444Q804 585 723 708Q643 830 507 876Q500 878 494 879Q487 880 480 880Q473 880 466 879Q460 878 453 876ZM480 795Q583 761 651 663Q719 564 719 444V256Q719 256 719 256Q719 256 719 256L480 167Q480 167 480 167Q480 167 480 167L241 256Q241 256 241 256Q241 256 241 256V444Q241 564 309 663Q377 761 480 795ZM480 795Q377 761 309 663Q241 564 241 444V256Q241 256 241 256Q241 256 241 256L480 167Q480 167 480 167Q480 167 480 167L719 256Q719 256 719 256Q719 256 719 256V444Q719 564 651 663Q583 761 480 795Z"
+        />
+      </symbol>
+      <symbol id="i-keyboard" viewBox="0 0 960 960">
+        <path
+          d="M160 766Q125 766 100 740Q74 715 74 680V280Q74 245 100 220Q125 194 160 194H800Q835 194 860 220Q886 245 886 280V680Q886 715 860 740Q835 766 800 766ZM160 680H800Q800 680 800 680Q800 680 800 680V280Q800 280 800 280Q800 280 800 280H160Q160 280 160 280Q160 280 160 280V680Q160 680 160 680Q160 680 160 680ZM360 640H600Q617 640 628 628Q640 617 640 600Q640 583 628 572Q617 560 600 560H360Q343 560 332 572Q320 583 320 600Q320 617 332 628Q343 640 360 640ZM160 680Q160 680 160 680Q160 680 160 680V280Q160 280 160 280Q160 280 160 280H800Q800 280 800 280Q800 280 800 280V680Q800 680 800 680Q800 680 800 680ZM240 400Q257 400 268 388Q280 377 280 360Q280 343 268 332Q257 320 240 320Q223 320 212 332Q200 343 200 360Q200 377 212 388Q223 400 240 400ZM360 400Q377 400 388 388Q400 377 400 360Q400 343 388 332Q377 320 360 320Q343 320 332 332Q320 343 320 360Q320 377 332 388Q343 400 360 400ZM480 400Q497 400 508 388Q520 377 520 360Q520 343 508 332Q497 320 480 320Q463 320 452 332Q440 343 440 360Q440 377 452 388Q463 400 480 400ZM600 400Q617 400 628 388Q640 377 640 360Q640 343 628 332Q617 320 600 320Q583 320 572 332Q560 343 560 360Q560 377 572 388Q583 400 600 400ZM720 400Q737 400 748 388Q760 377 760 360Q760 343 748 332Q737 320 720 320Q703 320 692 332Q680 343 680 360Q680 377 692 388Q703 400 720 400ZM240 520Q257 520 268 508Q280 497 280 480Q280 463 268 452Q257 440 240 440Q223 440 212 452Q200 463 200 480Q200 497 212 508Q223 520 240 520ZM360 520Q377 520 388 508Q400 497 400 480Q400 463 388 452Q377 440 360 440Q343 440 332 452Q320 463 320 480Q320 497 332 508Q343 520 360 520ZM480 520Q497 520 508 508Q520 497 520 480Q520 463 508 452Q497 440 480 440Q463 440 452 452Q440 463 440 480Q440 497 452 508Q463 520 480 520ZM600 520Q617 520 628 508Q640 497 640 480Q640 463 628 452Q617 440 600 440Q583 440 572 452Q560 463 560 480Q560 497 572 508Q583 520 600 520ZM720 520Q737 520 748 508Q760 497 760 480Q760 463 748 452Q737 440 720 440Q703 440 692 452Q680 463 680 480Q680 497 692 508Q703 520 720 520Z"
+        />
+      </symbol>
+      <symbol id="i-copy" viewBox="0 0 960 960">
+        <path
+          d="M364 721Q329 721 304 696Q279 671 279 636V159Q279 123 304 98Q329 73 364 73H721Q757 73 782 98Q807 123 807 159V636Q807 671 782 696Q757 721 721 721ZM364 636H721Q721 636 721 636Q721 636 721 636V159Q721 159 721 159Q721 159 721 159H364Q364 159 364 159Q364 159 364 159V636Q364 636 364 636Q364 636 364 636ZM199 887Q163 887 138 862Q113 837 113 801V281Q113 263 126 251Q138 239 156 239Q174 239 186 251Q199 263 199 281V801Q199 801 199 801Q199 801 199 801H599Q617 801 629 814Q641 826 641 844Q641 862 629 874Q617 887 599 887ZM364 636Q364 636 364 636Q364 636 364 636V159Q364 159 364 159Q364 159 364 159Q364 159 364 159Q364 159 364 159V636Q364 636 364 636Q364 636 364 636Z"
+        />
+      </symbol>
+      <symbol id="i-bold" viewBox="0 0 960 960">
+        <path
+          d="M352 764Q316 764 291 739Q266 714 266 678V281Q266 246 291 221Q316 196 352 196H497Q563 196 619 237Q674 278 674 349Q674 399 652 427Q629 456 607 468V469Q635 481 664 512Q694 543 694 602Q694 689 629 727Q565 764 505 764ZM391 650H498Q544 650 555 626Q567 602 567 589Q567 577 555 553Q544 529 495 529H391ZM391 419H487Q519 419 535 402Q550 385 550 363Q550 339 533 324Q516 309 489 309H391Z"
+        />
+      </symbol>
+      <symbol id="i-list" viewBox="0 0 960 960">
+        <path
+          d="M404 763Q386 763 373 750Q361 738 361 720Q361 702 373 690Q386 677 404 677H801Q819 677 832 690Q844 702 844 720Q844 738 832 750Q819 763 801 763ZM404 523Q386 523 373 510Q361 498 361 480Q361 462 373 450Q386 437 404 437H801Q819 437 832 450Q844 462 844 480Q844 498 832 510Q819 523 801 523ZM404 283Q386 283 373 270Q361 258 361 240Q361 222 373 210Q386 197 404 197H801Q819 197 832 210Q844 222 844 240Q844 258 832 270Q819 283 801 283ZM198 803Q164 803 140 778Q116 754 116 720Q116 686 140 662Q164 637 198 637Q232 637 257 662Q281 686 281 720Q281 754 257 778Q232 803 198 803ZM198 563Q164 563 140 538Q116 514 116 480Q116 446 140 422Q164 397 198 397Q232 397 257 422Q281 446 281 480Q281 514 257 538Q232 563 198 563ZM198 323Q164 323 140 298Q116 274 116 240Q116 206 140 182Q164 157 198 157Q232 157 257 182Q281 206 281 240Q281 274 257 298Q232 323 198 323Z"
+        />
+      </symbol>
+      <symbol id="i-unread" viewBox="0 0 960 960">
+        <path
+          d="M161 804Q126 804 101 779Q76 754 76 719V241Q76 206 101 181Q126 156 161 156H519Q536 156 547 169Q558 182 557 199Q557 211 558 221Q559 231 561 241H161V719Q161 719 161 719Q161 719 161 719H799Q799 719 799 719Q799 719 799 719V399Q806 397 812 395Q819 394 825 392Q847 384 865 395Q884 406 884 427V719Q884 754 859 779Q834 804 799 804ZM561 241H161V719Q161 719 161 719Q161 719 161 719H799Q799 719 799 719Q799 719 799 719V399Q789 401 780 402Q771 403 760 403Q687 403 632 357Q576 312 561 241ZM480 441 624 351Q633 357 640 363Q648 369 657 374Q665 379 674 383Q683 387 693 391L504 510Q493 517 480 516Q467 516 456 509L178 317Q170 311 166 304Q161 297 161 286Q161 266 179 255Q196 245 216 256ZM760 323Q709 323 673 287Q637 251 637 200Q637 149 673 113Q709 77 760 77Q811 77 847 113Q883 149 883 200Q883 251 847 287Q811 323 760 323Z"
+        />
+      </symbol>
+      <symbol id="i-today" viewBox="0 0 960 960">
+        <path
+          d="M361 661Q319 661 290 632Q261 603 261 561Q261 519 290 490Q319 461 361 461Q403 461 432 490Q461 519 461 561Q461 603 432 632Q403 661 361 661ZM201 884Q166 884 141 859Q116 834 116 799V241Q116 206 141 181Q166 156 201 156H240V117Q240 100 252 88Q264 76 281 76Q299 76 311 88Q323 100 323 117V156H637V117Q637 100 649 88Q661 76 679 76Q696 76 708 88Q720 100 720 117V156H759Q794 156 819 181Q844 206 844 241V799Q844 834 819 859Q794 884 759 884ZM201 799H759Q759 799 759 799Q759 799 759 799V400H201V799Q201 799 201 799Q201 799 201 799ZM201 320H759V241Q759 241 759 241Q759 241 759 241H201Q201 241 201 241Q201 241 201 241ZM201 320V241Q201 241 201 241Q201 241 201 241H759Q759 241 759 241Q759 241 759 241V320Z"
+        />
+      </symbol>
+      <symbol id="i-timeline" viewBox="0 0 960 960">
+        <path
+          d="M199 764Q181 764 168 752Q156 739 156 721Q156 703 168 691Q181 679 199 679H234V403Q234 318 285 252Q336 186 417 166V139Q417 112 436 94Q454 76 480 76Q506 76 524 94Q543 112 543 139V166Q624 186 675 252Q726 318 726 403V679H761Q779 679 792 691Q804 703 804 721Q804 739 792 752Q779 764 761 764ZM640 403V679H320V403Q320 337 367 290Q414 243 480 243Q546 243 593 290Q640 337 640 403ZM480 885Q447 885 423 862Q399 838 399 804H561Q561 838 538 862Q514 885 480 885ZM320 679H640V403Q640 337 593 290Q546 243 480 243Q414 243 367 290Q320 337 320 403Z"
+        />
+      </symbol>
+      <symbol id="i-split" viewBox="0 0 960 960">
+        <path
+          d="M156 604Q138 604 126 591Q113 579 113 561Q113 543 126 531Q138 518 156 518H394Q412 518 424 531Q437 543 437 561Q437 579 424 591Q412 604 394 604ZM156 766Q138 766 126 753Q113 741 113 723Q113 705 126 692Q138 680 156 680H394Q412 680 424 692Q437 705 437 723Q437 741 424 753Q412 766 394 766ZM156 442Q138 442 126 429Q113 417 113 399Q113 381 126 369Q138 356 156 356H394Q412 356 424 369Q437 381 437 399Q437 417 424 429Q412 442 394 442ZM156 280Q138 280 126 268Q113 255 113 237Q113 219 126 207Q138 194 156 194H394Q412 194 424 207Q437 219 437 237Q437 255 424 268Q412 280 394 280ZM602 766Q567 766 542 740Q517 715 517 680V280Q517 245 542 220Q567 194 602 194H761Q796 194 822 220Q847 245 847 280V680Q847 715 822 740Q796 766 761 766ZM602 680H761Q761 680 761 680Q761 680 761 680V280Q761 280 761 280Q761 280 761 280H602Q602 280 602 280Q602 280 602 280V680Q602 680 602 680Q602 680 602 680ZM602 680Q602 680 602 680Q602 680 602 680V280Q602 280 602 280Q602 280 602 280H761Q761 280 761 280Q761 280 761 280V680Q761 680 761 680Q761 680 761 680Z"
+        />
+      </symbol>
+      <symbol id="i-title" viewBox="0 0 960 960">
+        <path
+          d="M417 281H259Q232 281 214 263Q196 245 196 219Q196 192 214 174Q232 156 259 156H701Q728 156 746 174Q764 192 764 219Q764 245 746 263Q728 281 701 281H543V741Q543 768 525 786Q506 804 480 804Q454 804 436 786Q417 767 417 741Z"
+        />
+      </symbol>
+      <symbol id="i-hash" viewBox="0 0 960 960">
+        <path
+          d="M362 643 329 773Q326 787 315 796Q304 804 290 804Q269 804 256 788Q244 772 249 753L277 643H170Q149 643 136 626Q123 610 129 589Q132 575 144 566Q155 557 170 557H298L337 403H230Q209 403 196 386Q183 370 189 349Q192 335 204 326Q215 317 230 317H358L391 187Q394 173 405 165Q416 156 430 156Q451 156 464 172Q476 188 471 207L443 317H598L631 187Q634 173 645 165Q656 156 670 156Q691 156 704 172Q716 188 711 207L683 317H790Q811 317 824 334Q837 350 831 371Q828 385 816 394Q805 403 790 403H662L623 557H730Q751 557 764 574Q777 590 771 611Q768 625 756 634Q745 643 730 643H602L569 773Q566 787 555 796Q544 804 530 804Q509 804 496 788Q484 772 489 753L517 643ZM383 557H538L577 403H422Z"
+        />
+      </symbol>
+      <symbol id="i-new-window" viewBox="0 0 960 960">
+        <path
+          d="M201 844Q166 844 141 819Q116 794 116 759V201Q116 166 141 141Q166 116 201 116H437Q455 116 468 128Q480 141 480 159Q480 177 468 189Q455 201 437 201H201Q201 201 201 201Q201 201 201 201V759Q201 759 201 759Q201 759 201 759H759Q759 759 759 759Q759 759 759 759V523Q759 505 771 492Q783 480 801 480Q819 480 832 492Q844 505 844 523V759Q844 794 819 819Q794 844 759 844ZM759 261 422 598Q410 610 392 610Q374 610 362 598Q350 586 350 568Q350 550 362 538L699 201H603Q585 201 572 189Q560 177 560 159Q560 141 572 128Q585 116 603 116H801Q819 116 832 128Q844 141 844 159V357Q844 375 832 388Q819 400 801 400Q783 400 771 388Q759 375 759 357Z"
+        />
+      </symbol>
+    </svg>
+
+    <script src="app.js"></script>
+    <script src="main.js" defer></script>
+  </body>
+</html>
