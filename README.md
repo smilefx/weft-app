@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/smilefx/weft-app/releases/latest"><b>Download</b></a> ·
-  <a href="https://smilefx.github.io/weft-app/">Website</a> ·
+  <a href="https://weft.lucaar.dev/">Website</a> ·
   <a href="https://github.com/smilefx/weft-app/releases">All releases</a>
 </p>
 
