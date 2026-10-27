@@ -40,6 +40,8 @@ function detectPlatform() {
     } catch {}
     return "mac-arm";
   }
+  // Android's user agent names Linux too.
+  if (/Linux/i.test(ua) && !/Android/i.test(ua)) return "linux-appimage";
   return null;
 }
 
@@ -47,11 +49,14 @@ const LABELS = {
   windows: "Download for Windows",
   "mac-arm": "Download for Mac",
   "mac-intel": "Download for Mac (Intel)",
+  "linux-appimage": "Download for Linux",
 };
 const MATCH = {
   windows: (n) => /x64-setup\.exe$/i.test(n),
   "mac-arm": (n) => /aarch64\.dmg$/i.test(n),
   "mac-intel": (n) => /x64\.dmg$/i.test(n),
+  "linux-appimage": (n) => /amd64\.AppImage$/i.test(n),
+  "linux-deb": (n) => /amd64\.deb$/i.test(n),
 };
 const urls = {};
 

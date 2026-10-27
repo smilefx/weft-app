@@ -3158,24 +3158,33 @@
       "mac-arm":
         "macOS on Apple silicon (M1 and later). Drag Weft to Applications.",
       "mac-intel": "macOS on Intel. Drag Weft to Applications.",
+      "linux-appimage":
+        "Linux, 64-bit, Ubuntu 22.04 or newer. Make the file executable and start it.",
+      "linux-deb":
+        "Debian and Ubuntu, 64-bit. Install the next .deb to update it.",
     };
     const LABEL = {
       windows: "Download for Windows",
       "mac-arm": "Download for Mac",
       "mac-intel": "Download for Mac (Intel)",
+      "linux-appimage": "Download AppImage",
+      "linux-deb": "Download .deb",
     };
-    const sub = $(".seg-sub", dialog);
-    let os = "windows",
-      mac = "mac-arm";
+    // The system picked, and the variant last picked for the systems that have more than one.
+    let os = "windows";
+    const pick = { mac: "mac-arm", linux: "linux-appimage" };
     const update = () => {
-      const key = os === "windows" ? "windows" : mac;
+      const key = pick[os] ?? os;
       $$("[data-os]", dialog).forEach((b) =>
         b.setAttribute("aria-checked", String(b.dataset.os === os)),
       );
-      $$("[data-mac]", dialog).forEach((b) =>
-        b.setAttribute("aria-checked", String(b.dataset.mac === mac)),
+      $$("[data-mac], [data-linux]", dialog).forEach((b) =>
+        b.setAttribute(
+          "aria-checked",
+          String((b.dataset.mac ?? b.dataset.linux) === key),
+        ),
       );
-      sub.hidden = os !== "mac";
+      $$("[data-sub]", dialog).forEach((s) => (s.hidden = s.dataset.sub !== os));
       $("[data-os-note]", dialog).textContent = NOTES[key];
       const btn = $("[data-dl]", dialog);
       btn.textContent = LABEL[key];
@@ -3183,16 +3192,17 @@
       document.dispatchEvent(new CustomEvent("weft:asset"));
     };
     dialog.addEventListener("click", (e) => {
-      const b = e.target.closest("[data-os], [data-mac]");
+      const b = e.target.closest("[data-os], [data-mac], [data-linux]");
       if (!b) return;
       if (b.dataset.os) os = b.dataset.os;
-      if (b.dataset.mac) mac = b.dataset.mac;
+      if (b.dataset.mac) pick.mac = b.dataset.mac;
+      if (b.dataset.linux) pick.linux = b.dataset.linux;
       update();
     });
     window.weftSetPlatform = (p) => {
       if (!p) return;
-      os = p === "windows" ? "windows" : "mac";
-      if (p !== "windows") mac = p;
+      os = p.split("-")[0];
+      if (os in pick) pick[os] = p;
       update();
     };
     update();

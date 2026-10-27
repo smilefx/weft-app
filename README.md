@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="assets/readme/banner.png" alt="Weft: your chats, woven into one. A Matrix client for Windows and macOS." width="100%" />
+  <img src="assets/readme/banner.png" alt="Weft: your chats, woven into one. A Matrix client for Windows, macOS and Linux." width="100%" />
 </p>
 
 <p align="center">
   <b>Your chats, woven into one.</b><br />
-  A Matrix client for Windows and macOS that keeps every account, your mail and
+  A Matrix client for Windows, macOS and Linux that keeps every account, your mail and
   servers long gone in one searchable record on your own computer.
 </p>
 
@@ -58,11 +58,13 @@ as usual.
 Download the installer for your system from the
 [latest release](https://github.com/smilefx/weft-app/releases/latest):
 
-| System                    | File                |
-| ------------------------- | ------------------- |
-| Windows 10 and 11, 64-bit | `..._x64-setup.exe` |
-| macOS, Apple silicon      | `..._aarch64.dmg`   |
-| macOS, Intel              | `..._x64.dmg`       |
+| System                    | File                 |
+| ------------------------- | -------------------- |
+| Windows 10 and 11, 64-bit | `..._x64-setup.exe`  |
+| macOS, Apple silicon      | `..._aarch64.dmg`    |
+| macOS, Intel              | `..._x64.dmg`        |
+| Linux, 64-bit             | `..._amd64.AppImage` |
+| Debian and Ubuntu, 64-bit | `..._amd64.deb`      |
 
 Weft keeps itself up to date: it checks shortly after it starts and every six hours,
 downloads a signed update in the background and asks you to restart when it is ready.
@@ -79,11 +81,14 @@ damaged, run this once in Terminal:
 xattr -dr com.apple.quarantine /Applications/Weft.app
 ```
 
-**Linux.** There is no Linux build yet. It is coming soon, see below.
+**Linux.** Weft needs Ubuntu 22.04 or newer, or another distribution of that age. Make the
+AppImage executable (`chmod +x Weft_*.AppImage`) and start it; it updates itself. The `.deb`
+installs with `sudo apt install ./Weft_*_amd64.deb` and does not update itself: install the
+next one. The tray icon needs AppIndicator support, which GNOME gets from its AppIndicator
+extension.
 
 ## Coming soon
 
-- **Linux.** A desktop build for Linux.
 - **Container.** The same service in a container on your own server, with Weft in the
   browser.
 - **Open source.** The source code of the app and the service, published here.
@@ -98,7 +103,8 @@ there.
 
 For a bug, please include:
 
-- your Weft version and your system (Windows or macOS, Apple silicon or Intel),
+- your Weft version and your system (Windows, macOS on Apple silicon or Intel, or your
+  Linux distribution),
 - what you did, what you expected and what happened instead,
 - a screenshot or the error text, if there is one.
 

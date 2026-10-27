@@ -6,7 +6,7 @@
     <title>Weft - Your Matrix client</title>
     <meta
       name="description"
-      content="Weft is a Matrix client for Windows and macOS. It keeps every account, your mail and servers long gone in one searchable record on your own computer, and a local assistant turns what was agreed into todos."
+      content="Weft is a Matrix client for Windows, macOS and Linux. It keeps every account, your mail and servers long gone in one searchable record on your own computer, and a local assistant turns what was agreed into todos."
     />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:title" content="Weft - Your Matrix client" />
@@ -62,7 +62,7 @@
           </h1>
           <div class="hero-side" data-after-lines>
             <p class="lead">
-              <b>Weft is a Matrix client</b> for Windows and macOS. It keeps
+              <b>Weft is a Matrix client</b> for Windows, macOS and Linux. It keeps
               every account, your mail and servers long gone in one archive on
               your own computer.
             </p>
@@ -507,11 +507,20 @@
                 >
                   macOS
                 </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked="false"
+                  data-os="linux"
+                >
+                  Linux
+                </button>
               </div>
               <div
                 class="seg seg-sub"
                 role="radiogroup"
                 aria-label="Mac processor"
+                data-sub="mac"
                 hidden
               >
                 <button
@@ -529,6 +538,30 @@
                   data-mac="mac-intel"
                 >
                   Intel
+                </button>
+              </div>
+              <div
+                class="seg seg-sub"
+                role="radiogroup"
+                aria-label="Linux package"
+                data-sub="linux"
+                hidden
+              >
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked="true"
+                  data-linux="linux-appimage"
+                >
+                  AppImage
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked="false"
+                  data-linux="linux-deb"
+                >
+                  Debian / Ubuntu
                 </button>
               </div>
               <p class="dlg-note" data-os-note>
@@ -633,12 +666,21 @@
               </div>
             </details>
             <details name="faq">
-              <summary>What about Linux?</summary>
+              <summary>How do I install it on Linux?</summary>
               <div class="ans">
                 <p>
-                  A linux build is planned, but not yet available. A Docker
-                  image is also in the works, for running Weft on a local server
-                  and using it in a browser.
+                  Weft runs on 64-bit Linux, Ubuntu 22.04 or newer and other
+                  distributions of that age. The <b>AppImage</b> works almost
+                  everywhere and updates itself: make it executable and start
+                  it. The <b>.deb</b> package for Debian and Ubuntu installs
+                  with the command below; to update it, install the next one.
+                </p>
+                <pre><code>sudo apt install ./Weft_*_amd64.deb</code></pre>
+                <p>
+                  The tray icon needs AppIndicator support, which GNOME gets
+                  from its AppIndicator extension. A Docker image is in the
+                  works, for running Weft on a local server and using it in a
+                  browser.
                 </p>
               </div>
             </details>
