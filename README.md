@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/smilefx/weft-app/releases/latest"><b>Download</b></a> ·
-  <a href="https://weft.lucaar.dev/">Website</a> ·
+  <a href="https://github.com/smilefx/weft-app/releases/latest"><b>Download</b></a> |
+  <a href="https://weft.lucaar.dev/">Website</a> |
   <a href="https://github.com/smilefx/weft-app/releases">All releases</a>
 </p>
 
@@ -31,13 +31,18 @@
 - **Encrypted, keys backed up.** End-to-end encryption with cross-signing, key backup and
   recovery. Weft signs in as one more device, so Element and your phone stay in sync.
 - **Everything around the chat.** A timeline that sums up what you missed, a calendar that
-  finds dates in messages (and subscribes to `.ics` feeds such as a course timetable), a
-  todo board, notes that quote what was said, and a page for every person.
+  finds dates in messages, a todo board, notes that quote what was said, and a page for
+  every person.
+- **The calendar you already use.** Connect iCloud, Nextcloud, Fastmail, mailbox.org, Posteo
+  or any other CalDAV server and add, change and delete its events from Weft, in both
+  directions. Google, Outlook and course timetables come in as `.ics` subscriptions.
 - **From message to todo.** A small model on your machine reads new messages and suggests
   todos and events with a title, a date and a label. Nothing is added without you.
 - **Warp, an assistant for your records.** Ask your chats anything: Warp searches, reads
   what matters and answers in a few sentences with numbered sources. It can propose todos,
   notes and replies, you decide what happens.
+- **AI when you want it.** One setting hides Warp, summaries and every suggestion. Chats,
+  search and the workspace stay.
 - **Privacy mode.** Sharing your screen in a lecture or a meeting? Privacy mode covers the
   open chat and hides previews in the chat list.
 - **Make it yours.** Eight themes, nine accents, three message styles, adjustable density
@@ -49,7 +54,9 @@
 Weft is a service that runs inside the app on your own computer. Messages, imports, todos
 and notes stay in your data folder. There is no Weft cloud and no Weft
 account. Your other computers get your todos, notes and events through an encrypted room
-on your own Matrix account.
+on your own Matrix account, and your settings, folders and labels come along. Passwords
+never sync: calendar passwords are encrypted on each device with a key in your system
+keychain, and every computer adds the account itself.
 
 The assistant features use an inference server on your machine with an OpenAI-compatible
 API, such as [Ollama](https://ollama.com). Without one, chats, search and the workspace work
@@ -76,7 +83,7 @@ SmartScreen warns on the first install. Choose _More info_, then _Run anyway_. U
 that do not warn. The installer needs no administrator rights.
 
 **macOS will not open it.** Drag Weft to Applications and open it. If macOS refuses, open
-_System Settings → Privacy & Security_ and choose _Open Anyway_. If it says the app is
+_System Settings -> Privacy & Security_ and choose _Open Anyway_. If it says the app is
 damaged, run this once in Terminal:
 
 ```bash
@@ -84,7 +91,7 @@ xattr -dr com.apple.quarantine /Applications/Weft.app
 ```
 
 **Linux.** Weft needs Ubuntu 22.04 or newer, or another distribution of that age. Make the
-AppImage executable (`chmod +x Weft_*.AppImage`) and start it; it updates itself. The `.deb`
+AppImage executable (`chmod +x Weft_*.AppImage`) and start it. It updates itself. The `.deb`
 installs with `sudo apt install ./Weft_*_amd64.deb` and does not update itself: install the
 next one. The tray icon needs AppIndicator support, which GNOME gets from its AppIndicator
 extension.
@@ -116,7 +123,7 @@ into an issue. Instead describe the problem in made-up words, and blur names in 
 ## Questions
 
 **Do I need a Matrix account?** Yes. Any homeserver works, your organisation's or a public
-one, with password or single sign-on. Mail is optional.
+one, with password or single sign-on. Mail and calendar accounts are optional.
 
 **Can I keep using other clients?** Yes. Weft signs in as one more device of your account,
 so everything stays in sync with your other clients, encryption keys included.
