@@ -564,7 +564,6 @@
           "sofia",
           "12:43",
           "Lab meeting moves to Thursday 14:00 in E23. Half of us are at the faculty retreat on the usual day.",
-          { chip: "calendar" },
         ],
         [
           "daniel",
@@ -602,6 +601,12 @@
           { chip: "calendar" },
         ],
         [
+          "lukas",
+          "13:15",
+          "@Anna Weber could you check the colours of Figure 3 before Wednesday? Then I regenerate all plots for the camera-ready.",
+          { chip: "todo", mention: true },
+        ],
+        [
           "daniel",
           "13:24",
           "Quick question: should the user study appendix go into the supplementary material or the main paper?",
@@ -616,7 +621,7 @@
       c: 1,
       acct: ["example"],
       time: "13:11",
-      unread: 1,
+      unread: 2,
       reply: true,
       dm: "mira",
       online: true,
@@ -634,6 +639,12 @@
           "Yes please! Arrival on the evening before the conference.",
         ],
         ["mira", "08:30", "Booked. The confirmation is in your inbox."],
+        [
+          "mira",
+          "13:05",
+          "Coffee on Sunday at 10 at Café Rathaus before you leave?",
+          { chip: "calendar" },
+        ],
         [
           "mira",
           "13:11",
@@ -661,7 +672,12 @@
           "I pushed my edits to the discussion section. Mostly tightened the limitations paragraph.",
         ],
         ["anna", "Yesterday", "Thanks Priya! I'll merge them tonight."],
-        ["jonas", "11:14", "Abstract is at 248 words, we have 2 to spare."],
+        [
+          "jonas",
+          "11:14",
+          "@Anna Weber the abstract is at 248 words, we have 2 to spare.",
+          { mention: true },
+        ],
         [
           "sofia",
           "12:14",
@@ -934,13 +950,13 @@
 
   // EventTile.svelte: name, account tag (linked chats), time, the AI's tags, the lock; continuation
   // rows show their time in the gutter on hover; read receipts sit at the bottom right.
-  function messageHtml(m, i, list, lock = true) {
+  function messageHtml(m, i, list, lock = true, fresh = false) {
     const [who, time, text, x = {}] = m;
     const p = person(who);
     const mine = who === "anna";
     const prev = list[i - 1];
     const cont =
-      prev && prev[0] === who && !x.quote && !x.mail && !prev[3]?.mail;
+      !fresh && prev && prev[0] === who && !x.quote && !x.mail && !prev[3]?.mail;
     const body = esc(text).replace(
       /@Anna Weber/,
       `<span class="mention"><span class="pill-av">A</span>Anna Weber</span>`,
@@ -991,8 +1007,8 @@
     return `<div class="card${done ? " done" : ""}${sugg ? " sugg-card" : ""}">
       ${check}
       <span class="sg-main">
-        <span class="sg-top"><b>${esc(t.title)}</b>${sugg ? `<span class="sg-acts"><button type="button" class="sm btn-ui" data-take="${t.id}">Add</button>${icon("close", "ic ic-14")}</span>` : ""}</span>
-        ${done ? "" : t.quote ? `<span class="sg-q">“${esc(t.quote)}”</span>` : t.note ? `<span class="sg-note">${esc(t.note)}</span>` : ""}
+        <span class="sg-top"><b>${esc(t.title)}</b>${sugg ? `<span class="sg-acts"><button type="button" class="sm btn-ui" data-take="${t.id}">Add</button><button type="button" class="sg-x btn-ui" data-drop="${t.id}" title="Dismiss">${icon("close", "ic ic-14")}</button></span>` : ""}</span>
+        ${done ? "" : t.quote ? `<span class="sg-q">"${esc(t.quote)}"</span>` : t.note ? `<span class="sg-note">${esc(t.note)}</span>` : ""}
         ${done || !(due || lbl || from) ? "" : `<span class="sg-meta">${due}${lbl}${from}</span>`}
       </span>
     </div>`;
@@ -1091,8 +1107,13 @@
       addr: "jonas.brandt@uni.example",
       subject: "UIST travel budget",
       time: "10:26",
-      reply: true,
       label: ["Conference", "pink"],
+      // InboxPage.svelte: a conversation row stands for the whole thread and unfolds into its mails.
+      thread: [
+        ["anna", "Mon", "Hi Jonas, can the group cover UIST this year? Registration closes on Friday."],
+        ["jonas", "10:26", "The group can cover UIST registration, travel and up to three hotel nights."],
+        ["anna", "10:41", "Thanks, Jonas. I will book the hotel and send the receipts after the trip."],
+      ],
       kind: "Person",
       body: [
         "Hi Anna,",
@@ -1323,54 +1344,11 @@
     { day: 3, title: "Faculty retreat", cal: "purple" },
     { day: 4, title: "CHI abstract deadline", cal: "blue" },
   ];
-  const FOUND = [
-    {
-      id: "f1",
-      title: "Coffee with Mira",
-      when: "Sun 25 Oct, 10:00",
-      from: ["example", "Mira Schulz"],
-      add: {
-        day: 6,
-        from: 10,
-        to: 11,
-        title: "Coffee with Mira",
-        where: "Café Rathaus",
-        cal: "purple",
-        chat: true,
-      },
-    },
-    {
-      id: "f2",
-      title: "GPU cluster maintenance",
-      when: "Sat 31 Oct, 08:00",
-      from: ["uni", "Machine Learning Lab"],
-    },
-  ];
-
   const TODOS = {
-    sugg: [
-      {
-        id: "s1",
-        title: "Send camera-ready checklist to Daniel",
-        quote:
-          "@Anna Weber could you send the camera-ready checklist to Daniel before Friday?",
-        due: "Fri 30 Oct",
-        label: ["Thesis supervision", "purple"],
-        from: "Machine Learning Lab",
-      },
-      {
-        id: "s2",
-        title: "Submit September travel expense report",
-        quote: "Reminder: travel expense reports for September are due…",
-        due: "Sat 31 Oct",
-        label: ["Admin", "orange"],
-        from: "CS Department",
-      },
-    ],
     today: [
       {
         id: "t1",
-        title: "Reply to reviewers (workshop paper)",
+        title: "Revise the workshop paper",
         note: "Three reviews, two minor revisions.",
         due: "Fri 23 Oct",
         overdue: true,
@@ -1397,13 +1375,6 @@
         title: "Grade seminar presentations (groups 3-5)",
         due: "Tomorrow",
         label: ["Teaching", "green"],
-      },
-      {
-        id: "u2",
-        title: "Feedback on Daniel's thesis chapter 2",
-        due: "Mon 26 Oct",
-        label: ["Thesis supervision", "purple"],
-        from: "Daniel Okafor",
       },
       {
         id: "u3",
@@ -1501,14 +1472,6 @@
       messages: 148,
       events: [
         ["Tue 27 Oct", "14:00", "Thesis meeting with Daniel", "Office 3.12"],
-      ],
-      picked: [
-        [
-          "Feedback on Daniel's thesis chapter 2",
-          "Mon 26 Oct",
-          "Thesis supervision",
-          "purple",
-        ],
       ],
       files: [
         ["thesis_chapter2_draft.pdf", "1.8 MB", "Mon"],
@@ -1620,6 +1583,54 @@
     return html;
   }
 
+  /** Colours for the note source (noteHighlight.ts): Markdown marks, headings, emphasis, code,
+   *  links and quotes. Spans only, so every character stays where the textarea draws it. */
+  function highlightNote(src) {
+    const span = (c, h) => `<span class="nh-${c}">${h}</span>`;
+    const mark = (t) => (t ? span("m", esc(t)) : "");
+    const INLINE =
+      /(`[^`\n]+`)|(\*\*(?=\S)[^\n]*?\S\*\*)|(\[[^\]\n]+\]\([^)\s]+\))|((?<![*\w])\*(?=\S)[^*\n]*?\S\*(?!\*))/g;
+    const inline = (t) => {
+      let out = "",
+        at = 0;
+      for (const m of t.matchAll(INLINE)) {
+        out += esc(t.slice(at, m.index));
+        const x = m[0];
+        if (m[1]) out += span("c", esc(x));
+        else if (m[2])
+          out += span("b", mark("**") + inline(x.slice(2, -2)) + mark("**"));
+        else if (m[3]) {
+          const close = x.indexOf("](");
+          out +=
+            span("l", mark("[") + inline(x.slice(1, close)) + mark("]")) +
+            mark("(") +
+            span("u", esc(x.slice(close + 2, -1))) +
+            mark(")");
+        } else out += span("i", mark("*") + inline(x.slice(1, -1)) + mark("*"));
+        at = m.index + x.length;
+      }
+      return out + esc(t.slice(at));
+    };
+    const line = (l) => {
+      let m;
+      if ((m = /^(#{1,6})(\s+)(.*)$/.exec(l)))
+        return mark(m[1]) + m[2] + span("h", inline(m[3]));
+      if ((m = /^(>\s?)(.*)$/.exec(l)))
+        return mark(m[1]) + span("q", inline(m[2]));
+      if ((m = /^(\s*)([-*+]|\d+\.)(\s+)(\[[ x]\](?=\s))?(.*)$/.exec(l)))
+        return m[1] + mark(m[2]) + m[3] + mark(m[4] ?? "") + inline(m[5]);
+      if (/^\s*\|/.test(l))
+        return l
+          .split("|")
+          .map((c) => (/^\s*:?-+:?\s*$/.test(c) ? mark(c) : inline(c)))
+          .join(mark("|"));
+      return inline(l);
+    };
+    return (
+      src.split("\n").map(line).join("\n") + (src.endsWith("\n") ? " " : "")
+    );
+  }
+
   // --- App windows -----------------------------------------------------------------------------
 
   const hhmm = () => {
@@ -1628,13 +1639,82 @@
   };
   const fmtH = (h) =>
     `${String(Math.floor(h)).padStart(2, "0")}:${String(Math.round((h % 1) * 60)).padStart(2, "0")}`;
+  // What the assistant picked up from the chats, each from one message. The same list feeds the
+  // chat's tray, the timeline, the calendar's "Found in chats", the todo board and the profile.
+  const SUGG = [
+    {
+      id: "gpu",
+      kind: "event",
+      room: "lab",
+      who: "lukas",
+      title: "GPU cluster maintenance",
+      mon: "Oct",
+      day: 31,
+      date: "Sat 31 Oct",
+      when: "Saturday, 08:00-14:00",
+      at: "08:00",
+      where: "GPU cluster",
+      quote: "the GPU cluster is down for maintenance on Saturday 08:00-14:00",
+    },
+    {
+      id: "fig3",
+      kind: "todo",
+      room: "lab",
+      who: "lukas",
+      title: "Check the colours of Figure 3",
+      due: "Wed 28 Oct",
+      label: ["Research", "blue"],
+      quote: "could you check the colours of Figure 3 before Wednesday?",
+    },
+    {
+      id: "coffee",
+      kind: "event",
+      room: "mira",
+      who: "mira",
+      title: "Coffee with Mira",
+      mon: "Oct",
+      day: 25,
+      date: "Sun 25 Oct",
+      when: "Sunday, 10:00-11:00",
+      at: "10:00",
+      where: "Café Rathaus",
+      quote: "Coffee on Sunday at 10 at Café Rathaus before you leave?",
+      add: {
+        day: 6,
+        from: 10,
+        to: 11,
+        title: "Coffee with Mira",
+        where: "Café Rathaus",
+        cal: "purple",
+        chat: true,
+      },
+    },
+    {
+      id: "ch2",
+      kind: "todo",
+      room: "daniel",
+      who: "anna",
+      title: "Feedback on Daniel's thesis chapter 2",
+      due: "Mon 26 Oct",
+      label: ["Thesis supervision", "purple"],
+      quote: "Great, I'll give you feedback early next week.",
+    },
+  ];
+  const suggById = (id) => SUGG.find((x) => x.id === id);
+  // ChatList.svelte: a question waiting for you outranks a mention, a mention a plain count.
+  const roomBadge = (r) =>
+    r.msgs.some((m) => m[3]?.chip === "needs reply")
+      ? "reply"
+      : r.msgs.some((m) => m[3]?.mention)
+        ? "at"
+        : "count";
   // Catch-up summaries: [headline, sentence, room, times of the messages each point cites].
   const AWAY = [
     [
       "Jonas is waiting on you.",
-      "He asked about the reviewer responses from the workshop paper and wants the camera-ready checklist sent to Daniel before Friday.",
+      "He asked about the reviewer responses from the workshop paper, and Lukas wants the colours of Figure 3 checked before Wednesday.",
       "lab",
-      ["13:09", "12:21"],
+      ["13:09", "13:15"],
     ],
     [
       "Lab meeting moved.",
@@ -1676,8 +1756,8 @@
       ],
       [
         "Two things for you.",
-        "Jonas asks you to send Daniel the camera-ready checklist before Friday, and whether you have read the reviewer responses from the workshop paper.",
-        ["12:21", "13:09"],
+        "Jonas asks whether you have read the reviewer responses from the workshop paper, and Lukas asks you to check the colours of Figure 3 before Wednesday.",
+        ["13:09", "13:15"],
       ],
       [
         "Ablation results are in.",
@@ -1724,13 +1804,18 @@
     mira: [
       [
         "Dinner in Vienna?",
-        "Mira booked the hotel and suggests dinner with Tom near the Naschmarkt on the first evening.",
-        ["08:30", "13:11"],
+        "Mira booked the hotel, suggests coffee on Sunday at 10 and dinner with Tom near the Naschmarkt on the first evening.",
+        ["08:30", "13:05", "13:11"],
       ],
     ],
   };
-  const cites = (times) =>
-    times.map((t) => `<span class="cite-t">${t}</span>`).join("");
+  // SourceMessages.svelte: the messages a point rests on as a count pill, and their time span
+  // as quiet text ("12:21 - 13:09"), at the right edge of the row with `end`.
+  const sources = (times, end = false) => {
+    const t = [...times].sort();
+    const range = t[0] === t.at(-1) ? t[0] : `${t[0]} - ${t.at(-1)}`;
+    return `<span class="src-n">${t.length} ${t.length === 1 ? "message" : "messages"}</span><span class="src-range${end ? " end" : ""}">${range}</span>`;
+  };
 
   const COVERS = {
     timeline: "Show timeline",
@@ -1753,8 +1838,10 @@
       ptab: "messages",
       mail: "m6",
       mailFilter: "all",
+      mailLabel: null,
+      threadOpen: true,
       note: "n1",
-      noteMode: "preview",
+      noteMode: "split",
       sent: {},
       read: new Set([room]),
       readMail: new Set(["m6"]),
@@ -1762,7 +1849,10 @@
       notes: Object.fromEntries(NOTES.map((n) => [n.id, n.body])),
       catchup,
       awayDismissed: false,
-      gpuAdded: false,
+      trayOpen: true,
+      // Suggestions dealt with (added or dismissed), and the added ones.
+      handled: new Set(),
+      accepted: new Set(),
       added: new Set(),
       cal: [...CAL],
       done: new Set(),
@@ -1797,7 +1887,7 @@
       const folder = (ic, color, name, n) =>
         `<span class="rail-item"><span class="folder-glyph" style="--c:var(--folder-${color})">${icon(ic, "ic ic-20")}</span><span>${name}</span>${n ? `<em>${n}</em>` : ""}</span>`;
       return `<aside class="rail">
-        <div class="rail-top">${logo("weft", 30)}<span class="wordmark">Weft</span>${eye}<button type="button" class="rail-eye${s.view === "timeline" ? " is-on" : ""}" data-view="timeline" aria-pressed="${s.view === "timeline"}" title="Timeline">${icon("bell")}</button></div>
+        <div class="rail-top">${logo("weft", 30)}<span class="wordmark">Weft</span>${eye}<button type="button" class="rail-eye${s.view === "timeline" ? " is-on" : ""}" data-view="timeline" aria-pressed="${s.view === "timeline"}" title="Timeline">${icon("feed")}</button></div>
         <span class="rail-search">${icon("search")}<span>Search everything</span><kbd>Ctrl K</kbd></span>
         <p class="rail-h">Workspace</p>
         <div class="rail-items">${item("chats", "chat", "Chats", 19)}${item("inbox", "mail", "Inbox", unreadMail)}${item("calendar", "cal", "Calendar", 1)}${item("todos", "todo", "Todos", openTodos)}${item("notes", "note", "Notes")}</div>
@@ -1813,9 +1903,14 @@
     function chatsView() {
       const row = (r) => {
         const unread = !s.read.has(r.id) && r.unread;
-        const badge = unread
-          ? `<em class="${r.reply ? "badge" : "badge badge-q"}">${r.reply ? icon("reply", "ic ic-16") : ""}${r.unread}</em>`
-          : "";
+        const kind = roomBadge(r);
+        const badge = !unread
+          ? ""
+          : kind === "reply"
+            ? `<em class="badge" title="Waiting for your reply">${icon("reply", "ic ic-16")}${r.unread}</em>`
+            : kind === "at"
+              ? `<em class="badge badge-at" title="You were mentioned">@ ${r.msgs.filter((m) => m[3]?.mention).length}</em>`
+              : `<em class="badge badge-q">${r.unread}</em>`;
         const tags = r.acct.map(acctTag).join("");
         const last = s.last[r.id];
         const av = avatar(r.av, r.c, roomAv(r, "av av-38"));
@@ -1840,20 +1935,45 @@
             ? `<span class="tl-online">Online</span>`
             : "Offline"
           : `${r.members} members`;
-      // SuggestionTray.svelte: what the assistant picked up, folded above the composer.
-      const picked =
-        r.id === "lab"
-          ? `<div class="picked"><span class="pk-spark">${icon("spark", "ic ic-16")}</span><b>Picked up from this chat</b><em>3</em><span class="comp-fill"></span><span class="picked-add">Add all</span><span class="pk-fold">${icon("up", "ic ic-16")}</span></div>`
-          : "";
+      // SuggestionTray.svelte: what the assistant picked up, above the composer. Dashed cards in
+      // the AI colour, a date leaf for an event and a todo glyph for a todo, Add and dismiss.
+      const tray = r.mail ? [] : open(r.id);
+      const pickCard = (p) => {
+        const leaf = p.day
+          ? `<span class="pk-leaf"><span class="pk-mon">${p.mon}</span><span class="pk-day">${p.day}</span></span>`
+          : `<span class="pk-leaf">${icon("todo", "ic ic-18")}</span>`;
+        const meta = p.day
+          ? `<span class="pk-m">${icon("clock", "ic ic-12")}${p.when}</span><span class="pk-m">${icon("mappin", "ic ic-12")}${esc(p.where)}</span>`
+          : `<span class="pk-m">${icon("cal", "ic ic-12")}Due ${p.due}</span><span class="pk-m pk-who">${firstName(p.who)}: "${esc(p.quote)}"</span>`;
+        return `<div class="pk-card">${leaf}<span class="pk-text"><span class="pk-line"><span class="pk-t">${esc(p.title)}</span>${p.label ? label(...p.label).replace('class="lbl"', 'class="lbl lbl-sm"') : ""}</span><span class="pk-meta">${meta}</span></span><span class="pk-acts"><button type="button" class="pk-add btn-ui" data-take="${p.id}">${icon("plus", "ic ic-14")}Add</button><button type="button" class="pk-x btn-ui" data-drop="${p.id}" title="Dismiss">${icon("close", "ic ic-16")}</button></span></div>`;
+      };
+      const picked = tray.length
+        ? `<div class="picked-tray"><div class="picked"><span class="pk-spark">${icon("spark", "ic ic-14")}</span><b>Picked up from this chat</b><em>${tray.length}</em><span class="comp-fill"></span>${tray.length > 1 ? `<button type="button" class="picked-add btn-ui" data-take-all="${r.id}">Add all</button>` : ""}<button type="button" class="pk-fold btn-ui" data-pick-fold title="${s.trayOpen ? "Collapse" : "Expand"}">${icon(s.trayOpen ? "down" : "up", "ic ic-14")}</button></div>${s.trayOpen ? `<div class="pk-cards">${tray.map(pickCard).join("")}</div>` : ""}</div>`
+        : "";
       const hb = (ic, label, n) =>
         `<span class="hb" title="${label}">${icon(ic, ic === "video" ? "ic ic-22" : "ic ic-20")}${n ? `<em>${n}</em>` : ""}</span>`;
+      // Timeline.svelte: the "New since" divider where this visit's unread messages start, and
+      // under it the first point of the summary (UnreadSummary.svelte), which opens the panel.
+      const newAt = r.unread ? Math.max(1, r.msgs.length - r.unread) : -1;
+      const points = CATCHUP[r.id];
+      const newSince =
+        newAt > 0
+          ? `<div class="new-since">New since ${r.msgs[newAt - 1][1]}</div><button type="button" class="unread-sum" data-catchup="open" title="Open the summary">${icon("spark", "ic ic-14")}<span class="us-lead">${points ? esc(points[0][0]) : `Summarize ${r.unread} new messages`}</span>${points && points.length > 1 ? `<span class="us-more">+${points.length - 1} more</span>` : ""}</button>`
+          : "";
+      const body = msgs
+        .map(
+          (m, i, l) =>
+            (i === newAt ? newSince : "") +
+            messageHtml(m, i, l, r.lock, i === newAt),
+        )
+        .join("");
+      const sum = s.catchup === r.id;
       return `<div class="list-pane">
           <div class="lp-head"><b>Chats</b><span class="lp-sort">${icon("sort")}Recent</span><span class="lp-new">${icon("edit")}</span></div>
-          <span class="lp-filter">${icon("search")}<span>Filter chats and people</span><span class="slash">/</span></span>
-          <div class="lp-tabs"><span class="on">All</span><span>People</span><span>Rooms</span><span>Linked</span></div>
+          <div class="seg-ui lp-tabs"><span class="on">All</span><span>Unread</span><span>People</span><span>Rooms</span><span>Linked</span></div>
           <div class="lp-accts">${["uni", "example", "mail"].map((a) => acctTag(a).replace('class="tag', 'class="tag bordered')).join("")}</div>
           <div class="lp-rows">
-            <p class="lp-h">${icon("star", "ic ic-s")}Favourites</p>
+            <p class="lp-h">${icon("star", "ic ic-12")}Favourites</p>
             ${ROOMS.filter((x) => x.fav)
               .map(row)
               .join("")}
@@ -1865,11 +1985,11 @@
         </div>
         <div class="tl-pane">
           <div class="tl-head">${avatar(r.av, r.c, roomAv(r, "av av-36"))}
-            <span class="tl-title"><b>${r.linked ? icon("link", "ic ic-16") : ""}${esc(r.name)}${r.acct.map(acctTag).join("")}</b><small>${r.lock ? icon("lock", "ic ic-12") : ""}${sub}</small></span>
-            <button type="button" class="tl-btn catch btn-ui${s.catchup === r.id ? " is-on" : ""}" data-catchup aria-pressed="${s.catchup === r.id}">Catch up</button>
+            <span class="tl-title"><b>${r.linked ? icon("link", "ic ic-16") : ""}<span>${esc(r.name)}</span>${r.acct.map(acctTag).join("")}</b><small>${r.lock ? icon("lock", "ic ic-12") : ""}${sub}</small></span>
+            ${sum ? "" : `<button type="button" class="tl-btn catch btn-ui" data-catchup="open">Catch up</button>`}
             <span class="tl-tools">${hb("search", "Search in this chat")}${hb("spark", "Picked up")}${hb("thread", "Threads")}${hb("pin", "Pinned", r.id === "lab" ? 2 : 0)}${hb("panel", "Details")}</span>
           </div>
-          ${gate(`${s.catchup === r.id ? catchupCard(r) : ""}<div class="tl-body"><div class="tl-inner">${msgs.map((m, i, l) => messageHtml(m, i, l, r.lock)).join("")}</div></div>
+          ${gate(`<div class="tl-body"><div class="tl-inner">${body}</div></div>
             ${
               r.mail
                 ? `<p class="comp-state">Email is read-only in Weft. Answer from your mail program.</p>`
@@ -1880,23 +2000,32 @@
               <div class="comp-row"><span class="tool">${icon("plus", "ic ic-20")}</span><span class="tool">${icon("clip")}</span><span class="tool">${icon("at")}</span><span class="tool">${icon("smile")}</span><span class="comp-fill"></span><span class="tool">${icon("mic")}</span><button class="send" type="submit">Send ${icon("send", "ic ic-16")}</button></div>
             </form>`
             }`)}
-        </div>`;
+        </div>${sum ? summaryPanel(r) : ""}`;
     }
 
     // Inbox
-    // The chat's catch-up ("Catch up" in the chat header): a short summary that cites its messages.
-    function catchupCard(r) {
+    // The summary panel (AiSummary.svelte in DetailsPanel.svelte): "While you were away" beside
+    // the conversation, each point with its lead, its text and the messages it rests on.
+    function summaryPanel(r) {
       const points = CATCHUP[r.id];
-      const unread = r.unread ? `${r.unread} unread` : "since you last read";
-      return `<div class="cu-card">
-        <div class="cu-head"><b>While you were away</b><small>${unread}</small><span class="comp-fill"></span>${icon("sync", "ic ic-16")}<button type="button" class="cu-dismiss" data-catchup>Dismiss</button></div>
-        ${
-          points
-            ? `<ol class="cu-points">${points.map(([h, t, times], i) => `<li><span class="cu-n">${String(i + 1).padStart(2, "0")}</span><p><b>${esc(h)}</b> ${esc(t)} ${cites(times)}</p></li>`).join("")}</ol>`
-            : `<p class="empty">Nothing new since you last read this chat.</p>`
-        }
-        
-      </div>`;
+      const since = r.unread ? `${r.unread} unread` : "Latest messages";
+      const acts = `<div class="sum-acts">${open(r.id)
+        .map(
+          (g, i) =>
+            `<button type="button" class="act${i ? "" : " primary"} btn-ui" data-take="${g.id}">${icon(g.kind === "event" ? "cal" : "todo", "ic ic-14")}${g.kind === "event" ? `Add ${esc(g.title)} to calendar` : `Todo: ${esc(g.title)}`}</button>`,
+        )
+        .join("")}${r.unread ? `<span class="act">${icon("down", "ic ic-14")}Jump to first unread</span>` : ""}</div>`;
+      return `<aside class="sum-panel" aria-label="Summary">
+        <div class="sum-head"><b>While you were away</b><button type="button" class="sum-x" data-catchup="close" title="Close">${icon("close", "ic ic-14")}</button></div>
+        <div class="sum-body">
+          <div class="sum-meta"><span>${since}</span>${icon("sync", "ic ic-14")}</div>
+          ${
+            points
+              ? `<ol class="sum-points">${points.map(([h, t, times], i) => `<li><span class="cu-n">${String(i + 1).padStart(2, "0")}</span><div class="sum-pt"><b>${esc(h)}</b><p>${esc(t)}</p><div class="srcs">${sources(times, true)}</div></div></li>`).join("")}</ol>${acts}`
+              : `<p class="empty">Nothing to catch up on.</p>`
+          }
+        </div>
+      </aside>`;
     }
 
     // Timeline (the bell): what happened across every chat, with what is due and what is unread.
@@ -1918,11 +2047,23 @@
           "Heads-up: the GPU cluster is down for maintenance on Saturday 08:00-14:00, plan your runs accordingly.",
           { chip: "calendar" },
         ],
+        [
+          "lukas",
+          "13:15",
+          "@Anna Weber could you check the colours of Figure 3 before Wednesday? Then I regenerate all plots for the camera-ready.",
+          { chip: "todo", mention: true },
+        ],
       ];
       // TimelineItemActions.svelte: what the assistant found in a message, right under it.
-      const pick = s.gpuAdded
-        ? `<p class="tg-done"><i>${icon("check", "ic ic-12")}</i>GPU cluster maintenance is in your calendar</p>`
-        : `<div class="tg-sugg">${icon("cal")}<span><b>GPU cluster maintenance</b><small>Sat 31 Oct, 08:00, GPU cluster</small></span><span class="sm">Dismiss</span><button type="button" class="sm primary btn-ui" data-gpu>${icon("plus", "ic ic-14")}Calendar</button></div>`;
+      const pickLine = (g) =>
+        s.accepted.has(g.id)
+          ? `<p class="tg-done"><i>${icon("check", "ic ic-12")}</i>${esc(g.title)} is in your ${g.kind === "event" ? "calendar" : "todos"}</p>`
+          : s.handled.has(g.id)
+            ? ""
+            : `<div class="tg-sugg">${icon(g.kind === "event" ? "cal" : "todo")}<span><b>${esc(g.title)}</b><small>${g.kind === "event" ? `${g.date}, ${g.at}, ${esc(g.where)}` : `Due ${g.due}`}</small></span><button type="button" class="sm btn-ui" data-drop="${g.id}">Dismiss</button><button type="button" class="sm primary btn-ui" data-take="${g.id}">${icon("plus", "ic ic-14")}${g.kind === "event" ? "Calendar" : "Todo"}</button></div>`;
+      const pick = SUGG.filter((g) => g.room === "lab")
+        .map(pickLine)
+        .join("");
       return `<div class="tline">
         <div class="tline-bar"><span class="comp-fill"><b class="page-title">Timeline</b><small>Saturday 24 October</small></span>
           <div class="seg-ui seg-inline"><span class="on">All <em>16</em></span><span>Mentions <em>4</em></span><span>Needs reply <em>8</em></span><span>Picked up <em>8</em></span></div><span class="tl-refresh">${icon("sync", "ic ic-18")}</span></div>
@@ -1931,12 +2072,15 @@
             s.awayDismissed
               ? ""
               : `<div class="cu-card cu-wide">
-            <div class="cu-head">${icon("spark", "ic ic-16 ic-ai")}<b>While you were away</b><small>Since yesterday, 13:40</small><span class="comp-fill"></span><button type="button" class="cu-dismiss" data-away>Dismiss</button></div>
-            <ol class="cu-points">${AWAY.map(([h, t, room, times], i) => `<li><span class="cu-n">${String(i + 1).padStart(2, "0")}</span><p><b>${esc(h)}</b> ${esc(t)}<span class="cu-meta"><button type="button" class="cu-src" data-room="${room}">${esc(roomById(room).name)}</button>${cites(times)}</span></p></li>`).join("")}</ol>
+            <div class="cu-head">${icon("spark", "ic ic-16 ic-ai")}<b>While you were away</b><small>Since yesterday, 13:40</small><span class="comp-fill"></span>${icon("sync", "ic ic-14 ic-mute")}<button type="button" class="cu-dismiss" data-away>Dismiss</button></div>
+            <ol class="cu-points">${AWAY.map(([h, t, room, times], i) => {
+              const c = roomById(room);
+              return `<li><span class="cu-n">${String(i + 1).padStart(2, "0")}</span><div class="cu-pt"><p><b>${esc(h)}</b> <span>${esc(t)}</span></p><div class="srcs"><button type="button" class="src-chat" data-room="${room}" title="Open in ${esc(c.name)}">${avatar(c.av, c.c, roomAv(c, "av av-18"))}<span>${esc(c.name)}</span></button>${sources(times, true)}</div></div></li>`;
+            }).join("")}</ol>
           </div>`
           }
           <div class="tl-day"><p class="side-h">Today</p>
-          ${runCardHtml(lab, lmsgs, "13:24", `<div class="run-extra">${pick}</div>`)}</div>
+          ${runCardHtml(lab, lmsgs, "13:15", pick ? `<div class="run-extra">${pick}</div>` : "")}</div>
         </div>
         <aside class="tline-aside">
           <p class="side-h">Due <em class="cnt">${due.filter((t) => !s.done.has(t.id)).length}</em></p>
@@ -1953,7 +2097,7 @@
           <p class="today-row"><span class="row-time">11:00</span><span>Call with Mira</span></p>
           <p class="today-row"><span class="row-time">16:30</span><span>Writing block: CHI abstract</span></p>
           <p class="side-h">Unread</p>
-          ${unread.map((r) => `<button type="button" class="unread-row" data-room="${r.id}">${avatar(r.av, r.c, roomAv(r, "av av-xs"))}<span>${esc(r.name)}</span>${r.reply ? `<em class="at">${icon("at", "ic ic-12")}</em>` : ""}<em>${r.unread}</em></button>`).join("") || `<p class="empty">All caught up.</p>`}
+          ${unread.map((r) => `<button type="button" class="unread-row" data-room="${r.id}">${avatar(r.av, r.c, roomAv(r, "av av-xs"))}<span>${esc(r.name)}</span>${roomBadge(r) === "count" ? "" : `<em class="at">${icon(roomBadge(r) === "reply" ? "reply" : "at", "ic ic-12")}</em>`}<em>${r.unread}</em></button>`).join("") || `<p class="empty">All caught up.</p>`}
         </aside></div>`)}
       </div>`;
     }
@@ -1961,11 +2105,47 @@
     function inboxView() {
       const shown = INBOX.filter(
         (m) =>
-          s.mailFilter === "all" ||
-          (s.mailFilter === "answer" ? m.reply : m.kind === "Person"),
+          (s.mailFilter === "all" ||
+            (s.mailFilter === "answer" ? m.reply : m.kind === "Person")) &&
+          (!s.mailLabel || m.label?.[0] === s.mailLabel),
       );
+      // LabelFilter.svelte: the labels the mail is sorted into, one at a time.
+      const mailLabels = [
+        ...new Map(
+          INBOX.filter((x) => x.label).map((x) => [x.label[0], x.label]),
+        ).values(),
+      ];
+      const labelRow = `<div class="mail-labels">${mailLabels
+        .map(
+          ([n, c]) =>
+            `<button type="button" class="lbl lbl-btn${s.mailLabel === n ? " on" : ""}" style="--l:var(--label-${c})" data-mail-label="${esc(n)}" aria-pressed="${s.mailLabel === n}">${esc(n)}</button>`,
+        )
+        .join(
+          "",
+        )}${s.mailLabel ? `<button type="button" class="lbl-tiny btn-ui" data-mail-label="" title="Show all labels">${icon("close", "ic ic-12")}</button>` : ""}</div>`;
       const m = INBOX.find((x) => x.id === s.mail);
+      // A conversation: everyone in it, its newest mail (your own too), the mail count; open, it
+      // sits on --sunk and lists every mail under the row's text column.
+      const conv = (x) => {
+        const open = s.threadOpen;
+        const last = x.thread.at(-1);
+        const mine = last[0] === "anna";
+        const p = person("jonas");
+        const tags = `${x.label ? label(...x.label).replace('class="lbl"', 'class="lbl lbl-sm"') : ""}<span class="count-tag" title="${x.thread.length} mails in this conversation">${x.thread.length}${icon(open ? "up" : "down", "ic ic-12")}</span>`;
+        const sub = ([who, time, text]) =>
+          `<${who === "anna" ? "span" : `button type="button" data-mail="${x.id}"`} class="mail-sub${who === "anna" ? " mine" : ""}${who !== "anna" && x.id === s.mail ? " on" : ""}">${avatar(who === "anna" ? "AW" : initials(p.name), who === "anna" ? 0 : x.c, "av av-22 av-mail")}<span class="mi-main"><span class="mi-top"><b>${who === "anna" ? "You" : esc(p.name)}</b><span class="time">${time}</span></span>${s.privacy ? "" : `<span class="mi-prev"><span>${esc(text)}</span></span>`}</span></${who === "anna" ? "span" : "button"}>`;
+        return `<div class="mail-conv${open ? " open" : ""}"><button type="button" class="mail-item" data-thread aria-expanded="${open}">
+          <span class="av-pair">${avatar(initials(p.name), x.c, "av av-20 av-mail")}${avatar("AW", 0, "av av-20 av-mail")}</span>
+          <span class="mi-main">
+            <span class="mi-top"><b>${esc(p.name)} and You</b><span class="time">${last[1]}</span></span>
+            <span class="mi-sub"><span>${esc(x.subject)}</span></span>
+            ${s.privacy ? "" : `<span class="mi-prev"><span>${mine ? `You: ${esc(last[2])}` : esc(last[2])}</span></span>`}
+            <span class="mi-tags">${tags}</span>
+          </span>
+        </button>${open ? `<div class="mail-thread">${x.thread.map(sub).join("")}</div>` : ""}</div>`;
+      };
       const row = (x) => {
+        if (x.thread) return conv(x);
         const unread = x.unread && !s.readMail.has(x.id);
         const tags = `${x.reply ? `<span class="chip chip-reply chip-sm">${icon("reply", "ic ic-12")}needs reply</span>` : ""}${x.label ? label(...x.label).replace('class="lbl"', 'class="lbl lbl-sm"') : ""}`;
         return `<button type="button" class="mail-item${x.id === s.mail ? " on" : ""}${unread ? " unread" : ""}" data-mail="${x.id}" aria-pressed="${x.id === s.mail}">
@@ -1983,7 +2163,7 @@
       const added = m.event && s.added.has(m.id);
       return `<div class="list-pane mail-list">
           <div class="lp-head"><b>Inbox</b><span class="lp-icons"><span class="on" title="Threads">${icon("thread", "ic ic-18")}</span><span title="Refresh">${icon("sync", "ic ic-18")}</span></span></div>
-          <div class="pills">${f("all", "All")}${f("answer", "To answer", INBOX.filter((x) => x.reply).length)}${f("people", "People", INBOX.filter((x) => x.kind === "Person").length)}<span class="pill">Notifications</span><span class="pill">Newsletters</span><span class="pill">Spam</span></div>
+          <div class="pills">${f("all", "All")}${f("answer", "To answer", INBOX.filter((x) => x.reply).length)}${f("people", "People", INBOX.filter((x) => x.kind === "Person").length)}<span class="pill">Notifications</span><span class="pill">Newsletters</span><span class="pill">Spam</span></div>${labelRow}
           <div class="mail-rows">${shown.map(row).join("")}</div>
         </div>
         <div class="reader">
@@ -2045,12 +2225,19 @@
             `<p class="cal-row"><i class="cal-box" style="--l:var(--label-${c})">${icon("check", "ic")}</i><span>${n}</span><small>${k}</small></p>`,
         )
         .join("")}</div>`;
-      const found = `<div class="cal-found"><p class="side-h">Found in chats <em class="cnt">${FOUND.filter((f) => !s.taken.has(f.id)).length}</em></p>${FOUND.map(
-        (
-          f,
-        ) => `<div class="found${s.taken.has(f.id) ? " taken" : ""}"><b>${esc(f.title)}</b><small>${f.when}</small><small class="from">${acctTag(f.from[0]).replace('class="tag', 'class="tag tag-sm')} ${esc(f.from[1])}</small>
-        ${s.taken.has(f.id) ? `<p class="ai-done"><i>${icon("check", "ic ic-12")}</i>Added to your calendar</p>` : `<span class="found-act"><button type="button" class="primary btn-ui" data-found="${f.id}">Add</button><span>Dismiss</span></span>`}</div>`,
-      ).join("")}</div>`;
+      const events = SUGG.filter(
+        (g) =>
+          g.kind === "event" &&
+          (!s.handled.has(g.id) || s.accepted.has(g.id)),
+      );
+      const found = `<div class="cal-found"><p class="side-h">Found in chats <em class="cnt">${open("event").length}</em></p>${events
+        .map((g) => {
+          const r = roomById(g.room);
+          const done = s.accepted.has(g.id);
+          return `<div class="found${done ? " taken" : ""}"><b>${esc(g.title)}</b><small>${g.date}, ${g.at}</small><small class="from">${acctTag(r.acct[0]).replace('class="tag', 'class="tag tag-sm')} ${esc(r.name)}</small>
+        ${done ? `<p class="ai-done"><i>${icon("check", "ic ic-12")}</i>Added to your calendar</p>` : `<span class="found-act"><button type="button" class="primary btn-ui" data-take="${g.id}">Add</button><button type="button" class="btn-ui" data-drop="${g.id}">Dismiss</button></span>`}</div>`;
+        })
+        .join("")}</div>`;
       const hours = Array.from(
         { length: H1 - H0 },
         (_, i) =>
@@ -2093,9 +2280,20 @@
     function todosView() {
       const card = (t, sugg, col) =>
         todoCardHtml(t, { sugg, done: s.done.has(t.id), col });
-      const sugg = TODOS.sugg.filter((t) => !s.taken.has(t.id));
+      // A suggestion as a card: its quote, due date, label and the chat it came from.
+      const asTodo = (g) => ({
+        id: g.id,
+        title: g.title,
+        quote: g.quote,
+        due: g.due,
+        label: g.label,
+        from: roomById(g.room).name,
+      });
+      const sugg = open("todo").map(asTodo);
       const upcoming = [
-        ...TODOS.sugg.filter((t) => s.taken.has(t.id)),
+        ...SUGG.filter((g) => s.accepted.has(g.id) && g.kind === "todo").map(
+          asTodo,
+        ),
         ...TODOS.upcoming,
       ];
       const done = [...TODOS.today, ...TODOS.upcoming].filter((t) =>
@@ -2106,7 +2304,6 @@
       return `<div class="todo-page">
           <div class="todo-bar"><span class="comp-fill"><b class="page-title">Todos</b><small>Saturday 24 October</small></span><div class="seg-ui seg-inline"><span class="on">${icon("cal", "ic ic-16")}By date</span><span>${icon("label", "ic ic-16")}By label</span></div><span class="send">${icon("plus", "ic ic-16")}New todo</span></div>
           <div class="todo-labels">${[
-            ["All", ""],
             ["Research", "blue"],
             ["Teaching", "green"],
             ["Thesis supervision", "purple"],
@@ -2114,14 +2311,14 @@
             ["Admin", "orange"],
           ]
             .map(
-              ([n, c], i) =>
-                `<span class="lbl-pill${i ? "" : " on"}"${c ? ` style="--c:var(--label-${c})"` : ""}>${c ? `<i></i>` : ""}${n}</span>`,
+              ([n, c]) =>
+                `<span class="lbl-pill" style="--c:var(--label-${c})">${n}</span>`,
             )
             .join(
               "",
-            )}<span class="lbl-pill manage">${icon("gear", "ic ic-14")}Labels</span></div>
+            )}<span class="lbl-tiny" title="Labels">${icon("gear", "ic ic-14")}</span></div>
           ${gate(`<div class="todo-board">
-            ${col("spark", "From your chats", sugg.length, sugg.length ? sugg.map((t) => card(t, true)).join("") : `<p class="empty">Nothing new from your chats.</p>`, " col-sugg", sugg.length ? `<span class="c-link">Add all</span>` : "")}
+            ${col("spark", "From your chats", sugg.length, sugg.length ? sugg.map((t) => card(t, true)).join("") : `<p class="empty">Nothing new from your chats.</p>`, " col-sugg", sugg.length > 1 ? `<button type="button" class="c-link btn-ui" data-take-all="todo">Add all</button>` : "")}
             ${col(
               "today",
               "Today",
@@ -2160,21 +2357,28 @@
         `<button type="button" role="radio" class="nt-tool" aria-checked="${s.noteMode === k}" data-mode="${k}" title="${t}">${icon(ic)}</button>`;
       const tool = (ic, t) =>
         `<span class="nt-tool" title="${t}">${icon(ic)}</span>`;
+      const room = ROOMS.find((r) => r.name === n.chat);
+      // NoteEditor.svelte: list toggle, layout, formats, width and size, then saved, send, delete.
       return `<div class="list-pane notes-list">
-          <div class="lp-head"><b>Notes</b><span class="nt-add">${icon("plus")}</span></div>
+          <div class="lp-head"><b>Notes</b><span class="lp-new">${icon("edit")}</span></div>
           <span class="lp-filter">${icon("search")}<span>Search notes</span></span>
           <div class="note-rows">${NOTES.map(row).join("")}</div>
         </div>
         <div class="note-pane">
           ${gate(`<div class="note-bar">
-            <div class="nt-modes" role="radiogroup" aria-label="Note mode">${mode("edit", "edit", "Markdown")}${mode("split", "split", "Side by side")}${mode("preview", "eye", "Preview")}</div>
-            <span class="nt-sep"></span>${tool("bold", "Bold")}${tool("title", "Heading")}${tool("list", "List")}${tool("todo", "Checklist")}${tool("chat", "Link a message")}${tool("clip", "Embed a file")}<span class="nt-tool on" title="Linked to a chat">${icon("link")}</span>
+            <span class="nt-tool on" title="Hide the note list">${icon("panel")}</span><span class="nt-sep"></span>
+            <div class="nt-modes" role="radiogroup" aria-label="Note layout">${mode("edit", "edit", "Markdown")}${mode("split", "split", "Side by side")}${mode("preview", "eye", "Preview")}</div>
+            <span class="nt-sep"></span>${tool("bold", "Bold")}${tool("title", "Heading")}${tool("list", "List")}${tool("todo", "Checklist")}${tool("chat", "Link a message")}${tool("clip", "Embed a file")}<span class="nt-tool on" title="Unlink the chat">${icon("link")}</span>
+            <span class="nt-sep nt-size"></span><span class="nt-tool nt-size" title="Full width">${icon("wide")}</span><span class="nt-tool nt-size nt-a" title="Smaller text">A<small>-</small></span><span class="nt-tool nt-size nt-a big" title="Larger text">A<small>+</small></span>
             <span class="comp-fill"></span><span class="nt-saved">Saved ${n.time}</span>${tool("send", "Send to a chat")}${tool("trash", "Delete note")}</div>
           <div class="note-body mode-${s.noteMode}">
-            <div class="nt-title"><b>${esc(n.title)}</b><span class="note-chat">${icon("link", "ic ic-12")}Linked to ${esc(n.chat)}</span></div>
+            <div class="nt-title"><b>${esc(n.title)}</b><span class="note-chat">${icon("link", "ic ic-12")}Linked to ${esc(n.chat)}${room ? acctTag(room.acct[0]) : ""}</span></div>
             <div class="nt-panes">
-              <label class="sr" for="md-${uid}">Markdown of ${esc(n.title)}</label>
-              <textarea id="md-${uid}" class="md-src" spellcheck="false">${esc(body)}</textarea>
+              <div class="nt-write"><div class="nt-stack">
+                <pre class="nt-hl" aria-hidden="true">${highlightNote(body)}</pre>
+                <label class="sr" for="md-${uid}">Markdown of ${esc(n.title)}</label>
+                <textarea id="md-${uid}" class="md-src" spellcheck="false">${esc(body)}</textarea>
+              </div></div>
               <div class="md">${md(body)}</div>
             </div>
           </div>`)}
@@ -2191,6 +2395,8 @@
       );
       const chats = ROOMS.filter((r) => r.msgs.some((m) => m[0] === k));
       const questions = theirs.filter(({ m }) => m[3]?.chip === "needs reply");
+      // What was picked up in your direct chat with them.
+      const picked = open().filter((g) => roomById(g.room).dm === k);
       const stats = [
         chats.length,
         pr.messages ?? theirs.length,
@@ -2247,7 +2453,7 @@
           </div>
           <aside class="pf-aside">
             ${questions.length ? sec("Open questions", questions.length, questions.map(({ r, m }) => `<button type="button" class="prow" data-room="${r.id}"><span class="pr-glyph ai">${icon("reply", "ic ic-18")}</span><span class="pr-text"><span class="pr-line wrap">${esc(m[2])}</span><span class="pr-meta">${esc(r.name)}, ${m[1]}</span></span></button>`).join("")) : ""}
-            ${pr.picked ? sec("Picked up from your chats", pr.picked.length, pr.picked.map(([title, due]) => `<div class="prow"><span class="pr-glyph ai">${icon("todo", "ic ic-18")}</span><span class="pr-text"><span class="pr-line">${esc(title)}</span><span class="pr-meta">Due ${due}</span></span><span class="pr-tiny">${icon("plus", "ic ic-18")}</span><span class="pr-tiny">${icon("close", "ic ic-16")}</span></div>`).join("")) : ""}
+            ${picked.length ? sec("Picked up from your chats", picked.length, picked.map((g) => `<div class="prow"><span class="pr-glyph ai">${icon(g.kind === "event" ? "cal" : "todo", "ic ic-18")}</span><span class="pr-text"><span class="pr-line">${esc(g.title)}</span><span class="pr-meta">${g.kind === "event" ? `${g.date}, ${g.at}` : `Due ${g.due}`}</span></span><button type="button" class="pr-tiny btn-ui" data-take="${g.id}" title="Add">${icon("plus", "ic ic-18")}</button><button type="button" class="pr-tiny btn-ui" data-drop="${g.id}" title="Dismiss">${icon("close", "ic ic-16")}</button></div>`).join("")) : ""}
             ${pr.events ? sec("Events together", pr.events.length, pr.events.map(([d, t, title, where]) => `<div class="prow"><span class="pr-date"><b>${d.split(" ")[1]}</b><small>Oct</small></span><span class="pr-text"><span class="pr-line">${esc(title)}</span><span class="pr-meta">${t}, ${esc(where)}</span></span></div>`).join("")) : ""}
             ${sec(
               "Conversations",
@@ -2280,12 +2486,46 @@
         rail() +
         `<div class="main">${VIEWS[s.view]()}</div>` +
         (s.toast ? `<p class="toast" role="status">${esc(s.toast)}</p>` : "");
+      // A chat opens at its first unread message (the "New since" divider), else at the bottom.
+      fitNote();
       const body = $(".tl-body", el);
-      if (body) body.scrollTop = body.scrollHeight;
+      const fresh = body && $(".new-since", body);
+      if (body)
+        body.scrollTop = fresh
+          ? fresh.getBoundingClientRect().top -
+            body.getBoundingClientRect().top -
+            8
+          : body.scrollHeight;
       if (focus) $(focus, el)?.focus();
       el.dispatchEvent(
         new CustomEvent("weft:view", { detail: s.view, bubbles: true }),
       );
+    }
+
+    /** The suggestions still open: of a room, of a kind ("event", "todo"), or all. */
+    function open(of = "") {
+      return SUGG.filter(
+        (x) =>
+          !s.handled.has(x.id) &&
+          (!of || x.room === of || x.kind === of),
+      );
+    }
+    function accept(g) {
+      if (s.handled.has(g.id)) return;
+      s.handled.add(g.id);
+      s.accepted.add(g.id);
+      if (g.add) s.cal.push({ ...g.add, added: true });
+    }
+    const firstName = (k) =>
+      k === "anna" ? "You" : person(k).name.replace(/^Prof\. /, "").split(" ")[0];
+
+    // The note source is as tall as its text and its pane scrolls, so the colours under the
+    // transparent textarea line up without scroll syncing.
+    function fitNote() {
+      const ta = $(".md-src", el);
+      if (!ta || !ta.offsetParent) return;
+      ta.style.height = "auto";
+      ta.style.height = `${ta.scrollHeight}px`;
     }
 
     function toast(text) {
@@ -2319,17 +2559,33 @@
       const hit = (sel) => t.closest(sel);
       let x;
       if (hit("[data-eye]")) return setPrivacy(!s.privacy);
-      if (hit("[data-catchup]")) {
-        s.catchup = s.catchup === s.room ? null : s.room;
+      if ((x = hit("[data-catchup]"))) {
+        s.catchup = x.dataset.catchup === "close" ? null : s.room;
         return render();
       }
       if (hit("[data-away]")) {
         s.awayDismissed = true;
         return render();
       }
-      if (hit("[data-gpu]")) {
-        s.gpuAdded = true;
-        return toast("Added “GPU cluster maintenance” to your calendar");
+      if ((x = hit("[data-take]"))) {
+        const g = suggById(x.dataset.take);
+        accept(g);
+        return toast(
+          `Added "${g.title}" to your ${g.kind === "event" ? "calendar" : "todos"}`,
+        );
+      }
+      if ((x = hit("[data-drop]"))) {
+        s.handled.add(x.dataset.drop);
+        return render();
+      }
+      if ((x = hit("[data-take-all]"))) {
+        const list = open(x.dataset.takeAll);
+        list.forEach(accept);
+        return toast(`Added ${list.length} suggestions`);
+      }
+      if (hit("[data-pick-fold]")) {
+        s.trayOpen = !s.trayOpen;
+        return render();
       }
       if (hit("[data-show]")) {
         s.shown = place();
@@ -2351,6 +2607,15 @@
         s.readMail.add(s.mail);
         return render();
       }
+      if (hit("[data-thread]")) {
+        s.threadOpen = !s.threadOpen;
+        return render();
+      }
+      if ((x = hit("[data-mail-label]"))) {
+        const l = x.dataset.mailLabel;
+        s.mailLabel = l && s.mailLabel !== l ? l : null;
+        return render();
+      }
       if ((x = hit("[data-filter]"))) {
         s.mailFilter = x.dataset.filter;
         return render();
@@ -2358,17 +2623,7 @@
       if ((x = hit("[data-add-event]"))) {
         const m = INBOX.find((y) => y.id === x.dataset.addEvent);
         s.added.add(m.id);
-        return toast(`Added “${m.event.title}” to your calendar`);
-      }
-      if ((x = hit("[data-found]"))) {
-        const f = FOUND.find((y) => y.id === x.dataset.found);
-        s.taken.add(f.id);
-        if (f.add) s.cal.push({ ...f.add, added: true });
-        return toast(`Added “${f.title}” to your calendar`);
-      }
-      if ((x = hit("[data-take]"))) {
-        s.taken.add(x.dataset.take);
-        return toast("Added to your todos");
+        return toast(`Added "${m.event.title}" to your calendar`);
       }
       if ((x = hit("[data-done]"))) {
         const id = x.dataset.done;
@@ -2405,6 +2660,8 @@
       if (!e.target.matches(".md-src")) return;
       s.notes[s.note] = e.target.value;
       $(".md", el).innerHTML = md(e.target.value);
+      $(".nt-hl", el).innerHTML = highlightNote(e.target.value);
+      fitNote();
     });
     el.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -2434,7 +2691,7 @@
   }
 
   const heroEl = $('[data-frag="hero"]');
-  if (heroEl) mountWindow(heroEl, { catchup: "lab" });
+  if (heroEl) mountWindow(heroEl);
 
   // The workspace window: the page's tabs and the window's own sidebar pick the same view.
   const tourEl = $('[data-frag="tour"]');
@@ -2694,7 +2951,7 @@
           "Workspace",
           by((k) => k !== "chat" && k !== "mail"),
         )}</div>`
-      : `${filters}<p class="res-empty">Nothing in the sample records matches “${esc(q.value)}”.</p>`;
+      : `${filters}<p class="res-empty">Nothing in the sample records matches "${esc(q.value)}".</p>`;
   }
 
   if (q && results) {
@@ -2768,9 +3025,9 @@
   const flow = $('[data-frag="flow"]');
   if (flow) {
     const ask = [
-      "jonas",
-      "13:44",
-      "@Anna Weber could you send the camera-ready checklist to Daniel before Friday?",
+      "lukas",
+      "13:15",
+      "@Anna Weber could you check the colours of Figure 3 before Wednesday? Then I regenerate all plots for the camera-ready.",
       { mention: true },
     ];
     flow.innerHTML = `
@@ -2778,15 +3035,15 @@
       <div class="fl-head">${avatar("ML", 5, "av av-s av-room")}<b>Machine Learning Lab</b>${acctTag("uni")}</div>
       <div class="fl-msgs">
         ${messageHtml(["lukas", "13:13", "Heads-up: the GPU cluster is down for maintenance on Saturday 08:00-14:00."], 0, [])}
-        ${messageHtml(ask, 1, [["lukas"], ask])}
+        ${messageHtml(ask, 1, [["lukas"], ask], true, true)}
       </div>
       <div class="fl-sugg">
         <p class="fl-sh"><span class="pk-spark">${icon("spark", "ic ic-16")}</span><b>Picked up from this chat</b><em>1</em><span class="comp-fill"></span><span class="pk-fold">${icon("down", "ic ic-16")}</span></p>
         <div class="sugg">
           <span class="leaf">${icon("todo", "ic ic-22")}</span>
           <span class="s-text">
-            <span class="s-line"><b>Send camera-ready checklist to Daniel</b>${label("Thesis supervision", "purple").replace('class="lbl"', 'class="lbl lbl-sm"')}</span>
-            <span class="s-meta"><span>${icon("cal", "ic ic-14")}Due Fri 30 Oct</span></span>
+            <span class="s-line"><b>Check the colours of Figure 3</b>${label("Research", "blue").replace('class="lbl"', 'class="lbl lbl-sm"')}</span>
+            <span class="s-meta"><span>${icon("cal", "ic ic-14")}Due Wed 28 Oct</span></span>
           </span>
           <span class="ai-add">${icon("plus", "ic ic-16")}Add</span><span class="ai-x">${icon("close", "ic ic-18")}</span>
         </div>
@@ -2796,10 +3053,10 @@
         <div class="col">
           <p class="fl-col"><span class="c-icon">${icon("cal", "ic ic-16")}</span><b>Upcoming</b><em>7</em></p>
           <div class="col-cards">
-            <p class="fl-day">Fri 30 Oct</p>
-            ${todoCardHtml({ id: "f1", title: "Send camera-ready checklist to Daniel", due: "Fri 30 Oct", label: ["Thesis supervision", "purple"], from: "Machine Learning Lab" }).replace('class="card"', 'class="card new"')}
             <p class="fl-day">Tue 27 Oct</p>
             ${todoCardHtml({ id: "f2", title: "Book train to Vienna", due: "Tue 27 Oct", label: ["Conference", "pink"] })}
+            <p class="fl-day">Wed 28 Oct</p>
+            ${todoCardHtml({ id: "f1", title: "Check the colours of Figure 3", due: "Wed 28 Oct", label: ["Research", "blue"], from: "Machine Learning Lab" }).replace('class="card"', 'class="card new"')}
           </div>
         </div>
       </div>`;
@@ -2830,7 +3087,7 @@
     chi: {
       q: "Where does the CHI paper stand?",
       steps: [
-        ["search", "Searched “CHI paper deadline abstract”", "3 found"],
+        ["search", 'Searched "CHI paper deadline abstract"', "3 found"],
         ["cal", "Looked in the calendar", "1 found"],
         ["todo", "Looked at your todos", "2 found"],
       ],
@@ -2871,7 +3128,7 @@
     meet: {
       q: "When is the lab meeting this week?",
       steps: [
-        ["search", "Searched “lab meeting room”", "2 found"],
+        ["search", 'Searched "lab meeting room"', "2 found"],
         ["cal", "Looked in the calendar", "1 found"],
       ],
       answer: [
