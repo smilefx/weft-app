@@ -164,8 +164,9 @@
               <div class="mod-text">
                 <h3>Mail directly in your chats</h3>
                 <p>
-                  Add your mail account. The same local model sorts it into what
-                  needs a reply, what belongs to which label and what is spam.
+                  Add your mail account, then read, answer and forward mail in
+                  Weft. The same local model sorts it into what needs a reply,
+                  what belongs to which label and what is spam.
                 </p>
               </div>
             </article>
@@ -193,8 +194,8 @@
           <div class="tour-head" data-reveal>
             <h2 id="tour-h">Everything around the chat</h2>
             <p>
-              A timeline that sums up what you missed in every chat, mail sorted
-              like your chats, a calendar that finds dates in messages, a todo
+              A timeline that sums up what you missed in every chat, mail you
+              read, sort and answer like your chats, a calendar that finds dates in messages, a todo
               board, notes that quote what was said, and a dedicated page for
               every person.
             </p>
@@ -386,70 +387,94 @@
         </div>
       </section>
 
-      <!-- Small things -->
+      <!-- Also in Weft -->
       <section class="small-things sec" aria-labelledby="st-h">
         <div class="frame">
-          <h2 id="st-h" data-reveal>Shortcuts and details</h2>
-          <div class="lists">
-            <div class="list keys" data-reveal>
-              <p class="group">Keyboard</p>
-              <ul>
-                <li>
-                  <span class="k"><kbd>Ctrl</kbd> <kbd>K</kbd></span
-                  ><span>Search every chat, mail and note</span>
-                </li>
-                <li>
-                  <span class="k"><kbd>Ctrl</kbd> <kbd>J</kbd></span
-                  ><span>Open Warp next to what you are reading</span>
-                </li>
-                <li>
-                  <span class="k"><kbd>/</kbd></span
-                  ><span>Filter the chat list</span>
-                </li>
-                <li>
-                  <span class="k"
-                    ><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>H</kbd></span
-                  ><span>Turn privacy mode on or off</span>
-                </li>
-                <li>
-                  <span class="k"><kbd>Ctrl</kbd> <kbd>I</kbd></span
-                  ><span>Show the raw Matrix event behind a message</span>
-                </li>
-                <li>
-                  <span class="k"><kbd>Shift</kbd> <kbd>Enter</kbd></span
-                  ><span>Start a new line without sending</span>
-                </li>
-                <li>
-                  <span class="k"><kbd>Esc</kbd></span
-                  ><span>Close a dialog or cancel a reply</span>
-                </li>
-              </ul>
-            </div>
-            <div class="list" data-reveal>
-              <p class="group">Also in Weft</p>
-              <ul class="facts">
-                <li>
-                  Polls, voice messages, files, locations and threads all show
-                  in the timeline, with read receipts under each message.
-                </li>
-                <li>
-                  Archived chats come back on their own when someone writes
-                  again. Folders and pins keep the rest in order.
-                </li>
-                <li>
-                  Subscribe to .ics calendars, like a course timetable, and see
-                  them next to the events found in your chats.
-                </li>
-                <li>
-                  The app, and everything the assistant writes, follows the
-                  language you pick: English or German.
-                </li>
-                <!-- <li>
-                  The same service also runs in a container on your own server,
-                  with Weft in the browser.
-                </li> -->
-              </ul>
-            </div>
+          <h2 id="st-h" data-reveal>Also in Weft</h2>
+          <div class="also" data-reveal>
+            <ul class="also-list" id="also-list">
+              <li>
+                <b>Todos and notes on every device</b>
+                <span>Todos, notes and your own events sync to Weft on your other computers through an encrypted room on your Matrix account. Settings, folders and labels come along.</span>
+              </li>
+              <li>
+                <b>Everything Matrix sends</b>
+                <span>Threads, polls, voice messages, files and locations show in the timeline, with read receipts under each message.</span>
+              </li>
+              <li>
+                <b>Folders and pins</b>
+                <span>Sort chats into folders, pin the ones you need daily and select several at once to move them together.</span>
+              </li>
+              <li>
+                <b>An archive that wakes up</b>
+                <span>Archived chats leave the list and come back on their own when someone writes again.</span>
+              </li>
+              <li>
+                <b>Notifications per chat</b>
+                <span>Every message, mentions only or muted, set for each chat and shared with your other clients.</span>
+              </li>
+              <li>
+                <b>Timetables next to your week</b>
+                <span>Subscribe to .ics calendars, like a course timetable, and see them beside your own events.</span>
+              </li>
+              <li>
+                <b>Plan in one line</b>
+                <span>Ask the calendar for an hour with Mira next week. Weft finds free times and drafts the message or a poll for you to send.</span>
+              </li>
+              <li>
+                <b>Files open in place</b>
+                <span>PDFs, images, Markdown, CSV and code open in a side panel, and large videos play right in the chat.</span>
+              </li>
+              <li>
+                <b>Formulas in notes</b>
+                <span>Notes render LaTeX, tables and checklists, and colour their Markdown source as you type.</span>
+              </li>
+              <li class="more">
+                <b>English or German</b>
+                <span>The app, and everything the assistant writes, follows the language you pick.</span>
+              </li>
+              <li class="more">
+                <b>Mail with its attachments</b>
+                <span>Open attachments in the file viewer or download them, and mark mail as important on the server.</span>
+              </li>
+              <li class="more">
+                <b>Rooms of your own</b>
+                <span>Start rooms and direct chats, invite people, change room settings and follow room upgrades.</span>
+              </li>
+              <li class="more">
+                <b>Edit, forward, pin</b>
+                <span>Edit, quote and forward messages, react to them and pin the ones that matter.</span>
+              </li>
+              <li class="more">
+                <b>Who is around</b>
+                <span>See who is online and who is typing, and links show a preview of the page.</span>
+              </li>
+              <li class="more">
+                <b>Verify with emoji</b>
+                <span>Confirm a new session by comparing emoji, and see every session of your account.</span>
+              </li>
+              <li class="more">
+                <b>Ready when you are</b>
+                <span>Weft can start at login, hidden in the tray, so your chats are synced when you open it.</span>
+              </li>
+              <li class="more">
+                <b>AI only if you want it</b>
+                <span>One setting hides Warp, summaries and every suggestion. Chats, search and the workspace stay.</span>
+              </li>
+              <li class="more">
+                <b>For the curious</b>
+                <span>Look at the raw Matrix event behind any message, or watch the live sync stream.</span>
+              </li>
+            </ul>
+            <button
+              type="button"
+              class="also-more"
+              aria-controls="also-list"
+              aria-expanded="false"
+              hidden
+            >
+              Show 9 more
+            </button>
           </div>
         </div>
       </section>
@@ -462,7 +487,9 @@
             <p>
               Weft runs standalone on your computer. All your Messages, imports,
               todos and notes get saved in one file in your data folder. There
-              is no Weft cloud and no Weft account.
+              is no Weft cloud and no Weft account. Your other computers get
+              your todos, notes and events through an encrypted room on your
+              own Matrix account.
             </p>
             <p>
               The assistant uses an inference server on your machine. Without

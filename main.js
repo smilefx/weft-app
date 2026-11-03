@@ -100,3 +100,17 @@ fetch(`https://api.github.com/repos/${RELEASE_REPO}/releases/latest`, {
     }
   })
   .catch(() => {});
+
+// "Also in Weft" shows its first features and folds the rest behind a button.
+const also = document.querySelector(".also");
+const alsoMore = also?.querySelector(".also-more");
+if (also && alsoMore) {
+  const label = alsoMore.textContent.trim();
+  also.classList.add("folded");
+  alsoMore.hidden = false;
+  alsoMore.addEventListener("click", () => {
+    const open = also.classList.toggle("folded") === false;
+    alsoMore.setAttribute("aria-expanded", String(open));
+    alsoMore.textContent = open ? "Show fewer" : label;
+  });
+}

@@ -1128,6 +1128,7 @@
       c: 1,
       addr: "chairs@chi.example",
       subject: "Abstract submission closes Friday 23:59",
+      flagged: true,
       time: "08:36",
       unread: true,
       label: ["Research", "blue"],
@@ -1839,6 +1840,7 @@
       mail: "m6",
       mailFilter: "all",
       mailLabel: null,
+      flags: new Set(INBOX.filter((x) => x.flagged).map((x) => x.id)),
       threadOpen: true,
       note: "n1",
       noteMode: "split",
@@ -1992,7 +1994,7 @@
           ${gate(`<div class="tl-body"><div class="tl-inner">${body}</div></div>
             ${
               r.mail
-                ? `<p class="comp-state">Email is read-only in Weft. Answer from your mail program.</p>`
+                ? `<div class="comp-state"><span>Mail is written in its own window, not here.</span><button type="button" class="send btn-ui">${icon("edit", "ic ic-14")}Write mail</button></div>`
                 : `<form class="composer">
               ${picked}
               <label class="sr" for="compose-${uid}">Message ${esc(r.name)}</label>
@@ -2106,7 +2108,11 @@
       const shown = INBOX.filter(
         (m) =>
           (s.mailFilter === "all" ||
-            (s.mailFilter === "answer" ? m.reply : m.kind === "Person")) &&
+            (s.mailFilter === "answer"
+              ? m.reply
+              : s.mailFilter === "flagged"
+                ? flagged(m)
+                : m.kind === "Person")) &&
           (!s.mailLabel || m.label?.[0] === s.mailLabel),
       );
       // LabelFilter.svelte: the labels the mail is sorted into, one at a time.
@@ -2148,10 +2154,10 @@
         if (x.thread) return conv(x);
         const unread = x.unread && !s.readMail.has(x.id);
         const tags = `${x.reply ? `<span class="chip chip-reply chip-sm">${icon("reply", "ic ic-12")}needs reply</span>` : ""}${x.label ? label(...x.label).replace('class="lbl"', 'class="lbl lbl-sm"') : ""}`;
-        return `<button type="button" class="mail-item${x.id === s.mail ? " on" : ""}${unread ? " unread" : ""}" data-mail="${x.id}" aria-pressed="${x.id === s.mail}">
+        return `<button type="button" class="mail-item${x.id === s.mail ? " on" : ""}${unread ? " unread" : ""}${flagged(x) ? " flagged" : ""}" data-mail="${x.id}" aria-pressed="${x.id === s.mail}">
         ${avatar(initials(x.from), x.c, "av av-38 av-mail")}
         <span class="mi-main">
-          <span class="mi-top"><b>${esc(x.from)}</b><span class="time">${x.time}</span></span>
+          <span class="mi-top"><b>${esc(x.from)}</b>${flagged(x) ? `<span class="mi-star" title="Important">${icon("star", "ic ic-12")}</span>` : ""}<span class="time">${x.time}</span></span>
           <span class="mi-sub"><span>${esc(x.subject)}</span></span>
           ${s.privacy ? "" : `<span class="mi-prev">${x.file ? icon("clip", "ic ic-14") : ""}<span>${esc(x.body[1] ?? x.body[0])}</span></span>`}
           ${tags ? `<span class="mi-tags">${tags}</span>` : ""}
@@ -2161,16 +2167,20 @@
       const f = (k, l, n) =>
         `<button type="button" class="pill${s.mailFilter === k ? " on" : ""}" data-filter="${k}" aria-pressed="${s.mailFilter === k}">${l}${n ? `<em>${n}</em>` : ""}</button>`;
       const added = m.event && s.added.has(m.id);
+      // A sender with a mail chat opens it; anyone else can be followed.
+      const chat = ROOMS.find((r) => r.mail && r.name === m.from);
+      const tool = (ic, title, attr = "") =>
+        `<button type="button" class="rd-tool" title="${title}" ${attr}>${icon(ic, "ic ic-18")}</button>`;
       return `<div class="list-pane mail-list">
-          <div class="lp-head"><b>Inbox</b><span class="lp-icons"><span class="on" title="Threads">${icon("thread", "ic ic-18")}</span><span title="Refresh">${icon("sync", "ic ic-18")}</span></span></div>
-          <div class="pills">${f("all", "All")}${f("answer", "To answer", INBOX.filter((x) => x.reply).length)}${f("people", "People", INBOX.filter((x) => x.kind === "Person").length)}<span class="pill">Notifications</span><span class="pill">Newsletters</span><span class="pill">Spam</span></div>${labelRow}
+          <div class="lp-head"><b>Inbox</b><span class="lp-icons"><span class="on" title="Threads">${icon("thread", "ic ic-18")}</span><span title="Refresh">${icon("sync", "ic ic-18")}</span></span><button type="button" class="lp-new btn-ui" title="Write mail">${icon("edit")}</button></div>
+          <div class="pills">${f("all", "All")}${f("answer", "To answer", INBOX.filter((x) => x.reply).length)}${f("flagged", "Important", INBOX.filter((x) => flagged(x)).length)}${f("people", "People", INBOX.filter((x) => x.kind === "Person").length)}<span class="pill">Notifications</span><span class="pill">Newsletters</span><span class="pill">Spam</span></div>${labelRow}
           <div class="mail-rows">${shown.map(row).join("")}</div>
         </div>
         <div class="reader">
           <div class="mail-head">
-            <h3 class="rd-subject">${esc(m.subject)}</h3>
+            <div class="rd-title"><h3 class="rd-subject">${esc(m.subject)}</h3><div class="rd-tools" role="toolbar" aria-label="Mail actions">${tool("reply", "Reply")}${tool("forward", "Forward")}<span class="rd-sep"></span><button type="button" class="rd-tool rd-star${flagged(m) ? " on" : ""}" data-flag="${m.id}" aria-pressed="${flagged(m)}" title="${flagged(m) ? "Not important" : "Mark as important"}">${icon("star", "ic ic-18")}</button>${tool("note", "Add to a note")}${chat ? tool("chat", `Open ${esc(chat.name)}`, `data-room="${chat.id}"`) : tool("link", "Add to a chat")}</div></div>
             <div class="rd-from">${avatar(initials(m.from), m.c, "av av-40 av-mail")}<span><b>${esc(m.from)}</b><small>${esc(m.addr)}</small></span>
-              <span class="rd-actions"><span class="tl-btn">${icon("note", "ic ic-16")}Add to note</span><span class="tl-btn">${icon("link", "ic ic-16")}Add to a chat</span><span class="tl-btn primary">${icon("plus", "ic ic-16")}Follow</span></span></div>
+              ${chat ? "" : `<button type="button" class="bar-btn btn-ui">${icon("plus", "ic ic-14")}Follow</button>`}</div>
             <div class="rd-meta"><span>${m.time.includes(":") ? `Today, ${m.time}` : m.time}</span><span>to</span><span class="who-chip">${avatar("AW", 0, "av av-20")}Anna Weber</span></div>
             <div class="rd-kind"><div class="seg-ui seg-inline">${["Person", "Notification", "Newsletter", "Spam"].map((k) => `<span class="${k === m.kind ? "on" : ""}">${k}</span>`).join("")}</div>${m.reply ? `<span class="chip chip-reply">${icon("reply", "ic ic-12")}needs reply</span>` : ""}${m.label ? label(...m.label) : ""}<span class="rd-sorted">Sorted by nimble-v3</span></div>
           </div>
@@ -2502,6 +2512,8 @@
       );
     }
 
+    const flagged = (m) => s.flags.has(m.id);
+
     /** The suggestions still open: of a room, of a kind ("event", "todo"), or all. */
     function open(of = "") {
       return SUGG.filter(
@@ -2605,6 +2617,11 @@
       if ((x = hit("[data-mail]"))) {
         s.mail = x.dataset.mail;
         s.readMail.add(s.mail);
+        return render();
+      }
+      if ((x = hit("[data-flag]"))) {
+        const id = x.dataset.flag;
+        s.flags.has(id) ? s.flags.delete(id) : s.flags.add(id);
         return render();
       }
       if (hit("[data-thread]")) {

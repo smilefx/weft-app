@@ -25,8 +25,9 @@
   Weft shows them as one chat, with the right account for each message.
 - **History from servers that shut down.** Import an Element export (JSON or zip). The
   messages slot into the room at their original time, attachments included.
-- **Mail next to your chats.** Add an IMAP account, a local model sorts it into what needs
-  a reply, which label it belongs to and what is spam.
+- **Mail next to your chats.** Add a mail account (IMAP and SMTP) and write, answer and
+  forward mail from Weft. A local model sorts it into what needs a reply, which label it
+  belongs to and what is spam.
 - **Encrypted, keys backed up.** End-to-end encryption with cross-signing, key backup and
   recovery. Weft signs in as one more device, so Element and your phone stay in sync.
 - **Everything around the chat.** A timeline that sums up what you missed, a calendar that
@@ -47,7 +48,8 @@
 
 Weft is a service that runs inside the app on your own computer. Messages, imports, todos
 and notes stay in your data folder. There is no Weft cloud and no Weft
-account.
+account. Your other computers get your todos, notes and events through an encrypted room
+on your own Matrix account.
 
 The assistant features use an inference server on your machine with an OpenAI-compatible
 API, such as [Ollama](https://ollama.com). Without one, chats, search and the workspace work
