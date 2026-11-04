@@ -44,10 +44,30 @@
 - **AI when you want it.** One setting hides Warp, summaries and every suggestion. Chats,
   search and the workspace stay.
 - **Privacy mode.** Sharing your screen in a lecture or a meeting? Privacy mode covers the
-  open chat and hides previews in the chat list.
-- **Make it yours.** Eight themes, nine accents, three message styles, adjustable density
-  and corners, and a `user.css` that loads last and reloads as you save.
+  open chat or mail and hides previews in your lists.
+- **Plugins for the rest of your work.** GitLab issues and merge requests become todos,
+  Moodle brings assignments, deadlines and messages, and an Obsidian vault becomes a folder of
+  your notes. See [Plugins](#plugins).
+- **Make it yours.** Thirteen themes, each in light and dark, or your own made from scratch or
+  imported from a file. Any accent colour, three message styles, adjustable density and
+  corners, and a `user.css` that loads last and reloads as you save.
 - **English or German**, for the app and everything the assistant writes.
+
+## Plugins
+
+Plugins bring your other tools into Weft, so their work lands where your own already is. They
+are built in, so there is nothing to install: connect one under _Settings -> Plugins_.
+
+| Plugin   | What it brings                                                                                                                                                                                  | How you connect it                                                                                       |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| GitLab   | Your To-Do List, assigned issues, merge requests to review and, if you want, your own merge requests, as todos that link back.                                                                  | A personal access token, for gitlab.com or your institution's GitLab. `read_api` to read, `api` to also mark to-dos done and close issues. |
+| Moodle   | Assignments still due and, if you want, quizzes and other activities as todos. Deadlines and course events in the calendar. Moodle messages as chats you can answer in plain text. Notifications for Warp. | A security key, which works with single sign-on, or your password. If your Moodle gives out no key, a calendar link brings deadlines and events only. |
+| Obsidian | A vault as a folder of your notes, in sync both ways, with wiki links, embeds, tags and properties. If a note changes on both sides, the other text is kept as a copy.                          | The vault's folder on your computer.                                                                     |
+
+Warp can look all of it up, and search finds it like everything else. GitLab and Moodle are
+fetched every five minutes, and you can connect several servers of each. Tokens are stored
+encrypted on your computer and never synced, so you connect each computer on its own, and a
+vault stays on the computer it is on. Plugins from others can't be installed yet.
 
 ## Your data stays on your machine
 
@@ -55,8 +75,8 @@ Weft is a service that runs inside the app on your own computer. Messages, impor
 and notes stay in your data folder. There is no Weft cloud and no Weft
 account. Your other computers get your todos, notes and events through an encrypted room
 on your own Matrix account, and your settings, folders and labels come along. Passwords
-never sync: calendar passwords are encrypted on each device with a key in your system
-keychain, and every computer adds the account itself.
+never sync: calendar passwords and plugin tokens are encrypted on each device with a key in
+your system keychain, and every computer adds the account itself.
 
 The assistant features use an inference server on your machine with an OpenAI-compatible
 API, such as [Ollama](https://ollama.com). Without one, chats, search and the workspace work
@@ -123,7 +143,7 @@ into an issue. Instead describe the problem in made-up words, and blur names in 
 ## Questions
 
 **Do I need a Matrix account?** Yes. Any homeserver works, your organisation's or a public
-one, with password or single sign-on. Mail and calendar accounts are optional.
+one, with password or single sign-on. Mail and calendar accounts and plugins are optional.
 
 **Can I keep using other clients?** Yes. Weft signs in as one more device of your account,
 so everything stays in sync with your other clients, encryption keys included.

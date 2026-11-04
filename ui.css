@@ -160,19 +160,13 @@
 .av-xl {
   --s: 84px;
 }
-/* A circle looks smaller than the rounded square in the same box, so it is drawn 5% larger;
-   the squircle (a superellipse mask) 4% larger, so all three weigh the same side by side. */
+/* Group rooms are circles (Avatar.svelte). */
 .av-room {
   border-radius: 50%;
-  transform: scale(1.05);
 }
-.av-mail {
-  border-radius: 0;
-  transform: scale(1.04);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0C88 0 100 12 100 50S88 100 50 100 0 88 0 50 12 0 50 0Z'/%3E%3C/svg%3E")
-    center / 100% 100% no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0C88 0 100 12 100 50S88 100 50 100 0 88 0 50 12 0 50 0Z'/%3E%3C/svg%3E")
-    center / 100% 100% no-repeat;
+/* Someone Weft knows only by address: neutral, no person's colour. */
+.av-none {
+  --u: var(--muted);
 }
 /* Presence dot (Avatar.svelte): bottom right, ringed in --panel. */
 .av-wrap {
@@ -3506,11 +3500,11 @@ button.prow {
 .settings[data-focus] .st-block {
   opacity: 0.3;
 }
+.settings[data-focus="scheme"] [data-part="scheme"],
 .settings[data-focus="theme"] [data-part="theme"],
 .settings[data-focus="accent"] [data-part="accent"],
 .settings[data-focus="style"] [data-part="style"],
-.settings[data-focus="density"] [data-part="density"],
-.settings[data-focus="css"] [data-part="css"] {
+.settings[data-focus="density"] [data-part="density"] {
   opacity: 1;
 }
 .st-h {
@@ -3526,46 +3520,6 @@ button.prow {
 }
 .st-h2 {
   margin-top: 6px;
-}
-.presets {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-.preset {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 38px;
-  padding: 0 10px 0 6px;
-  border: 1px solid var(--line2);
-  border-radius: var(--r2);
-  background: var(--panel);
-  color: var(--text);
-  cursor: pointer;
-  font: 500 13px/1 var(--ui);
-  text-align: left;
-}
-.preset:hover {
-  background: var(--hover);
-}
-.preset[aria-checked="true"] {
-  border-color: var(--accent);
-  outline: 1px solid var(--accent);
-  outline-offset: -2px;
-}
-.sw {
-  display: inline-flex;
-  gap: 2px;
-  padding: 3px;
-  border-radius: 6px;
-  flex: none;
-  box-shadow: 0 0 0 1px rgb(127 127 127 / 0.3);
-}
-.sw i {
-  width: 9px;
-  height: 18px;
-  border-radius: 3px;
 }
 .accents {
   display: flex;
@@ -3590,12 +3544,6 @@ button.prow {
   box-shadow:
     0 0 0 2px var(--panel),
     0 0 0 4px var(--a);
-}
-.acc-default {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--on);
 }
 .settings .seg-ui {
   display: flex;
@@ -5333,18 +5281,6 @@ button.tl-btn {
   gap: 6px;
   padding: 0 8px 8px;
 }
-.pk-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 7px 8px;
-  border-radius: var(--r2);
-  border: 1px dashed color-mix(in srgb, var(--ai) 45%, var(--line2));
-}
-.pk-card:hover {
-  border-color: var(--ai);
-  background: color-mix(in srgb, var(--ai) 5%, transparent);
-}
 /* A date leaf: the month as a tag over the day, like a calendar page. */
 .pk-leaf {
   width: 38px;
@@ -5403,13 +5339,6 @@ button.tl-btn {
   gap: 4px;
   flex: none;
 }
-.pk-who {
-  flex: 0 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-}
 .pk-acts {
   display: flex;
   align-items: center;
@@ -5451,7 +5380,7 @@ button.tl-btn {
 }
 @media (max-width: 719px) {
   .pk-cards .pk-card:nth-child(n + 2),
-  .pk-who {
+  .pk-quote {
     display: none;
   }
 }
@@ -5684,4 +5613,1350 @@ button.c-link {
   .rd-tools .rd-tool:nth-child(n + 4) {
     display: none;
   }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   The app as of 0.5.0 (frontend/DESIGN.md): the selected state is an accent tint, controls have no
+   outlines, every tag is one component and list columns sit on --list-surface. These rules come
+   last and win over the older ones above.
+   ------------------------------------------------------------------------------------------ */
+
+/* Tag.svelte: 500 mono, 10px on a 17px line, or 21px high for the md size. */
+.tag {
+  height: 17px;
+  font: 500 10px/17px var(--mono);
+}
+.tag-aweber {
+  --u: var(--user-5);
+}
+.tag-mail {
+  height: 17px;
+}
+.tag-logo {
+  display: inline-flex;
+  align-items: center;
+}
+.chip {
+  border: 0;
+}
+.chip-reply {
+  gap: 4px;
+  height: 17px;
+  padding: 0 5px 0 4px;
+  font: 500 10px/17px var(--mono);
+}
+.lbl-sm {
+  height: 21px;
+  padding: 0 7px;
+  border-radius: 5px;
+  font: 500 10px/21px var(--mono);
+}
+.mi-tags .lbl-sm,
+.rd-kind .lbl-sm {
+  height: 17px;
+  padding: 0 5px;
+  border-radius: 4px;
+  line-height: 17px;
+}
+.lbl-pill {
+  font: 500 11px/24px var(--mono);
+}
+/* ProviderLogo.svelte: a service's own colour and glyph, the one place brand colours appear. */
+.svc-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--s);
+  height: var(--s);
+  border-radius: var(--rad);
+  background: var(--c);
+  color: #fff;
+}
+.svc-logo svg {
+  display: block;
+}
+
+/* Rail.svelte */
+.win {
+  grid-template-columns: 224px minmax(0, 1fr);
+}
+.rail {
+  padding: 0 12px 12px;
+}
+.rail-top {
+  height: 64px;
+  padding: 0 4px;
+}
+.rail-search {
+  margin-bottom: 22px;
+  box-shadow: none;
+  color: var(--muted);
+}
+.rail-h {
+  font: 500 12px/12px var(--ui);
+  color: var(--muted);
+}
+.rail-h.folders {
+  padding-top: 22px;
+}
+.rail-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rail-folders {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+.rail-item {
+  gap: 12px;
+  height: 40px;
+  font: 500 14px/20px var(--ui);
+}
+.rail-item em {
+  min-width: 18px;
+  padding: 3px 6px;
+  text-align: center;
+}
+.rail-item.on {
+  background: var(--selected);
+  box-shadow: none;
+  color: var(--accent);
+}
+.rail-item.on em {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.rail-warp {
+  margin-top: auto;
+  box-shadow: none;
+}
+
+/* List columns and rows */
+.list-pane {
+  background: var(--list-surface);
+}
+.lp-new {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.lp-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  color: var(--muted);
+}
+.chat-row.on,
+.mail-item.on,
+.note-item.on {
+  background: var(--selected);
+}
+.lp-accts .tag {
+  padding: 0 6px;
+}
+
+/* The conversation */
+.tl-tools .hb em {
+  font: 500 12px/16px var(--ui);
+  color: var(--muted);
+}
+.quote {
+  border-color: var(--line2);
+}
+.send:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.send {
+  gap: 6px;
+  font: 500 13px/16px var(--ui);
+}
+.comp-service {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px;
+  font: 500 13px/18px var(--ui);
+  color: var(--muted);
+}
+/* SuggestionTray.svelte: --panel cards on the sunk tray, no outline inside the composer's. */
+.picked-tray .picked {
+  padding: 10px 12px 8px 14px;
+}
+.picked-tray .picked b {
+  font: 600 13px/16px var(--ui);
+}
+.picked-tray .picked em {
+  margin-left: 6px;
+  font: 500 13px/16px var(--ui);
+  color: var(--faint);
+}
+.picked-tray .pk-spark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.pk-cards {
+  padding: 0 12px 12px;
+  max-height: 240px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.pk-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 10px 10px 12px;
+  border-radius: var(--r2);
+  background: var(--panel);
+}
+.pk-card:hover {
+  background: color-mix(in srgb, var(--panel) 96%, var(--text));
+}
+.pk-leaf {
+  width: 40px;
+  height: 44px;
+}
+.pk-t {
+  font: 500 14px/18px var(--ui);
+}
+.pk-quote {
+  min-width: 0;
+  font: 400 12px/16px var(--ui);
+  color: var(--faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pk-chips {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  margin-top: 2px;
+  overflow: hidden;
+}
+.pk-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  height: 21px;
+  padding: 0 7px;
+  border-radius: 5px;
+  background: var(--hover);
+  color: var(--muted);
+  font: 500 11px/12px var(--ui);
+  white-space: nowrap;
+}
+.pk-person {
+  padding-left: 4px;
+}
+.pk-add {
+  padding: 0 12px 0 10px;
+  background: var(--ai);
+  color: var(--panel);
+}
+.pk-add:hover {
+  background: color-mix(in srgb, var(--ai) 85%, var(--text));
+}
+.sugg {
+  border: 0;
+  background: var(--panel);
+}
+.ai-add {
+  background: var(--ai);
+  color: var(--panel);
+}
+.ai-add:hover {
+  background: color-mix(in srgb, var(--ai) 85%, var(--text));
+}
+
+/* Inbox */
+.lp-pick {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rd-acct {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.rd-sorted {
+  margin-left: 0;
+}
+.rd-file {
+  max-width: none;
+  border: 0;
+  background: var(--hover);
+}
+.rd-file > .ic {
+  color: var(--muted);
+}
+.ev-card {
+  border: 0;
+  background: var(--sunk);
+  padding: 10px 12px;
+}
+.ev-main small {
+  gap: 5px;
+}
+
+/* Calendar */
+.side-ic {
+  display: inline-flex;
+  color: var(--muted);
+}
+.cal-cals .side-h {
+  gap: 8px;
+}
+.cal-group {
+  margin: 8px 0 0;
+  font: 400 12px/16px var(--ui);
+  color: var(--muted);
+}
+.cal-row {
+  min-height: 20px;
+}
+.cal-goes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cal-goes .side-h {
+  padding-top: 0;
+}
+.field-sel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--r2);
+  background: var(--hover);
+  font: 400 13px/18px var(--ui);
+}
+.found small.from > span {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hr {
+  font: 400 12px/12px var(--ui);
+  color: var(--muted);
+}
+.hr:first-child {
+  margin-top: 2px;
+}
+.ev-moment {
+  height: 22px;
+  padding: 3px 7px;
+}
+.cal-ask {
+  gap: 12px;
+  padding: 12px 24px 14px;
+}
+.cal-ask .bar {
+  flex: 0 1 820px;
+}
+.cal-fold {
+  display: inline-flex;
+  flex: none !important;
+  color: var(--muted);
+}
+
+/* TodosPage.svelte: the column head, and linked todos with their service over the title */
+.fl-col b {
+  flex: none;
+  font: 600 14px/20px var(--ui);
+}
+.fl-col .c-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  color: var(--muted);
+}
+.fl-col .c-link {
+  margin: 0 4px 0 0;
+}
+.circle.dashed {
+  color: transparent;
+}
+.sg-main b,
+.sg-top b {
+  font: 500 14px/20px var(--ui);
+}
+.due {
+  height: 21px;
+  padding: 0 7px;
+}
+.sg-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--muted);
+}
+.sg-x:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+.card.linked {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  column-gap: 10px;
+  row-gap: 6px;
+}
+.ctx-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+}
+.ctx-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.proj {
+  --p: var(--label-blue);
+  min-width: 0;
+  height: 21px;
+  padding: 0 7px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--p) 13%, transparent);
+  color: color-mix(in srgb, var(--p) 85%, var(--text));
+  font: 500 10px/21px var(--mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ctx-ref {
+  flex: none;
+  font: 500 10px/21px var(--mono);
+  color: var(--faint);
+  white-space: nowrap;
+}
+.ctx-why {
+  display: inline-flex;
+  flex: none;
+  color: var(--accent);
+}
+
+/* NotesPage.svelte: one tree of folders and notes; a vault is a folder too. */
+.note-rows {
+  padding: 0 10px 12px;
+}
+.frow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 32px;
+  flex: none;
+  padding: 0 10px 0 6px;
+  border: 0;
+  border-radius: var(--r2);
+  background: transparent;
+  color: var(--text);
+  font: 500 13px/18px var(--ui);
+  text-align: left;
+}
+button.frow {
+  cursor: pointer;
+}
+button.frow:hover {
+  background: var(--hover);
+}
+.frow .ic {
+  color: var(--muted);
+}
+.frow .ic-mute {
+  color: var(--faint);
+}
+.nrow {
+  font-weight: 400;
+}
+.frow.on,
+button.frow.on:hover {
+  background: var(--selected);
+  color: var(--accent);
+}
+.frow.on .ic {
+  color: inherit;
+}
+.chev {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  transition: transform 120ms ease;
+}
+.chev.open {
+  transform: rotate(90deg);
+}
+.fname {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fcount {
+  flex: none;
+  font: 400 12px/16px var(--ui);
+  color: var(--faint);
+}
+.nt-title b {
+  font: 600 26px/32px var(--ui);
+  letter-spacing: -0.02em;
+}
+.nt-title {
+  gap: 10px;
+}
+.add-tag {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 4px;
+  height: 21px;
+  padding: 0 7px;
+  border: 1px dashed var(--line2);
+  border-radius: 5px;
+  font: 500 10px/19px var(--mono);
+  color: var(--muted);
+}
+.wiki {
+  color: var(--accent);
+}
+.props {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 14px;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: var(--r2);
+  background: var(--sunk);
+  font: 400 13px/18px var(--ui);
+}
+.props dt {
+  color: var(--muted);
+}
+.props dd {
+  margin: 0;
+}
+
+/* Timeline */
+.side-go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  color: var(--muted);
+}
+.side-go:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+/* WarpThread.svelte */
+.warp-panel {
+  gap: 10px;
+}
+.wp-head {
+  gap: 8px;
+  font: 600 13px/14px var(--ui);
+}
+.wp-q span {
+  max-width: 80%;
+  padding: 10px 15px;
+  border-radius: 18px 18px 6px 18px;
+  background: color-mix(in srgb, var(--accent) 13%, var(--panel));
+  color: var(--text);
+  font: 400 14px/22px var(--ui);
+}
+.wp-steps {
+  padding: 4px 12px;
+  border: 1px solid color-mix(in srgb, var(--ai) 16%, var(--line));
+  border-radius: var(--r2);
+  background: color-mix(in srgb, var(--ai) 7%, var(--panel));
+}
+.wp-step {
+  padding: 4px 0;
+  font: 400 13px/20px var(--ui);
+}
+.wp-step em {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 400 12px/16px var(--ui);
+}
+.wp-answer {
+  gap: 10px;
+  padding-inline: 0;
+  font: 400 14px/22px var(--ui);
+}
+.wp-src summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 0;
+  font: 500 12px/16px var(--ui);
+  list-style: none;
+}
+.wp-src summary::-webkit-details-marker {
+  display: none;
+}
+.wp-model {
+  margin-left: auto;
+  font: 400 11px/16px var(--mono);
+  color: var(--faint);
+}
+.wp-comp {
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: 6px 6px 6px 14px;
+  font: 400 14px/22px var(--ui);
+}
+.wp-send {
+  width: 32px;
+  height: 32px;
+  background: color-mix(in srgb, var(--accent) 45%, var(--panel));
+}
+
+/* Search (SearchModal.svelte) */
+.res-filters {
+  flex-wrap: wrap;
+}
+
+/* ThemePicker.svelte: Settings, Appearance */
+.settings {
+  gap: 22px;
+}
+.settings .st-h {
+  font: 600 14px/20px var(--ui);
+}
+.modes,
+.styles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.mode {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 6px 6px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.mode:hover {
+  background: var(--sunk);
+}
+.mode[aria-checked="true"] {
+  border-color: var(--accent);
+  background: var(--selected);
+  color: var(--text);
+}
+.mode-win {
+  position: relative;
+  display: flex;
+  height: 76px;
+  border-radius: var(--r2);
+  overflow: hidden;
+}
+.mode-name {
+  padding: 6px 2px 8px;
+  font: 500 13px/18px var(--ui);
+  text-align: center;
+}
+/* MiniWindow.svelte */
+.mw {
+  flex: 1;
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  background: var(--mw-app);
+  overflow: hidden;
+}
+.mw.half {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 50%);
+}
+.mw i,
+.mw b {
+  display: block;
+}
+.mw-side {
+  width: 22%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 3px;
+}
+.mw-side i {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--mw-faint);
+  opacity: 0.5;
+}
+.mw-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px;
+  border-radius: 4px;
+  background: var(--mw-panel);
+}
+.mw-top {
+  display: flex;
+  gap: 6px;
+}
+.mw-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mw-lines i {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--mw-text);
+  opacity: 0.35;
+}
+.mw-lines b {
+  width: 42%;
+  height: 7px;
+  margin-left: auto;
+  border-radius: 4px;
+  background: var(--mw-accent);
+  opacity: 0.45;
+}
+.mw-card {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 3px;
+  background: var(--mw-sunk);
+  border: 1px solid var(--mw-line);
+}
+.mw-card i {
+  height: 2px;
+  background: var(--mw-faint);
+}
+.mw-comp {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 12px;
+  padding: 0 3px 0 5px;
+  border-radius: 3px;
+  background: var(--mw-sunk);
+  border: 1px solid var(--mw-line);
+}
+.mw-comp i {
+  flex: 1;
+  height: 2px;
+  background: var(--mw-faint);
+}
+.mw-comp b {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mw-accent);
+}
+/* Theme cards, each with a woven swatch per variant (ThemeSwatch.svelte) */
+.st-h-row {
+  align-items: center;
+}
+.st-acts {
+  display: flex;
+  gap: 6px;
+}
+.settings .st-h .bar-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 9px;
+  border-radius: var(--r2);
+  background: var(--hover);
+  color: var(--text);
+  font: 500 12px/16px var(--ui);
+  white-space: nowrap;
+}
+.themes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.tcard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+.tcard:hover {
+  background: var(--sunk);
+}
+.tcard.sel {
+  border-color: var(--accent);
+  background: var(--selected);
+}
+.swatches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.swatch {
+  display: block;
+  aspect-ratio: 76 / 62;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-in2);
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px var(--line);
+}
+.swatch.on {
+  box-shadow: 0 0 0 1.5px var(--accent);
+}
+.helix {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.helix .t {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.helix .t.back {
+  stroke-width: 2.5;
+}
+.helix .rung {
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+.helix .weft {
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.helix .cut {
+  fill: none;
+  stroke-linecap: round;
+}
+.tname {
+  padding: 4px 2px 2px;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: 500 13px/18px var(--ui);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.st-card {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--sunk);
+}
+.accents {
+  gap: 6px;
+}
+.accents {
+  flex-wrap: nowrap;
+}
+.acc {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  height: 32px;
+  border-radius: var(--r2);
+}
+.acc:hover {
+  transform: none;
+  filter: brightness(1.08);
+}
+.acc[aria-checked="true"] {
+  box-shadow:
+    0 0 0 2px var(--sunk),
+    0 0 0 3.5px var(--a);
+}
+/* The message styles, drawn */
+.sd {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  height: 76px;
+  padding: 5px 7px;
+  border-radius: var(--r2);
+  background: var(--panel);
+}
+.sd-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sd i {
+  display: block;
+}
+.sd-av {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--c) 25%, transparent);
+}
+.sd-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.sd-body i {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--line2);
+}
+.sd-body i:first-child {
+  background: var(--c);
+}
+.sd-bubbles .sd-body,
+.sd-split .sd-body {
+  flex: 0 1 74%;
+  padding: 4px 6px;
+  border-radius: 4px;
+  background: var(--hover);
+}
+.sd-bubbles .mine .sd-body,
+.sd-split .mine .sd-body {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.sd-split .mine {
+  justify-content: flex-end;
+}
+.sd-split .mine .sd-av {
+  display: none;
+}
+.st-slider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.st-val {
+  flex: none;
+  min-width: 44px;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 5px;
+  background: var(--hover);
+  font: 500 11px/24px var(--mono);
+  color: var(--muted);
+  text-align: center;
+}
+.settings .st-slider input[type="range"] {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+}
+.st-btn {
+  border: 0;
+  background: var(--hover);
+}
+
+/* Settings, Plugins (PluginSettings.svelte, ObsidianSettings.svelte) beside what a plugin brings */
+.plugin-win {
+  display: grid;
+  grid-template-columns: 216px minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  height: 640px;
+  overflow: hidden;
+  border-radius: var(--r);
+  background: var(--panel);
+  box-shadow: 0 0 0 1px var(--line);
+}
+.set-side {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 10px 12px;
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--line);
+  background: var(--list-surface);
+}
+.set-title {
+  flex: none;
+  padding: 20px 6px 14px;
+  font: 600 16px/24px var(--ui);
+  letter-spacing: -0.01em;
+}
+.set-h {
+  flex: none;
+  padding: 12px 10px 4px;
+  font: 500 12px/16px var(--ui);
+  color: var(--muted);
+}
+.set-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--r2);
+  background: none;
+  color: var(--text);
+  font: 500 13px/18px var(--ui);
+  text-align: left;
+}
+.set-nav > .ic {
+  color: var(--muted);
+}
+button.set-nav {
+  cursor: pointer;
+}
+button.set-nav:hover {
+  background: var(--hover);
+}
+.set-nav.on,
+button.set-nav.on:hover {
+  background: var(--selected);
+  color: var(--accent);
+}
+.set-page {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 28px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.set-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.set-name h3 {
+  margin: 0;
+  font: 600 24px/30px var(--ui);
+  letter-spacing: -0.02em;
+}
+.set-head p {
+  margin-top: 8px;
+  font: 400 13px/18px var(--ui);
+  color: var(--muted);
+}
+.set-sec {
+  margin: 24px 0 8px;
+  font: 600 14px/20px var(--ui);
+}
+.set-brings .set-sec {
+  margin-top: 0;
+}
+.set-group {
+  flex: none;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--sunk);
+}
+.set-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 8px 14px;
+}
+.set-row + .set-row {
+  border-top: 1px solid var(--line);
+}
+.set-row.toggle-row {
+  min-height: 44px;
+}
+.set-text {
+  flex: 1;
+  min-width: 0;
+  font: 500 13px/18px var(--ui);
+}
+.set-text b {
+  display: block;
+  font: 500 13px/18px var(--ui);
+}
+.set-text small {
+  font: 400 12px/16px var(--ui);
+  color: var(--muted);
+}
+.set-act {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--r2);
+  background: var(--hover);
+  font: 500 13px/18px var(--ui);
+  white-space: nowrap;
+}
+.set-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.set-hint {
+  margin-top: 12px;
+  font: 400 12px/16px var(--ui);
+  color: var(--muted);
+}
+button.switch {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+.set-brings {
+  min-width: 0;
+  min-height: 0;
+  padding: 28px 20px 20px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  border-left: 1px solid var(--line);
+  background: var(--list-surface);
+}
+.pl-shelf {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.pl-h {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 12px/16px var(--ui);
+  color: var(--muted);
+}
+.pl-cal {
+  display: grid;
+  gap: 6px;
+}
+.ev-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 8px;
+  border-radius: var(--r2);
+  background: color-mix(in srgb, var(--l) 14%, var(--panel));
+  color: color-mix(in srgb, var(--l) 78%, var(--text));
+}
+.ev-chip.moment {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 3px;
+}
+.ev-chip b {
+  font: 500 12px/16px var(--ui);
+}
+.ev-chip small {
+  font: 400 11px/14px var(--mono);
+  color: inherit;
+  opacity: 0.8;
+}
+.pl-chat {
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+.pl-warp {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 400 13px/18px var(--ui);
+  color: var(--muted);
+}
+.pl-warp .logo {
+  flex: none;
+}
+.pl-tree,
+.pl-note {
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  background: var(--panel);
+}
+.pl-note {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  font: 400 13px/20px var(--ui);
+}
+.pl-foot {
+  display: flex;
+  gap: 6px;
+  font: 400 12px/16px var(--ui);
+  color: var(--muted);
+}
+.pl-foot .ic {
+  margin-top: 1px;
+}
+
+@media (max-width: 1099px) {
+  .win {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+  .rail {
+    padding: 8px 6px 12px;
+  }
+  .rail-top {
+    height: auto;
+    padding: 4px 0 8px;
+  }
+  .rail-h,
+  .rail-h.folders {
+    padding-top: 0;
+  }
+  .plugin-win {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  }
+  .set-side {
+    display: none;
+  }
+}
+@media (max-width: 719px) {
+  .win {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+  .plugin-win {
+    display: block;
+    height: auto;
+    overflow: visible;
+  }
+  .set-page {
+    padding: 18px 16px;
+  }
+  .set-brings {
+    padding: 18px 16px;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .themes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .st-acts {
+    display: none;
+  }
+}
+
+/* Small follow-ups */
+.cal-row .svc-logo {
+  flex: none;
+}
+.cal-row {
+  font: 400 13px/18px var(--ui);
+}
+.themes {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.todo-board {
+  padding: 0 16px 16px;
+}
+.av-none {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--muted) 15%, transparent);
+}
+.win {
+  height: clamp(640px, 78vh, 780px);
+}
+@media (max-width: 719px) {
+  .themes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .win {
+    height: clamp(560px, 78vh, 700px);
+  }
+}
+
+/* "and more": the last place in the themes, as tall as a card. */
+.tmore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 6px;
+  border: 1px dashed var(--line2);
+  border-radius: var(--r);
+  background: transparent;
+  color: var(--muted);
+  font: 500 13px/18px var(--ui);
+  cursor: pointer;
+}
+.tmore:hover {
+  background: var(--sunk);
+  color: var(--text);
+}
+/* A logo in a row keeps its size; the text beside it takes the room. */
+.lc-row > span.svc-logo {
+  flex: none;
+}
+.lc-row > .svc-logo + span {
+  flex: 1;
+  min-width: 0;
+}
+
+/* The open mail scrolls inside its privacy gate. */
+.reader {
+  overflow: hidden;
+}
+.reader .gate-content {
+  overflow-y: auto;
+  scrollbar-width: thin;
 }

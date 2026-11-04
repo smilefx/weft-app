@@ -14,15 +14,22 @@
   /* App defaults (Light preset); app.js overrides them with the chosen theme. */
   --app: #eef1f5;
   --panel: #ffffff;
-  --sunk: #f6f8fa;
-  --hover: #eef1f5;
-  --active: #e8ecf2;
+  --sunk: #f0f3f7;
+  --hover: #e9edf2;
+  --active: #e2e7ee;
   --line: #e3e7ed;
   --line2: #d2d8e1;
   --text: #131a25;
-  --faint: #7a8597;
+  --muted: #526071;
+  --faint: #626f82;
   --accent: #3b5bdb;
   --on-accent: #ffffff;
+  /* Mixed from the theme, as in the app's app.css. */
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  --selected: color-mix(in srgb, var(--accent) 10%, var(--panel));
+  --list-surface: color-mix(in srgb, var(--sunk) 65%, var(--panel));
+  --r-in2: max(0px, calc(var(--r2) - 2px));
+  --r-in3: max(0px, calc(var(--r2) - 3px));
   --ok: #1d7a4a;
   --warn: #b26b00;
   --danger: #c93838;
@@ -674,8 +681,8 @@ kbd {
 }
 .plate {
   display: grid;
-  grid-template-columns: 1fr minmax(0, 400px) 1fr;
-  gap: 56px;
+  grid-template-columns: 1fr minmax(0, 560px) 1fr;
+  gap: 40px;
   margin-top: 64px;
   position: relative;
   align-items: start;
@@ -1086,7 +1093,7 @@ kbd {
     margin-top: 16px;
   }
   .plate {
-    grid-template-columns: 1fr minmax(0, 400px);
+    grid-template-columns: 1fr minmax(0, 560px);
     gap: 40px;
   }
   .notes-l {
@@ -1268,4 +1275,12 @@ kbd {
   .also-list {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+/* Plugins */
+.plugin-win {
+  margin-top: 24px;
+}
+.plugin-facts {
+  margin-top: 56px;
 }

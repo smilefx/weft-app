@@ -42,6 +42,7 @@
           <a href="#search">Chats</a>
           <a href="#workspace">Workspace</a>
           <a href="#warp">Local AI</a>
+          <a href="#plugins">Plugins</a>
           <a href="#yours">Make it yours</a>
         </nav>
         <a class="btn btn-small" href="#download">Download</a>
@@ -271,8 +272,8 @@
           <div class="hero-side">
             <p class="lead">
               Sharing your screen in a lecture or a meeting? <kbd>Ctrl</kbd>
-              <kbd>Shift</kbd> <kbd>H</kbd> covers sensitive information and
-              hides the previews in the chat list, until you allow it.
+              <kbd>Shift</kbd> <kbd>H</kbd> covers your chats and open mail, and
+              hides the previews in your lists, until you allow it.
             </p>
             <div class="hero-act">
               <button
@@ -335,28 +336,103 @@
         </div>
       </section>
 
+      <!-- Plugins -->
+      <section class="plugins sec" id="plugins" aria-labelledby="plugins-h">
+        <div class="frame">
+          <div class="tour-head" data-reveal>
+            <h2 id="plugins-h">Your other tools, in the same place</h2>
+            <p>
+              Plugins bring GitLab, Moodle and Obsidian into Weft. Connect one in
+              Settings and its issues, deadlines, messages and notes land where
+              your own already are, and Warp can look them up. Flip the switches
+              to see what each one brings.
+            </p>
+          </div>
+          <div
+            class="tour-tabs"
+            role="group"
+            aria-label="Show a plugin"
+            data-reveal
+          >
+            <button type="button" data-plugin-tab="gitlab" aria-pressed="true">
+              GitLab
+            </button>
+            <button type="button" data-plugin-tab="moodle" aria-pressed="false">
+              Moodle
+            </button>
+            <button
+              type="button"
+              data-plugin-tab="obsidian"
+              aria-pressed="false"
+            >
+              Obsidian
+            </button>
+          </div>
+          <div
+            class="plugin-win"
+            data-ui
+            data-frag="plugins"
+            aria-label="Settings, Plugins: a plugin's connection, its switches and what it brings"
+          ></div>
+          <ul class="also-list plugin-facts" data-reveal>
+            <li>
+              <b>GitLab</b>
+              <span>Your To-Do List, assigned issues and merge requests to review become todos that link back, from gitlab.com or your institution's GitLab.</span>
+            </li>
+            <li>
+              <b>Moodle</b>
+              <span>Assignments still due as todos, deadlines and course events in the calendar, and Moodle messages as chats you can answer in plain text.</span>
+            </li>
+            <li>
+              <b>Obsidian</b>
+              <span>A vault becomes a folder of your notes and stays in sync both ways, with wiki links, embeds, tags and properties.</span>
+            </li>
+            <li>
+              <b>Built in, nothing to install</b>
+              <span>The plugins ship with Weft. Connect as many GitLab or Moodle servers as you use, and Weft fetches them every five minutes.</span>
+            </li>
+            <li>
+              <b>Tokens stay on this device</b>
+              <span>Tokens are stored encrypted and never synced, so you connect each computer on its own. Weft talks to your server directly.</span>
+            </li>
+            <li>
+              <b>Warp knows about them</b>
+              <span>Ask what is due this week, and Warp reads plugin todos, Moodle deadlines and notifications, and your vault's notes too.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <!-- Make it yours -->
       <section class="yours" id="yours" aria-labelledby="yours-h">
         <div class="frame yours-in">
           <div class="yours-head" data-reveal>
             <h2 id="yours-h">Make it yours</h2>
             <p>
-              Themes, accents, and styles, all unique to you. Change them here
-              and every screen on this page follows.
+              Themes in light and dark, accents and styles, all unique to you.
+              Change them here and every screen on this page follows.
             </p>
           </div>
           <div class="plate">
             <div class="notes notes-l">
+              <div class="note" data-for="scheme">
+                <p class="note-h">Color scheme</p>
+                <p>Follow your system, or stay light or dark.</p>
+              </div>
               <div class="note" data-for="theme">
-                <p class="note-h">Theme</p>
+                <p class="note-h">Themes</p>
                 <p>
-                  Light, Dark, Midnight, Nord, Dracula, Catppuccin, Solarized
-                  and High contrast.
+                  Thirteen looks, each in light and dark, from Nord and Gruvbox
+                  to High contrast. In the app, make your own or import one from
+                  a file.
                 </p>
               </div>
               <div class="note" data-for="accent">
                 <p class="note-h">Accent colour</p>
-                <p>Buttons, links, toggles and your own message bubbles.</p>
+                <p>
+                  Buttons, links and toggles, from the theme's own hues or any
+                  colour you pick in the app.
+                </p>
               </div>
             </div>
             <div class="settings" data-ui data-frag="settings"></div>
@@ -373,13 +449,6 @@
                 <p>
                   How much room between messages, how round the cards and
                   buttons are.
-                </p>
-              </div>
-              <div class="note" data-for="css">
-                <p class="note-h">user.css</p>
-                <p>
-                  Your own stylesheet loads last, overrides everything and
-                  reloads as you save.
                 </p>
               </div>
             </div>
@@ -493,8 +562,9 @@
             </p>
             <p>
               The assistant uses an inference server on your machine. Without
-              one, chats, search and the workspace work as usual. Matrix, IMAP
-              and iCalendar keep your data readable.
+              one, chats, search and the workspace work as usual. Matrix, IMAP,
+              iCalendar and the Markdown files of an Obsidian vault keep your
+              data readable.
             </p>
           </div>
           <div class="local-panel" data-ui data-frag="local" data-reveal></div>
@@ -642,6 +712,17 @@
               </div>
             </details>
             <details name="faq">
+              <summary>Which plugins are there?</summary>
+              <div class="ans">
+                <p>
+                  GitLab, Moodle and Obsidian, all built in. You connect them in
+                  Settings, under Plugins. GitLab uses a personal access token,
+                  Moodle a security key or your password, and Obsidian the folder
+                  of your vault. Plugins from others can't be installed yet.
+                </p>
+              </div>
+            </details>
+            <details name="faq">
               <summary>Can I keep using other clients?</summary>
               <div class="ans">
                 <p>
@@ -730,6 +811,7 @@
           <a href="#search">Chats</a>
           <a href="#workspace">Workspace</a>
           <a href="#warp">Local AI</a>
+          <a href="#plugins">Plugins</a>
           <a href="#yours">Make it yours</a>
           <a href="#local">Your data</a>
         </nav>
@@ -762,6 +844,26 @@
 
     <!-- Material Symbols Rounded, drawn as the app's Icon.svelte does (weight 450, filled unless a line glyph). -->
     <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-go" viewBox="0 -960 960 960">
+        <path
+          d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"
+        />
+      </symbol>
+      <symbol id="i-open" viewBox="0 -960 960 960">
+        <path
+          d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"
+        />
+      </symbol>
+      <symbol id="i-download" viewBox="0 -960 960 960">
+        <path
+          d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+        />
+      </symbol>
+      <symbol id="i-vault" viewBox="0 -960 960 960">
+        <path
+          d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm0-200h560v-360H200v360Zm440 140q17 0 28.5-11.5T680-260q0-17-11.5-28.5T640-300q-17 0-28.5 11.5T600-260q0 17 11.5 28.5T640-220Z"
+        />
+      </symbol>
       <symbol id="i-chat" viewBox="0 0 960 960">
         <path
           d="M236 724 149 811Q128 832 102 820Q76 809 76 780V161Q76 126 101 101Q126 76 161 76H799Q834 76 859 101Q884 126 884 161V639Q884 674 859 699Q834 724 799 724ZM202 639H799Q799 639 799 639Q799 639 799 639V161Q799 161 799 161Q799 161 799 161H161Q161 161 161 161Q161 161 161 161V678ZM202 639 161 678V161Q161 161 161 161Q161 161 161 161H799Q799 161 799 161Q799 161 799 161V639Q799 639 799 639Q799 639 799 639ZM280 560H520Q537 560 548 548Q560 537 560 520Q560 503 548 492Q537 480 520 480H280Q263 480 252 492Q240 503 240 520Q240 537 252 548Q263 560 280 560ZM280 440H680Q697 440 708 428Q720 417 720 400Q720 383 708 372Q697 360 680 360H280Q263 360 252 372Q240 383 240 400Q240 417 252 428Q263 440 280 440ZM280 320H680Q697 320 708 308Q720 297 720 280Q720 263 708 252Q697 240 680 240H280Q263 240 252 252Q240 263 240 280Q240 297 252 308Q263 320 280 320Z"
